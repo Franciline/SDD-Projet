@@ -38,7 +38,7 @@ Chaines* lectureChaine(FILE *f) {
     CellChaine* cellC_suiv;
     CellPoint* cellP_suiv;
 
-    int TAILLE_MAX = 20
+    int TAILLE_MAX = 20;
     char ligne[TAILLE_MAX];
 
     // On recupere la 1ere ligne du fichier qui contient nbChain
