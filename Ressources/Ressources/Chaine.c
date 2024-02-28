@@ -2,73 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Chaine.h"
-
+#define TAILLE_MAX 512
 // Exercice 1
 
 Chaines* creer_chaine() {
-    Chaines* chaine = (Chaines*) malloc(sizeof(Chaines));
+    Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
     chaine->gamma = 0;
     chaine->nbChaines = 0;
     chaine->chaines = NULL;
+    return chaine;
 }
 
 Chaines* lectureChaines(FILE *f) {
-
     if (f == NULL) {
-        printf("Erreur lors du chargement du fichier %s\n", f);
+        printf("Erreur lors du chargement du fichier \n");
         exit(1);
     }
 
-    char nbChain_s[10];
-    int nbChain_i;
-
-    char gamma_s[10];
-    int gamma_i;
-
-    int num;
-    int nb_pts;
-    double x;
-    double y;
+    int nbChain, gamma, num, nb_pts;
+    double x, y;
 
     Chaines* chaine = creer_chaine();
-
-    CellChaine* cellC_suiv;
-    CellPoint* cellP_suiv;
-
-    int TAILLE_MAX = 20;
     char ligne[TAILLE_MAX];
 
     // On recupere la 1ere ligne du fichier qui contient nbChain
     fgets(ligne, sizeof(ligne), f);
-    sscanf(ligne, "%ms %d", &nbChain_s, &nbChain_i);
+    sscanf(ligne, "NbChain: %d\n", &nbChain);
     
     // On recupere la 2eme ligne du fichier qui contient gamma
     fgets(ligne, sizeof(ligne), f);
-    sscanf(ligne, "%ms %d", &gamma_s, &gamma_i);
+    sscanf(ligne, "Gamma: %d\n", &gamma);
 
-    while(fgets(ligne, TAILLE_MAX, f) != NULL) {
-        fscanf(f, "%d %d", &num, &nb_pts);
-        //sscanf(ligne, "%d %d %f", num, nb_pts, liste_points);
-        
+    chaine->nbChaines = nbChain;
+    chaine->gamma = gamma;
+
+    for (int i = 0; i<nbChain; i++){
+        fgets(ligne, sizeof(ligne), f);
+        sscanf(ligne, "%d %d %[^\n]\n", &num, &nb_pts, ligne);
         CellChaine* cellC = (CellChaine*) malloc(sizeof(CellChaine));
+        cellC->points = NULL;
         cellC->numero = num;
-        chaine->chaines = cellC;
-
-        CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
 
         for (int i = 0; i<nb_pts; i++) {
-            fscanf(f, "%f %f", &x, &y);
+            sscanf(ligne, "%lf %lf %[^\n]\n", &x, &y, ligne);
             CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
             cellP->x = x;
             cellP->y = y;
             cellP->suiv = cellC->points;
             cellC->points = cellP;
         }
-
         cellC->suiv = chaine->chaines;
         chaine->chaines = cellC;
     }
-    
     return chaine;
 }
 
@@ -77,8 +62,7 @@ void ecrireChaines(Chaines *C, FILE* f){
 
     fprintf(f, "NbChain: %d\n", C->nbChaines);
     fprintf(f, "Gamma: %d\n", C->gamma);
-    printf("here");
-
+    
     CellChaine * tmp_cell = C->chaines;
     while(tmp_cell){
         //on compte le nombre de points dans la liste chainée 
@@ -92,10 +76,11 @@ void ecrireChaines(Chaines *C, FILE* f){
         fprintf(f, "%d %d ", tmp_cell->numero, nb_point);
         tmp_point = tmp_cell->points;
         while(tmp_point){
-            fprintf(f, "%f %f ", tmp_point->x, tmp_point->y);
+            fprintf(f, "%lf %lf ", tmp_point->x, tmp_point->y);
             tmp_point=tmp_point->suiv;
         }
         fprintf(f, "\n");
+        tmp_cell = tmp_cell->suiv;
     }
     
     return;

@@ -9,9 +9,9 @@ int main(int argc, char** argv){
     }   
 
     FILE * fichier = fopen(argv[1], "r");
-    FILE * fichier2 = fopen("test.txt", "rw");
+    FILE * fichier2 = fopen("test.txt", "w");
     Chaines* test = lectureChaines(fichier);
-    printf("hrfjjfd");
+    fclose(fichier);
     ecrireChaines(test, fichier2);
 
     //Test de la fonction écriture
