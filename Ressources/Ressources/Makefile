@@ -1,11 +1,14 @@
+CC=gcc
+GCC_FLAGS=-Wall -g
+
 all: ChainMain
 
-Chaine.o: Chaine.h Chaine.c
-	gcc -c Chaine.c
+Chaine.o: Chaine.c Chaine.h
+	$(CC) $(GCC_FLAGS) -c $< -o $@
 
 ChainMain: Chaine.h ChainMain.c Chaine.o
-	gcc -o ChainMain ChainMain.c Chaine.o
+	$(CC) $(GCC_FLAGS) -o $@ $^
 
 
 clean:
-	rm *.o
+	rm -f *.o
