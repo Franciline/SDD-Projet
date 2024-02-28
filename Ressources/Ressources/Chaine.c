@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,11 +12,9 @@ Chaines* creer_chaine() {
     chaine->chaines = NULL;
 }
 
+Chaines* lectureChaines(FILE *f) {
 
-Chaines* lectureChaine(FILE *f) {
-    FILE* fichier = fopen(f, "r");
-
-    if (fichier == NULL) {
+    if (f == NULL) {
         printf("Erreur lors du chargement du fichier %s\n", f);
         exit(1);
     }
@@ -42,15 +39,15 @@ Chaines* lectureChaine(FILE *f) {
     char ligne[TAILLE_MAX];
 
     // On recupere la 1ere ligne du fichier qui contient nbChain
-    fgets(ligne, sizeof(ligne), fichier);
+    fgets(ligne, sizeof(ligne), f);
     sscanf(ligne, "%ms %d", &nbChain_s, &nbChain_i);
     
     // On recupere la 2eme ligne du fichier qui contient gamma
-    fgets(ligne, sizeof(ligne), fichier);
+    fgets(ligne, sizeof(ligne), f);
     sscanf(ligne, "%ms %d", &gamma_s, &gamma_i);
 
-    while(fgets(ligne, TAILLE_MAX, fichier) != NULL) {
-        fscanf(fichier, "%d %d", &num, &nb_pts);
+    while(fgets(ligne, TAILLE_MAX, f) != NULL) {
+        fscanf(f, "%d %d", &num, &nb_pts);
         //sscanf(ligne, "%d %d %f", num, nb_pts, liste_points);
         
         CellChaine* cellC = (CellChaine*) malloc(sizeof(CellChaine));
@@ -60,7 +57,7 @@ Chaines* lectureChaine(FILE *f) {
         CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
 
         for (int i = 0; i<nb_pts; i++) {
-            fscanf(fichier, "%f %f", &x, &y);
+            fscanf(f, "%f %f", &x, &y);
             CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
             cellP->x = x;
             cellP->y = y;
@@ -69,17 +66,18 @@ Chaines* lectureChaine(FILE *f) {
         }
 
         cellC->suiv = chaine->chaines;
-        chaine->chaines = CellC;
+        chaine->chaines = cellC;
     }
     
     return chaine;
 }
 
-void ecrireChaine(Chaines *C, FILE* f){
+void ecrireChaines(Chaines *C, FILE* f){
     if (f == NULL) return;
 
     fprintf(f, "NbChain: %d\n", C->nbChaines);
     fprintf(f, "Gamma: %d\n", C->gamma);
+    printf("here");
 
     CellChaine * tmp_cell = C->chaines;
     while(tmp_cell){
@@ -100,6 +98,5 @@ void ecrireChaine(Chaines *C, FILE* f){
         fprintf(f, "\n");
     }
     
-    fclose(f);
     return;
 }

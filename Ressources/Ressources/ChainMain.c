@@ -8,7 +8,11 @@ int main(int argc, char** argv){
         return -1;
     }   
 
-    Chaines* test = lectureChaines(argv[1]);
+    FILE * fichier = fopen(argv[1], "r");
+    FILE * fichier2 = fopen("test.txt", "rw");
+    Chaines* test = lectureChaines(fichier);
+    printf("hrfjjfd");
+    ecrireChaines(test, fichier2);
 
     //Test de la fonction écriture
     
