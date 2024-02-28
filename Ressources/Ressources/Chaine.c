@@ -73,3 +73,32 @@ Chaines* lectureChaine(FILE *f) {
     
     return chaine;
 }
+
+void ecrireChaine(Chaines *C, FILE* f){
+    if (f == NULL) return;
+
+    fprintf(f, "NbChain: %d\n", C->nbChaines);
+    fprintf(f, "Gamma: %d\n", C->gamma);
+
+    CellChaine * tmp_cell = C->chaines;
+    while(tmp_cell){
+        //on compte le nombre de points dans la liste chainée 
+        int nb_point = 0;
+        CellPoint * tmp_point = tmp_cell->points;
+        while(tmp_point){
+            nb_point++;
+            tmp_point = tmp_point->suiv;
+        }
+
+        fprintf(f, "%d %d ", tmp_cell->numero, nb_point);
+        tmp_point = tmp_cell->points;
+        while(tmp_point){
+            fprintf(f, "%f %f ", tmp_point->x, tmp_point->y);
+            tmp_point=tmp_point->suiv;
+        }
+        fprintf(f, "\n");
+    }
+    
+    fclose(f);
+    return;
+}
