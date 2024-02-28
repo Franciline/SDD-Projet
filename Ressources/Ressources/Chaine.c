@@ -5,6 +5,7 @@
 #define TAILLE_MAX 512
 // Exercice 1
 
+//Question 1
 Chaines* creer_chaine() {
     Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
     chaine->gamma = 0;
@@ -57,6 +58,7 @@ Chaines* lectureChaines(FILE *f) {
     return chaine;
 }
 
+//Question 2: fonction d'écriture
 void ecrireChaines(Chaines *C, FILE* f){
     if (f == NULL) return;
 
