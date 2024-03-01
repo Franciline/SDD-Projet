@@ -3,8 +3,6 @@
 #include <string.h>
 #include "SVGwriter.h"
 
-
-
 void SVGinit(SVGwriter *svg, char *nom, int sizeX, int sizeY) {
   char filename[100];
 

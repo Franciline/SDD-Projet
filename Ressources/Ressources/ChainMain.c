@@ -9,11 +9,21 @@ int main(int argc, char** argv){
     }   
 
     FILE * fichier = fopen(argv[1], "r");
-    FILE * fichier2 = fopen("test.txt", "w");
+    FILE * fichier2 = fopen("test_ecriture.txt", "w");
+
+    //Test de la fonction lecture
     Chaines* test = lectureChaines(fichier);
-    fclose(fichier);
+    
+    //Test de la fonction écriture
     ecrireChaines(test, fichier2);
 
-    //Test de la fonction écriture
+    fclose(fichier);
+    fclose(fichier2);
+    
+
+    //TEST SVGwriter
+    afficheChainesSVG(test, "affichage_test");
+
+    return 0;
     
 }

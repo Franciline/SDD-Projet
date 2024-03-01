@@ -1,5 +1,6 @@
 #ifndef _SVGWRITER_H_
 #define _SVGWRITER_H_
+#include <stdio.h>
 
 /* Dans cette librairie, les couleurs sont utilisees sous leur forme
    hexadecimale comme le montre les exemples suivants) */
