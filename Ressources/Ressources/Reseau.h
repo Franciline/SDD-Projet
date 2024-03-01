@@ -6,7 +6,7 @@ typedef struct noeud Noeud;
 
 /* Liste chainee de noeuds (pour la liste des noeuds du reseau ET les listes des voisins de chaque noeud) */
 typedef struct cellnoeud {
-    Noeud *nd;               /* Pointeur vers le noeud stock\'e */
+    Noeud *nd;               /* Pointeur vers le noeud stocké */
     struct cellnoeud *suiv;         /* Cellule suivante dans la liste */
 } CellNoeud;
 
@@ -15,7 +15,7 @@ struct noeud{
    int num;                        /* Numero du noeud */
    double x, y;                    /* Coordonnees du noeud*/
    CellNoeud *voisins;             /* Liste des voisins du noeud */
-};
+}; //Noeud
 
 /* Liste chainee de commodites */
 typedef struct cellCommodite {
@@ -37,5 +37,12 @@ void ecrireReseau(Reseau *R, FILE *f);
 int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
 void afficheReseauSVG(Reseau *R, char* nomInstance);
+
+//fonctions implémenté par nous meme
+Reseau* creer_reseau();
+CellCommodite* creer_cellcommodite();
+CellNoeud* creer_cellnoeud();
+Noeud* creer_noeud(); 
+
 #endif
 

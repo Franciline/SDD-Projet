@@ -7,7 +7,8 @@
 #define TAILLE_MAX 512
 // Exercice 1
 
-//Question 1
+//fonctions de bases
+/*Creer une chaine*/
 Chaines* creer_chaine() {
     Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
     chaine->gamma = 0;
@@ -16,6 +17,8 @@ Chaines* creer_chaine() {
     return chaine;
 }
 
+//Question 1
+/*Fonction de lecture des chaines depuis un fichier'*/
 Chaines* lectureChaines(FILE *f) {
     if (f == NULL) {
         printf("Erreur lors du chargement du fichier \n");
@@ -61,6 +64,7 @@ Chaines* lectureChaines(FILE *f) {
 }
 
 //Question 2: fonction d'écriture
+/*Fonction écriture des chaines dans un fichier*/
 void ecrireChaines(Chaines *C, FILE* f){
     if (f == NULL) return;
 
@@ -91,6 +95,7 @@ void ecrireChaines(Chaines *C, FILE* f){
 }
 
 //Question 3
+/*Affichage des chaines*/
 void afficheChainesSVG(Chaines *C, char* nomInstance){
     //int i;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
