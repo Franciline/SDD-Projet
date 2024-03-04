@@ -4,7 +4,7 @@ GCC_FLAGS=-Wall -g
 all: ChainMain
 
 Chaine.o: Chaine.c Chaine.h
-	$(CC) $(GCC_FLAGS) -c $< -o $@
+	$(CC) $(GCC_FLAGS) -c -lm $< -o $@
 
 ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
 	$(CC) $(GCC_FLAGS) -o $@ $^
