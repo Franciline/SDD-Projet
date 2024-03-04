@@ -22,13 +22,14 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
+Chaines* creer_chaine();
+double distance(cellPoint a, cellPoint b);
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
 void afficheChainesSVG(Chaines *C, char* nomInstance);
+double longueurChaine(CellChaine *c);
 double longueurTotale(Chaines *C);
+int comptePoints(CellChaine *c);
 int comptePointsTotal(Chaines *C);
-//fonction implémenté par nous même
-Chaines* creer_chaine();
-
 
 #endif	
