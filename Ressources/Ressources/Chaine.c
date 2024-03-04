@@ -19,6 +19,7 @@ Chaines* creer_chaine() {
     return chaine;
 }
 
+/*Calcule la distance entre deux points a et b*/
 double distance(CellPoint *a, CellPoint *b) {
     double xa = a->x;
     double ya = a->y;

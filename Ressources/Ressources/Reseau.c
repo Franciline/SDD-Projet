@@ -7,7 +7,7 @@
 //EXERCICE 2
 
 //fonctions de base
-/*Créer un réseau vide*/
+/*Renvoie un réseau vide*/
 Reseau* creer_reseau(){
     Reseau* reseau = (Reseau*)(malloc(sizeof(Reseau)));
     reseau->nbNoeuds = 0;
@@ -18,6 +18,7 @@ Reseau* creer_reseau(){
     return reseau;
 }
 
+/*Renvoie une commodité vide*/
 CellCommodite* creer_cellcommodite(){
     CellCommodite* cellc = (CellCommodite*)(malloc(sizeof(CellCommodite)));
     cellc->extrA = NULL; 
@@ -27,6 +28,7 @@ CellCommodite* creer_cellcommodite(){
 
 }
 
+/*Renvoie un CellNoeud vide*/
 CellNoeud* creer_cellnoeud(){
     CellNoeud* celln = (CellNoeud*)(malloc(sizeof(CellNoeud)));
     celln -> nd = NULL;
@@ -34,6 +36,7 @@ CellNoeud* creer_cellnoeud(){
     return celln;
 }
 
+/*Renvoie un noeud vide*/
 Noeud* creer_noeud(){
     Noeud* n = (Noeud*)(malloc(sizeof(Noeud)));
     n->num = 0;
@@ -41,6 +44,24 @@ Noeud* creer_noeud(){
     n->y = 0;
     n->voisins = NULL;
     return n;
+}
+
+/*Ajoute voisin aux voisins de n*/
+void ajouter_voisin(Noeud* n, Noeud* voisin){
+    if (voisin = NULL) return;
+
+    CellNoeud * liste_voisin = n->voisins;
+    //on vérifie si dedans;
+    while(liste_voisin){
+        if (liste_voisin->nd->num == voisin->num) return ;
+    }
+    //sinon on créer cellule et ajoute le noeud
+    CellNoeud* new_voisin = creer_cellnoeud();
+    new_voisin -> nd = voisin;
+
+    //on affecte ce voisin par insertion en tête
+    new_voisin->suiv = n->voisins;
+    n->voisins = new_voisin;
 }
 
 
@@ -84,35 +105,39 @@ Reseau* reconstitueReseauListe(Chaines *C){
 
     CellChaine* liste = C->chaines;
 
-    //on parcourt toutes les chaines
+    //on parcourt toutes les CellChaines
     while(liste){
+        //une chaine possède une commodité, une liste de CellNoeud avec des Noeuds
         CellCommodite* commodite = creer_cellcommodite();
         CellPoint * liste_points = liste->points;
+        CellPoint* prec = NULL, *suiv = NULL;
 
-        //on ajoute les points au réseau
-
-        //pour chaque point il faut avjouter voisin (?) prec suiv dans liste?
-        //fonction prec creer cellnoeud pour chaque noeud, et augmente nb points
-        
-        //premier point
+        //premier point: on rechercher et l'ajoute si n'existe pas
         Noeud* n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
 
         //on sauvegarde la commodité
         commodite->extrA = n;
-        //parcours les autres points
+
+        //On parcourt tous les CellPoints
         while(liste_points->suiv != NULL){
-            liste_points=liste_points->suiv;
+            suiv = liste->points;
             Noeud * n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
+            prec = liste_points;
+            //ajout des voisins
+            ajouter_voisin(n, prec);
+            ajouter_voisin(n, suiv);
+            liste_points=liste_points->suiv;
         }
 
         //on arrive au dernier point
-        commodite->extrB = n;
+        commodite->extrB = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
+        ajouter_voisin(commodite->extrB, prec); //le suivant est NULL
+        
+        //on insere en tete la commodité
         commodite->suiv = reseau->commodites;
         reseau->commodites = commodite;
 
-        //ici on a ajouté commodité et noeud de la chaine à réseau
-        //on passe à la liste suivante
-
+        //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
         liste = liste->suiv;
 
     }
