@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "Chaine.h"
 #include "SVGwriter.h"
 
 #define TAILLE_MAX 512
+
 // Exercice 1
 
-//fonctions de bases
+//Fonctions de bases
 /*Creer une chaine*/
 Chaines* creer_chaine() {
     Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
@@ -15,6 +17,15 @@ Chaines* creer_chaine() {
     chaine->nbChaines = 0;
     chaine->chaines = NULL;
     return chaine;
+}
+
+double distance(cellPoint a, cellPoint b) {
+    double xa = a->x;
+    double ya = a->y;
+    double xb = b->x;
+    double yb = b->y;
+
+    return sqrt(((xb - xa)*(xb - xa)) + ((yb - ya)*(yb - ya)));
 }
 
 //Question 1
@@ -134,4 +145,59 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
         ccour=ccour->suiv;
     }
     SVGfinalize(&svg);
+}
+
+//Question 4
+/* Calcul de la longueur d'une chaine */
+double longueurChaine(CellChaine *c) {
+    double longueur = 0;
+    CellPoint *liste_points = c->points;
+
+    while((liste_points != NULL) && (liste_points->suiv != NULL)) {
+        longueur += distance(liste_points, liste_points->suiv);
+        liste_points = liste_points->suiv;
+    }
+
+    return longueur;
+}
+
+//Question 4
+/* Calcul de la longueur totale de toutes les chaines */
+double longueurTotale(Chaines *C) {
+    double longueur = 0;
+    CellChaine *liste_chaines = C->chaines;
+
+    while(liste_chaines != NULL) {
+        longueur += longueurChaine(liste_chaines);
+        liste_chaines = liste_chaines->suiv;
+    }
+
+    return longueur;
+}
+
+//Question 5
+/* Calcul le nombre d'occurrences de points dans une chaine*/
+int comptePoints(CellChaine *c) {
+    int nb_pts = 0;
+    CellPoint *liste_points = c->points;
+
+    while(liste_points != NULL) {
+        nb_pts++;
+        liste_points = liste_points->suiv;
+    }
+
+    return nb_pts;
+}
+
+/* Calcul le nombre total d'occurrences de points */
+int comptePointsTotal(Chaines *C) {
+    int nb_pts = 0;
+    CellChaine *liste_chaines = C->chaines;
+
+    while(liste_chaines != NULL) {
+        nb_pts += comptePoints(liste_chaines);
+        liste_chaines = liste_chaines->suiv;
+    }
+
+    return nb_pts;
 }
