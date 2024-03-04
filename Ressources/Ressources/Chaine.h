@@ -23,7 +23,7 @@ typedef struct {
 } Chaines;
 
 Chaines* creer_chaine();
-double distance(cellPoint a, cellPoint b);
+double distance(CellPoint* a, CellPoint *b);
 Chaines* lectureChaines(FILE *f);
 void ecrireChaines(Chaines *C, FILE *f);
 void afficheChainesSVG(Chaines *C, char* nomInstance);

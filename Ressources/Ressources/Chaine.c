@@ -19,7 +19,7 @@ Chaines* creer_chaine() {
     return chaine;
 }
 
-double distance(cellPoint a, cellPoint b) {
+double distance(CellPoint *a, CellPoint *b) {
     double xa = a->x;
     double ya = a->y;
     double xb = b->x;
