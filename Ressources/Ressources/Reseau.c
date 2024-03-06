@@ -48,17 +48,21 @@ Noeud* creer_noeud(){
 }
 
 /*Ajoute voisin aux voisins de n*/
-void ajouter_voisin(Noeud* n, Noeud* voisin){
-    if (voisin = NULL) return;
+void ajouter_voisin(Noeud* n, CellPoint* voisin, Reseau *R){
+    if (voisin == NULL) return;
 
     CellNoeud * liste_voisin = n->voisins;
     //on vérifie si dedans;
     while(liste_voisin){
-        if (liste_voisin->nd->num == voisin->num) return ;
+        if ((liste_voisin->nd->x == voisin->x) && (liste_voisin->nd->y == voisin->y)) return ;
+        liste_voisin = liste_voisin->suiv;
     }
     //sinon on créer cellule et ajoute le noeud
     CellNoeud* new_voisin = creer_cellnoeud();
-    new_voisin -> nd = voisin;
+    new_voisin -> nd = creer_noeud();
+    new_voisin -> nd ->x = voisin->x;
+    new_voisin -> nd ->y = voisin->y;
+    new_voisin -> nd ->num = R->nbNoeuds + 1; 
 
     //on affecte ce voisin par insertion en tête
     new_voisin->suiv = n->voisins;
@@ -73,7 +77,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud * liste = R->noeuds;
 
     while (liste){
-        if ((liste->nd->x - x < EPSILON) && (liste->nd->y - y < EPSILON)) return liste;
+        if ((liste->nd->x - x < EPSILON) && (liste->nd->y - y < EPSILON)) return liste->nd;
         liste = liste->suiv;
     }
 
@@ -125,14 +129,14 @@ Reseau* reconstitueReseauListe(Chaines *C){
             Noeud * n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
             prec = liste_points;
             //ajout des voisins
-            ajouter_voisin(n, prec);
-            ajouter_voisin(n, suiv);
+            ajouter_voisin(n, prec, reseau);
+            ajouter_voisin(n, suiv, reseau);
             liste_points=liste_points->suiv;
         }
 
         //on arrive au dernier point
         commodite->extrB = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
-        ajouter_voisin(commodite->extrB, prec); //le suivant est NULL
+        ajouter_voisin(commodite->extrB, prec, reseau); //le suivant est NULL
         
         //on insere en tete la commodité
         commodite->suiv = reseau->commodites;

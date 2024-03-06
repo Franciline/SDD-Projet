@@ -46,7 +46,6 @@ int main(int argc, char* argv) {
                "\t- 2 : Table de hachage\n"
                "\t- 3 : Arbre\n");
         }
-
         return 0;
     }
 }

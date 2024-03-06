@@ -20,7 +20,6 @@ int main(int argc, char** argv){
     fclose(fichier);
     fclose(fichier2);
     
-
     //TEST SVGwriter
     afficheChainesSVG(test, "affichage_test");
 
