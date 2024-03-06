@@ -29,7 +29,7 @@ int main(int argc, char* argv) {
         return 1;
     }
     else {
-        int numero_methode = int(argv[2]);
+        int numero_methode = (int)(argv[2]);
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
         }

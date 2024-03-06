@@ -144,3 +144,41 @@ Reseau* reconstitueReseauListe(Chaines *C){
 
     return reseau;
 }
+
+//EXERCICE 3
+
+//Question 1
+/*Retourne le nombre de liaisons que possède le réseau*/
+int nbLiaisons(Reseau *R){
+    //nb liaisons est donné par la somme des nb de voisins de chaque CellNoeud / 2 
+    int nb_liaisons = 0; 
+    CellNoeud* noeud_parcours = R->noeuds;
+
+    //on parcours tous les noeuds
+    while(noeud_parcours){
+
+        int nb_voisins = 0;
+        CellNoeud* liste_voisins = noeud_parcours->nd->voisins; //les voisins de ce noeud
+
+        //on compte le nombre de voisins de ce noeud
+        while(liste_voisins){
+            nb_voisins ++;
+            liste_voisins = liste_voisins->suiv;
+        }
+
+        nb_liaisons += nb_voisins;
+        noeud_parcours = noeud_parcours->suiv;
+    }
+    return nb_liaisons / 2;
+}
+
+/*Retourne le nombre de commodité que possède le réseau*/
+int nbCommodites(Reseau *R){
+    int nbc = 0;
+    CellCommodite* commodite = R->commodites;
+    while(commodite){
+        nbc++;
+        commodite = commodite->suiv;
+    }
+    return nbc;
+}
