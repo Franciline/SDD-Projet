@@ -2,6 +2,7 @@
 #include "Chaine.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "SVGwriter.h"
 #define EPSILON 0.000001
 
 //EXERCICE 2
@@ -191,9 +192,9 @@ void ecrireReseau(Reseau *R, FILE *f) {
         exit(1);
     }
 
-    CellNoeud noeuds_reseau = R->noeuds;                //Recuperation de la liste des noeuds
-    CellNoeud liaisons_reseau = R->noeuds;              //Recuperation de la liste des noeuds pour les voisins (liaisons)
-    CellCommodite commodites_reseau = R->commodites;    //Recuperation de la liste des commodites
+    CellNoeud *noeuds_reseau = R->noeuds;                //Recuperation de la liste des noeuds
+    CellNoeud *liaisons_reseau = R->noeuds;              //Recuperation de la liste des noeuds pour les voisins (liaisons)
+    CellCommodite *commodites_reseau = R->commodites;    //Recuperation de la liste des commodites
 
     int nb_noeuds = R->nbNoeuds;
     int nb_liaisons = nbLiaisons(R);
@@ -210,7 +211,7 @@ void ecrireReseau(Reseau *R, FILE *f) {
     for (int i = 0; i<nb_noeuds; i++) {
         int num = noeuds_reseau->nd->num;
         double x = noeuds_reseau->nd->x;
-        double y = noeuds_reseau->nd->y
+        double y = noeuds_reseau->nd->y;
         fprintf(f, "v %d %f %f\n", num, x, y);
 
         noeuds_reseau = noeuds_reseau->suiv;
@@ -218,8 +219,8 @@ void ecrireReseau(Reseau *R, FILE *f) {
     fprintf(f, "\n");
     
     // Ecriture des lignes commencant par "l" (liaisons du reseau)
-    for (int i = 0; i<nb_liaisons; i++) {
-        Noeud* n = liaisons_reseau->nb;
+    for (int i = 0; i<nb_liaisons; i++){
+        Noeud* n = liaisons_reseau->nd;
         CellNoeud* liste_n_vois = n->voisins;
 
         while (liste_n_vois != NULL) {
@@ -235,11 +236,41 @@ void ecrireReseau(Reseau *R, FILE *f) {
     
     // Ecriture des lignes commencant par "k" (commodites du reseau)
     for (int i = 0; i<nb_commodites; i++) {
-        Noeud* a = commodites_reseau->extraA;
-        Noeud* b = commodites_reseau->extraB;
+        Noeud* a = commodites_reseau->extrA;
+        Noeud* b = commodites_reseau->extrB;
         fprintf(f, "k %d %d\n", a->num, b->num);
 
         commodites_reseau = commodites_reseau->suiv;
     }
     fprintf(f, "\n");
 }
+
+//Question 3
+void afficheReseauSVG(Reseau *R, char* nomInstance){
+    CellNoeud *courN,*courv;
+    SVGwriter svg;
+    double maxx=0,maxy=0,minx=1e6,miny=1e6;
+
+    courN=R->noeuds;
+    while (courN!=NULL){
+        if (maxx<courN->nd->x) maxx=courN->nd->x;
+        if (maxy<courN->nd->y) maxy=courN->nd->y;
+        if (minx>courN->nd->x) minx=courN->nd->x;
+        if (miny>courN->nd->y) miny=courN->nd->y;
+        courN=courN->suiv;
+    }
+    SVGinit(&svg,nomInstance,500,500);
+    courN=R->noeuds;
+    while (courN!=NULL){
+        SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+        courv=courN->nd->voisins;
+        while (courv!=NULL){
+            if (courv->nd->num<courN->nd->num)
+                SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+            courv=courv->suiv;
+        }
+        courN=courN->suiv;
+    }
+    SVGfinalize(&svg);
+}
+

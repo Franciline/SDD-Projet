@@ -12,7 +12,7 @@ ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
-Reseau.o: Reseau.c Reseau.h
+Reseau.o: Reseau.c Reseau.h SVGwriter.o
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
 clean:
