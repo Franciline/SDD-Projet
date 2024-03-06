@@ -43,7 +43,7 @@ Reseau* creer_reseau();
 CellCommodite* creer_cellcommodite();
 CellNoeud* creer_cellnoeud();
 Noeud* creer_noeud(); 
-void ajouter_voisin(Noeud* n, CellPoint* voisin, Reseau* R);
+void ajouter_voisin(Noeud* n, Noeud* voisin);
 
 #endif
 

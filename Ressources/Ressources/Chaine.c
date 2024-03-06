@@ -31,6 +31,7 @@ double distance(CellPoint *a, CellPoint *b) {
 
 //Question 1
 /*Fonction de lecture des chaines depuis un fichier'*/
+//lecture ne fonctionne pas bien??
 Chaines* lectureChaines(FILE *f) {
     if (f == NULL) {
         printf("Erreur lors du chargement du fichier \n");
