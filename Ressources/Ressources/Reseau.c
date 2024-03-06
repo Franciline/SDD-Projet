@@ -182,3 +182,64 @@ int nbCommodites(Reseau *R){
     }
     return nbc;
 }
+
+// Question 2
+/*Ecrit le reseau dans un fichier*/
+void ecrireReseau(Reseau *R, FILE *f) {
+    if (f == NULL) {
+        printf("Erreur lors du chargement du fichier \n");
+        exit(1);
+    }
+
+    CellNoeud noeuds_reseau = R->noeuds;                //Recuperation de la liste des noeuds
+    CellNoeud liaisons_reseau = R->noeuds;              //Recuperation de la liste des noeuds pour les voisins (liaisons)
+    CellCommodite commodites_reseau = R->commodites;    //Recuperation de la liste des commodites
+
+    int nb_noeuds = R->nbNoeuds;
+    int nb_liaisons = nbLiaisons(R);
+    int nb_commodites = nbCommodites(R);
+
+    // Ecriture des 4 premieres lignes du fichier
+    fprintf(f, "NbNoeuds: %d\n", nb_noeuds);
+    fprintf(f, "NbLiaisons: %d\n", nb_liaisons);
+    fprintf(f, "NbCommodites: %d\n", nb_commodites);
+    fprintf(f, "Gamma: %d\n", R->gamma);
+    fprintf(f, "\n");
+
+    // Ecriture des lignes commencant par "v" (noeuds du reseau)
+    for (int i = 0; i<nb_noeuds; i++) {
+        int num = noeuds_reseau->nd->num;
+        double x = noeuds_reseau->nd->x;
+        double y = noeuds_reseau->nd->y
+        fprintf(f, "v %d %f %f\n", num, x, y);
+
+        noeuds_reseau = noeuds_reseau->suiv;
+    }
+    fprintf(f, "\n");
+    
+    // Ecriture des lignes commencant par "l" (liaisons du reseau)
+    for (int i = 0; i<nb_liaisons; i++) {
+        Noeud* n = liaisons_reseau->nb;
+        CellNoeud* liste_n_vois = n->voisins;
+
+        while (liste_n_vois != NULL) {
+            Noeud* n_vois = liste_n_vois->nd;
+            fprintf(f, "l %d %d\n", n_vois->num, n->num);
+
+            liste_n_vois = liste_n_vois->suiv;
+        }
+
+        liaisons_reseau = liaisons_reseau->suiv;
+    }
+    fprintf(f, "\n");
+    
+    // Ecriture des lignes commencant par "k" (commodites du reseau)
+    for (int i = 0; i<nb_commodites; i++) {
+        Noeud* a = commodites_reseau->extraA;
+        Noeud* b = commodites_reseau->extraB;
+        fprintf(f, "k %d %d\n", a->num, b->num);
+
+        commodites_reseau = commodites_reseau->suiv;
+    }
+    fprintf(f, "\n");
+}
