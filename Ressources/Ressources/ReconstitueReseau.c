@@ -1,22 +1,52 @@
-#include "Chaine.h"
 #include "Reseau.h"
+#include "Chaine.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char** argv){
-    if (argc < 2){
-        printf("Il faut 1 arguments!: %s  <nom_du_fichier.cha>\n", argv[0]);
-        return -1;
-    } 
-    //récupération de la méthode à utiliser
-    int choix;
-    char reponse[512];
+#include "Reseau.h"
 
-    printf("Quelles méthode souhaitez vous utiliser? \n");
-    printf("0-liste\n1-table de hachage\n2-arbre\n");
+// Exercice 2
 
-    fgets(reponse, 512, stdin);
-    sscanf(reponse, "%d", &choix);
+// Question 3
+
+int main(int argc, char* argv) {
+    if (argc < 2) {
+        printf("Il faut des arguments ! : ./%s <nom_fichier> <numero_methode>\n", argv[0]);
+        printf("numero_methode :\n"
+               "\t- 1 : Liste\n"
+               "\t- 2 : Table de hachage\n"
+               "\t- 3 : Arbre\n");
         
-    return 0;
+        return 1;
+    }
+    if (argc > 2) {
+        printf("Trop d'arguments ! : ./%s <nom_fichier> <numero_methode>\n", argv[0]);
+        printf("numero_methode :\n"
+               "\t- 1 : Liste\n"
+               "\t- 2 : Table de hachage\n"
+               "\t- 3 : Arbre\n");
+        
+        return 1;
+    }
+    else {
+        int numero_methode = int(argv[2]);
+        if (numero_methode == 1) {
+            printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
+        }
+        if (numero_methode == 2) {
+            printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
+        }
+        if (numero_methode == 3) {
+            printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
+        }
+        else {
+            printf("Numéro de méthode invalide !\n");
+            printf("numero_methode :\n"
+               "\t- 1 : Liste\n"
+               "\t- 2 : Table de hachage\n"
+               "\t- 3 : Arbre\n");
+        }
+
+        return 0;
+    }
 }
