@@ -9,8 +9,8 @@
 
 // Question 3
 
-int main(int argc, char* argv) {
-    if (argc < 2) {
+int main(int argc, char** argv) {
+    if (argc < 3) {
         printf("Il faut des arguments ! : ./%s <nom_fichier> <numero_methode>\n", argv[0]);
         printf("numero_methode :\n"
                "\t- 1 : Liste\n"
@@ -19,7 +19,7 @@ int main(int argc, char* argv) {
         
         return 1;
     }
-    if (argc > 2) {
+    if (argc > 3) {
         printf("Trop d'arguments ! : ./%s <nom_fichier> <numero_methode>\n", argv[0]);
         printf("numero_methode :\n"
                "\t- 1 : Liste\n"
@@ -29,14 +29,20 @@ int main(int argc, char* argv) {
         return 1;
     }
     else {
-        int numero_methode = (int)(argv[2]);
+       
+        int numero_methode = atoi(argv[2]);
+        printf("numero m %d\n", numero_methode);
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
+            FILE * fichier = fopen(argv[1], "r");
+            Chaines* test = lectureChaines(fichier);
+            Reseau* test_reseau = reconstitueReseauListe(test);
+            afficheReseauSVG(test_reseau, "affichage_reseau_test");
         }
-        if (numero_methode == 2) {
+        else if (numero_methode == 2) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
         }
-        if (numero_methode == 3) {
+        else if (numero_methode == 3) {
             printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
         }
         else {
