@@ -34,32 +34,12 @@ int main(int argc, char** argv) {
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
+            
             Chaines* test = lectureChaines(fichier);
-            printf("nb chaines %d\n", test->nbChaines);
-            /*
-            int ttmp = 0;
-            CellChaine* cptc = test->chaines;
-            while (cptc){
-                CellPoint* cptp = cptc->points;
-                while(cptp){
-                    ttmp ++;
-                    printf("point %lf %lf\n ", cptp->x, cptp->y);
-                    cptp = cptp->suiv;
-                }
-                cptc = cptc->suiv;
-            }
-            printf("fini tot de %d \n", ttmp);
-            */
+            //on reconstitue le réseau depuis la chaine
             Reseau* test_reseau = reconstitueReseauListe(test);
-            int nb_cell_noeud = 0;
-            CellNoeud* tmp = test_reseau-> noeuds;
-            while(tmp){
-                nb_cell_noeud ++;
-                tmp = tmp->suiv;
-            }
-            printf("nb de noeud %d et vrai %d", test_reseau->nbNoeuds, nb_cell_noeud);
-            printf("nombre liaisons et comodites %d %d \n", nbLiaisons(test_reseau), nbCommodites(test_reseau));
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+
         }
         else if (numero_methode == 2) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
