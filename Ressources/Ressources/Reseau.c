@@ -219,7 +219,7 @@ void ecrireReseau(Reseau *R, FILE *f) {
     fprintf(f, "\n");
 
     // Ecriture des lignes commencant par "v" (noeuds du reseau)
-    for (int i = 0; i<nb_noeuds; i++) {
+    while(noeuds_reseau){
         int num = noeuds_reseau->nd->num;
         double x = noeuds_reseau->nd->x;
         double y = noeuds_reseau->nd->y;
@@ -230,14 +230,15 @@ void ecrireReseau(Reseau *R, FILE *f) {
     fprintf(f, "\n");
     
     // Ecriture des lignes commencant par "l" (liaisons du reseau)
-    for (int i = 0; i<nb_liaisons; i++){
+    while(liaisons_reseau){
         Noeud* n = liaisons_reseau->nd;
         CellNoeud* liste_n_vois = n->voisins;
 
         while (liste_n_vois != NULL) {
             Noeud* n_vois = liste_n_vois->nd;
-            fprintf(f, "l %d %d\n", n_vois->num, n->num);
-
+            if (n->num > n_vois->num) {
+                fprintf(f, "l %d %d\n", n_vois->num, n->num);
+            }
             liste_n_vois = liste_n_vois->suiv;
         }
 

@@ -22,3 +22,5 @@ ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o
 
 clean:
 	rm -f *.o
+	rm ReconstitueReseau
+	rm ChainMain

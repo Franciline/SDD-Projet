@@ -34,19 +34,25 @@ int main(int argc, char** argv) {
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
+            FILE * fichier2 = fopen("test_ecriture_reseau.txt", "w");
             
             Chaines* test = lectureChaines(fichier);
             //on reconstitue le réseau depuis la chaine
             Reseau* test_reseau = reconstitueReseauListe(test);
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            ecrireReseau(test_reseau, fichier2);
+
+
 
         }
         else if (numero_methode == 2) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
         }
+
         else if (numero_methode == 3) {
             printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
         }
+
         else {
             printf("Numéro de méthode invalide !\n");
             printf("numero_methode :\n"
