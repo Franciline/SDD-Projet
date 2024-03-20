@@ -2,7 +2,7 @@
 #include "Chaine.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#define TAILLE 20
 #include "Reseau.h"
 
 // Exercice 2
@@ -42,11 +42,17 @@ int main(int argc, char** argv) {
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
             ecrireReseau(test_reseau, fichier2);
 
-
-
         }
         else if (numero_methode == 2) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
+            FILE * fichier = fopen(argv[1], "r");
+            FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
+            
+            Chaines* test = lectureChaines(fichier);
+            //on reconstitue le réseau depuis la chaine
+            Reseau* test_reseau = reconstitueReseauHachage(test, TAILLE);
+            afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            ecrireReseau(test_reseau, fichier2);
         }
 
         else if (numero_methode == 3) {

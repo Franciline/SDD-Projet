@@ -297,7 +297,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     TableHachage * tableH = (TableHachage*)malloc(sizeof(TableHachage));
     tableH -> nbElement = 0;
     tableH -> tailleMax = M;
-    tableH -> T = (CellNoeud**)malloc(sizeof(CellNoeud*)*M);
+    tableH -> T=(CellNoeud**)malloc(sizeof(CellNoeud*)*M);
     for (int i = 0; i < M; i++){
         tableH->T[i] = NULL;
     }
@@ -361,7 +361,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     int i = h(H, f(x, y));
 
     // Liste de noeuds située a la position i
-    liste = t[i]->nd;
+    liste = t[i];
 
     //On cherche si le noeud existe deja ou pas
     while (liste){

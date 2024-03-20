@@ -10,13 +10,16 @@ Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
-Reseau.o: Reseau.c Reseau.h SVGwriter.h
+Reseau.o: Reseau.c Reseau.h SVGwriter.h Hachage.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
 ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o
+Hachage.o: Hachage.c Hachage.h Reseau.h
+	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm
+
+ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 
