@@ -13,6 +13,6 @@ int f(int x, int y);
 
 Reseau* reconstitueReseauHachage(Chaines *C, int M);
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y);
-
+TableHachage* initTableHachage(int taille);
 
 #endif

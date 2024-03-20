@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SVGwriter.h"
-#define EPSILON 0.000001
 
 //EXERCICE 2
 
 //fonctions de base
+
 /*Renvoie un réseau vide*/
 Reseau* creer_reseau(){
     Reseau* reseau = (Reseau*)(malloc(sizeof(Reseau)));
@@ -70,7 +70,6 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
     
     return;
 }
-
 
 //Question 1
 /*Retourne le noeud de R correspondant, sinon créer le noeud et l'ajoute dans R*/

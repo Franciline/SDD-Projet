@@ -48,9 +48,8 @@ int main(int argc, char** argv) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
             FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
-            
             Chaines* test = lectureChaines(fichier);
-            //on reconstitue le réseau depuis la chaine
+            //on reconstitue le réseau depuis la chaine avec la table de hachage
             Reseau* test_reseau = reconstitueReseauHachage(test, TAILLE);
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
             ecrireReseau(test_reseau, fichier2);
