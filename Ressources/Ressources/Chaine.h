@@ -32,6 +32,4 @@ double longueurTotale(Chaines *C);
 int comptePoints(CellChaine *c);
 int comptePointsTotal(Chaines *C);
 
-
-
 #endif	

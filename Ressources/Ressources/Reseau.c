@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SVGwriter.h"
+#include "Hachage.h"
 #define EPSILON 0.000001
 
 //EXERCICE 2
@@ -287,3 +288,65 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     SVGfinalize(&svg);
 }
 
+//EXO 4
+//Question 4
+/*Reconstitue le réseau à partir de la liste chaine et en utilisant le tableau de hachage*/
+Reseau* reconstitueReseauHachage(Chaines *C, int M){
+
+    //Création et init de la table de hachage pour le réseau
+    TableHachage * tableH = (TableHachage*)malloc(sizeof(TableHachage));
+    tableH -> nbElement = 0;
+    tableH -> tailleMax = M;
+    tableH -> T = (CellNoeud**)malloc(sizeof(CellNoeud*)*M);
+    for (int i = 0; i < M; i++){
+        tableH->T[i] = NULL;
+    }
+
+    //Création du réseau
+    Reseau* reseau = creer_reseau();
+    reseau->gamma=C->gamma;
+
+    CellChaine* liste = C->chaines;
+
+    //on parcourt toutes les CellChaines
+
+    while(liste){
+        //une chaine possède une commodité et une liste de CellNoeud avec des Noeuds
+        CellCommodite* commodite = creer_cellcommodite();   //on crée la commodité
+        CellPoint * liste_points = liste->points;           //liste des points dans la chaine 
+        CellPoint* prec = liste_points, *suiv = NULL;       //On garde le précédent et le suivant pour ajouter dans les voisins        
+
+        //premier point: on rechercher et l'ajoute si n'existe pas dans Reseau
+        Noeud* n = rechercheCreeNoeudHachage(reseau, tableH, liste_points->x, liste_points->y);
+
+        commodite->extrA = n;
+
+        //On parcourt tous les CellPoints
+        while(liste_points->suiv != NULL){
+            suiv = liste_points->suiv;
+
+            Noeud * n = rechercheCreeNoeudHachage(reseau, tableH, liste_points->x, liste_points->y);
+            
+            //ajout des voisins 
+            
+            ajouter_voisin(n, rechercheCreeNoeudHachage(reseau, tableH, prec->x, prec->y));
+            ajouter_voisin(n, rechercheCreeNoeudHachage(reseau, tableH, suiv->x, suiv->y));
+
+            prec = liste_points;
+            liste_points = liste_points->suiv;
+        }
+
+        commodite->extrB = rechercheCreeNoeudHachage(reseau, tableH, liste_points->x, liste_points->y);
+        //le suivant est NULL, on ajoute le précédent
+        ajouter_voisin(commodite->extrB, rechercheCreeNoeudHachage(reseau, tableH, suiv->x, suiv->y)); 
+        
+        //on insere la commodité
+        commodite->suiv = reseau->commodites;
+        reseau->commodites = commodite;
+
+        //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
+        liste = liste->suiv;
+    }
+
+    return reseau;
+}

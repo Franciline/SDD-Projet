@@ -9,4 +9,7 @@ typedef struct{
   CellNoeud** T;
 } TableHachage ;
 
+int h(TableHachage* t, int k);
+int f(int x, int y);
+
 #endif

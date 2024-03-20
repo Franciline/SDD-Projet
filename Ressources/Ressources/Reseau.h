@@ -38,6 +38,8 @@ int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
 void afficheReseauSVG(Reseau *R, char* nomInstance);
 
+Reseau* reconstitueReseauHachage(Chaines *C, int M);
+
 //fonctions implémenté par nous meme
 Reseau* creer_reseau();
 CellCommodite* creer_cellcommodite();
