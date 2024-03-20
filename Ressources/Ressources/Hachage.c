@@ -37,13 +37,13 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     //On recupere l'indice grace a la fonction de hachage
     int i = h(H, f(x, y));
 
-    // Liste de noeuds située a la position i
+    //Liste de noeuds située a la position i
     CellNoeud* liste = H->T[i];
 
     //On cherche si le noeud existe deja ou pas
     while (liste){
         //égalité des doubles 
-        if ((liste->nd->x == x) && (liste->nd->y == y)) {
+        if ((liste->nd->x == x) && (liste->nd->y == y)){
             return liste->nd;
         }
         liste = liste->suiv;
@@ -113,12 +113,11 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
 
         commodite->extrB = rechercheCreeNoeudHachage(reseau, tableH, liste_points->x, liste_points->y);
         //le suivant est NULL, on ajoute le précédent
-        ajouter_voisin(commodite->extrB, rechercheCreeNoeudHachage(reseau, tableH, suiv->x, suiv->y)); 
+        ajouter_voisin(commodite->extrB, rechercheCreeNoeudHachage(reseau, tableH, prec->x, prec->y)); 
         
         //on insere la commodité
         commodite->suiv = reseau->commodites;
         reseau->commodites = commodite;
-
         //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
         liste = liste->suiv;
     }
