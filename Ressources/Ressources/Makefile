@@ -10,7 +10,7 @@ Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
-Reseau.o: Reseau.c Reseau.h SVGwriter.h Hachage.h
+Reseau.o: Reseau.c Reseau.h SVGwriter.h Hachage.h Chaine.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@
 
 ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o

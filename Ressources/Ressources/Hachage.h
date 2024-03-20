@@ -11,4 +11,8 @@ typedef struct{
 int h(TableHachage* t, int k);
 int f(int x, int y);
 
+Reseau* reconstitueReseauHachage(Chaines *C, int M);
+Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y);
+
+
 #endif

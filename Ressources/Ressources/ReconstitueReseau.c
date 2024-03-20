@@ -1,4 +1,5 @@
 #include "Reseau.h"
+#include "Hachage.h"
 #include "Chaine.h"
 #include <stdio.h>
 #include <stdlib.h>
