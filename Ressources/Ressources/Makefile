@@ -22,8 +22,15 @@ Hachage.o: Hachage.c Hachage.h Reseau.h
 ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
+ArbreQuat.o: ArbreQuat.c ArbreQuat.h Reseau.h
+	$(CC) $(GCC_FLAGS) -c $< -o $@ 
 
 clean:
 	rm -f *.o
-	rm ReconstitueReseau
-	rm ChainMain
+	rm -f ReconstitueReseau
+	rm -f ChainMain
+	rm -f test_ecriture_reseau_Hachage.txt
+	rm -f test_ecriture_reseau.txt
+	rm -f test_ecriture.txt
+	rm -f *.html
+
