@@ -8,7 +8,7 @@
 
 //fonctions de base
 
-/*Renvoie un réseau vide*/
+/*Renvoie un reseau vide*/
 Reseau* creer_reseau(){
     Reseau* reseau = (Reseau*)(malloc(sizeof(Reseau)));
     reseau->nbNoeuds = 0;
@@ -19,7 +19,7 @@ Reseau* creer_reseau(){
     return reseau;
 }
 
-/*Renvoie une commodité vide*/
+/*Renvoie une commodite vide*/
 CellCommodite* creer_cellcommodite(){
     CellCommodite* cellc = (CellCommodite*)(malloc(sizeof(CellCommodite)));
     cellc->extrA = NULL; 
@@ -72,9 +72,8 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
 }
 
 //Question 1
-/*Retourne le noeud de R correspondant, sinon créer le noeud et l'ajoute dans R*/
+/*Retourne le noeud de R correspondant, sinon creer le noeud et l'ajoute dans R*/
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
-
     CellNoeud * liste = R->noeuds;
 
     while (liste){
@@ -84,7 +83,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     }
 
     //cas ou n'existe pas
-    //création du noeud si n'existe pas
+    //creation du noeud si n'existe pas
     Noeud * new_noeud = creer_noeud();
     new_noeud->x = x;
     new_noeud->y = y;
@@ -93,7 +92,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     //creation de la cellule
     CellNoeud * new_celln = (CellNoeud*)(malloc(sizeof(CellNoeud)));
     new_celln -> nd = new_noeud; //on affecte le noeud dans la cellule
-    new_celln -> suiv = R->noeuds; //on ajoute à la suite de la liste de CellNoeud dans Reseau
+    new_celln -> suiv = R->noeuds; //on ajoute a la suite de la liste de CellNoeud dans Reseau
     
     //ajout dans R
     R->noeuds = new_celln;
@@ -103,7 +102,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 }
 
 //Question 2
-/*Reconstitue le réseau à partir de la liste chainée*/
+/*Reconstitue le reseau à partir de la liste chainee*/
 Reseau* reconstitueReseauListe(Chaines *C){
 
     //Création du réseau
@@ -115,12 +114,12 @@ Reseau* reconstitueReseauListe(Chaines *C){
     //on parcourt toutes les CellChaines
 
     while(liste){
-        //une chaine possède une commodité et une liste de CellNoeud avec des Noeuds
+        //une chaine possede une commodite et une liste de CellNoeud avec des Noeuds
         CellCommodite* commodite = creer_cellcommodite();   //on crée la commodité
         CellPoint * liste_points = liste->points;           //liste des points dans la chaine 
         CellPoint* prec = liste_points, *suiv = NULL;       //On garde le précédent et le suivant pour ajouter dans les voisins        
 
-        //premier point: on rechercher et l'ajoute si n'existe pas dans Reseau
+        //premier point: on recherche et l'ajoute si n'existe pas dans Reseau
         Noeud* n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
 
         commodite->extrA = n;
@@ -140,14 +139,14 @@ Reseau* reconstitueReseauListe(Chaines *C){
         }
 
         commodite->extrB = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
-        //le suivant est NULL, on ajoute le précédent
+        //le suivant est NULL, on ajoute le precedent
         ajouter_voisin(commodite->extrB, rechercheCreeNoeudListe(reseau, prec->x, prec->y)); 
         
-        //on insere la commodité
+        //on insere la commodite
         commodite->suiv = reseau->commodites;
         reseau->commodites = commodite;
 
-        //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
+        //On a ajoute commodite et noeud de la chaine a réseau, on passe à la liste suivante
         liste = liste->suiv;
     }
 
@@ -158,10 +157,10 @@ Reseau* reconstitueReseauListe(Chaines *C){
 //EXERCICE 3
 
 //Question 1
-/*Retourne le nombre de liaisons que possède le réseau*/
+/*Retourne le nombre de liaisons que possede le reseau*/
 int nbLiaisons(Reseau *R){
 
-    //nb liaisons est donné par la somme des nb de voisins de chaque CellNoeud / 2 
+    //nb liaisons est donne par la somme des nb de voisins de chaque CellNoeud / 2 
     int nb_liaisons = 0; 
     CellNoeud* noeud_parcours = R->noeuds;
 
@@ -183,7 +182,7 @@ int nbLiaisons(Reseau *R){
     return nb_liaisons / 2;
 }
 
-/*Retourne le nombre de commodité que possède le réseau*/
+/*Retourne le nombre de commodite que possede le reseau*/
 int nbCommodites(Reseau *R){
     int nbc = 0;
     CellCommodite* commodite = R->commodites;
