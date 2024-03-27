@@ -67,22 +67,43 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     if (a == NULL){
         //on insère par rapport au parent en fonction de sa position
         //Les cotés correspondent à ceux du parent/2
-        ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
-        new->noeud = n; 
-        *a = new;
+        ArbreQuat* new2 = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
+        new2->noeud = n; 
+        *a = new2;
         
-        if ((n->x <= parent->xc) && (n->y >= parent->yc))
         //cas no
-            parent->no = *a;        
-        if ((n->x >= parent->xc) && (n->y >= parent->yc))
-        //cas ne
-            parent->ne = *a;  
-        if ((n->x <= parent->xc) && (n->y <= parent->yc))
-        //cas so
-            parent->so = *a;  
-        if ((n->x >= parent->xc) && (n->y <= parent->yc))
+        if ((n->x <= parent->xc) && (n->y >= parent->yc)){
+            ArbreQuat* new = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            new->noeud = n; 
+            *a = new;
+            parent->no = *a; 
+        }
+        
+
+        //cas ne 
+        if ((n->x >= parent->xc) && (n->y >= parent->yc)){
+            ArbreQuat* new = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            new->noeud = n; 
+            *a = new;
+            parent->ne = *a;
+        }
+        
+        //cas so 
+        if ((n->x <= parent->xc) && (n->y <= parent->yc)){
+            ArbreQuat* new = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            new->noeud = n; 
+            *a = new;
+            parent->so = *a;
+        }
+        
         //cas se
+        if ((n->x >= parent->xc) && (n->y <= parent->yc)){
+            ArbreQuat* new = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            new->noeud = n; 
+            *a = new;
             parent->se = *a;  
+        }
+            
         return;
     }
 
@@ -191,8 +212,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     return NULL;
 }
 
-//Question 4
-/*Retourne le noeud de R correspondant, sinon cree le noeud et l'ajoute dans R*/
+//Question 5
+/*Reconstitue le réseau à partir de la liste chaine et en utilisant l'arbre quaternaire*/
 Reseau* reconstitueReseauArbre(Chaines* C) {
     //Creation du réseau
     Reseau* reseau = creer_reseau();
