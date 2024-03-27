@@ -61,7 +61,61 @@ ArbreQuat* creerArbreQuat(double xc, double yc, double coteX, double coteY) {
 //Question 3
 /*Insere un Noeud du reseau dans un arbre*/
 void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
-    //
+    //cas 1 arbre vide
+    if (a == NULL){
+
+        //on insère par rapport au parent en fonction de sa position
+        //Les cotés correspondent à ceux du parent/2
+        ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
+        new->noeud = n; 
+        *a = new;
+        
+        if ((n->x <= parent->xc) && (n->y <= parent->yc))
+        //cas no
+            parent->no = *a;        
+        if ((n->x >= parent->xc) && (n->y <= parent->yc))
+        //cas ne
+            parent->ne = *a;  
+        if ((n->x <= parent->xc) && (n->y >= parent->yc))
+        //cas so
+            parent->so = *a;  
+        if ((n->x >= parent->xc) && (n->y >= parent->yc))
+        //cas se
+            parent->se = *a;  
+        return;
+    }
+
+    //Cas 2 feuille de l'arbre
+    if ((*a)->noeud != NULL){
+        //on créer un nouveau noeud où on va insérer les deux noeuds
+        ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
+        new->noeud = NULL;
+        new->no = NULL;
+        new->ne = NULL;
+        new->so = NULL;
+        new->se = NULL; 
+
+        insererNoeudArbre((*a)->noeud, NULL, new);
+        insererNoeudArbre(n, NULL, new);
+        return;
+    }
+
+    //Cas 3 noeud interne
+    if ((n->x <= parent->xc) && (n->y <= parent->yc))
+    //cas no
+        insererNoeudArbre(n, &((*a)->no), parent);
+    //cas ne
+    if ((n->x >= parent->xc) && (n->y <= parent->yc))
+        insererNoeudArbre(n, &((*a)->ne), parent);
+    //cas so
+    if ((n->x <= parent->xc) && (n->y >= parent->yc))
+        insererNoeudArbre(n, &((*a)->so), parent);
+    //cas se
+    if ((n->x >= parent->xc) && (n->y >= parent->yc))
+        insererNoeudArbre(n, &((*a)->se), parent);
+
+    return;
+
 }
 
 //Question 4
@@ -118,23 +172,23 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
 
             return new_noeud;
         }
-    }
+    
 
     //Cas cellule interne
     if ((arbre != NULL) && (arbre->noeud == NULL)) {
-        if (x < parent->xc) && (y < parent->yc) {
-            rechercheCreeNoeudArbre(R, arbre, parent->so, x, y);
+        if ((x < parent->xc) && (y < parent->yc)) {
+            return rechercheCreeNoeudArbre(R, arbre, parent->so, x, y);
         }
-        if (x > parent->xc) && (y > parent->yc) {
-            rechercheCreeNoeudArbre(R, arbre, parent->ne, x, y);
+        if ((x > parent->xc) && (y > parent->yc)) {
+            return rechercheCreeNoeudArbre(R, arbre, parent->ne, x, y);
         }
-        if (x < parent->xc) && (y > parent->yc) {
-            rechercheCreeNoeudArbre(R, arbre, parent->no, x, y);
+        if ((x < parent->xc) && (y > parent->yc)) {
+            return rechercheCreeNoeudArbre(R, arbre, parent->no, x, y);
         }
-        if (x > parent->xc) && (y < parent->yc) {
-            rechercheCreeNoeudArbre(R, arbre, parent->se, x, y);
+        if ((x > parent->xc) && (y < parent->yc)) {
+            return rechercheCreeNoeudArbre(R, arbre, parent->se, x, y);
         }
     }
+    }
 
-    return new_noeud;
 }
