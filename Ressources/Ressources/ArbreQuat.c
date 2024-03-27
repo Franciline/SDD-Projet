@@ -3,7 +3,7 @@
 
 //EXO 5 
 //Question 1
-/*Fonction qui détermine les coordonnées min et max de la chaine*/
+/*Fonction qui determine les coordonnees min et max de la chaine*/
 void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
     if ((C == NULL) || (C->chaines == NULL)) return; 
     CellChaine * cellchaine = C->chaines;
@@ -12,7 +12,7 @@ void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, dou
     double xmi = cellchaine->points->x, ymi = cellchaine->points->y, xma = cellchaine->points->x, yma = cellchaine->points->y;
     cellchaine = cellchaine->suiv;
 
-    //on parcours les cellules chaines de la chaine
+    //on parcourt les cellules chaines de la chaine
     while (cellchaine){
         CellPoint * points = cellchaine->points;
         //on parcours les points de la chaine
@@ -64,8 +64,8 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     //cas 1 arbre vide
     if (a == NULL){
 
-        //on insère par rapport au parent en fonction de sa position
-        //Les cotés correspondent à ceux du parent/2
+        //on insere par rapport au parent en fonction de sa position
+        //Les cotes correspondent a ceux du parent/2
         ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
         new->noeud = n; 
         *a = new;
@@ -87,7 +87,7 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
 
     //Cas 2 feuille de l'arbre
     if ((*a)->noeud != NULL){
-        //on créer un nouveau noeud où on va insérer les deux noeuds
+        //on cree un nouveau noeud ou on va insérer les deux noeuds
         ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
         new->noeud = NULL;
         new->no = NULL;
