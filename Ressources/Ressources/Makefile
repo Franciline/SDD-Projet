@@ -19,11 +19,11 @@ ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
 Hachage.o: Hachage.c Hachage.h Reseau.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm
 
-ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o
-	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
-
 ArbreQuat.o: ArbreQuat.c ArbreQuat.h Reseau.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ 
+
+ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
+	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 clean:
 	rm -f *.o
