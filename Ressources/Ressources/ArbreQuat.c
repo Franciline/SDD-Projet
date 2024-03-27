@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "ArbreQuat.h"
 #include "Reseau.h"
 
