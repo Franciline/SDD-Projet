@@ -50,7 +50,7 @@ ArbreQuat* creerArbreQuat(double xc, double yc, double coteX, double coteY) {
     new_aq->yc = yc;
     new_aq->coteX = coteX;
     new_aq->coteY = coteY;
-    new_aq->noeud = creer_noeud();
+    new_aq->noeud = NULL;
     new_aq->so = NULL;
     new_aq->se = NULL;
     new_aq->no = NULL;
@@ -65,23 +65,22 @@ ArbreQuat* creerArbreQuat(double xc, double yc, double coteX, double coteY) {
 void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     //cas 1 arbre vide
     if (a == NULL){
-
-        //on insere par rapport au parent en fonction de sa position
-        //Les cotes correspondent a ceux du parent/2
+        //on insère par rapport au parent en fonction de sa position
+        //Les cotés correspondent à ceux du parent/2
         ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
         new->noeud = n; 
         *a = new;
         
-        if ((n->x <= parent->xc) && (n->y <= parent->yc))
+        if ((n->x <= parent->xc) && (n->y >= parent->yc))
         //cas no
             parent->no = *a;        
-        if ((n->x >= parent->xc) && (n->y <= parent->yc))
+        if ((n->x >= parent->xc) && (n->y >= parent->yc))
         //cas ne
             parent->ne = *a;  
-        if ((n->x <= parent->xc) && (n->y >= parent->yc))
+        if ((n->x <= parent->xc) && (n->y <= parent->yc))
         //cas so
             parent->so = *a;  
-        if ((n->x >= parent->xc) && (n->y >= parent->yc))
+        if ((n->x >= parent->xc) && (n->y <= parent->yc))
         //cas se
             parent->se = *a;  
         return;
@@ -89,32 +88,29 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
 
     //Cas 2 feuille de l'arbre
     if ((*a)->noeud != NULL){
-        //on cree un nouveau noeud ou on va insérer les deux noeuds
-        ArbreQuat* new = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
-        new->noeud = NULL;
-        new->no = NULL;
-        new->ne = NULL;
-        new->so = NULL;
-        new->se = NULL; 
-
-        insererNoeudArbre((*a)->noeud, NULL, new);
-        insererNoeudArbre(n, NULL, new);
+        //on transforme la feuille en Noeud interne
+        //et on reinsere dans l'arbre les deux noeuds
+        Noeud* tmp_a = (*a)->noeud;
+        (*a)->noeud = NULL;
+        //on créer un nouveau noeud où on va insérer les deux noeuds
+        insererNoeudArbre(tmp_a, NULL, *a);
+        insererNoeudArbre(n, NULL, *a);
         return;
     }
 
     //Cas 3 noeud interne
-    if ((n->x <= parent->xc) && (n->y <= parent->yc))
-    //cas no
-        insererNoeudArbre(n, &((*a)->no), parent);
-    //cas ne
-    if ((n->x >= parent->xc) && (n->y <= parent->yc))
-        insererNoeudArbre(n, &((*a)->ne), parent);
-    //cas so
     if ((n->x <= parent->xc) && (n->y >= parent->yc))
-        insererNoeudArbre(n, &((*a)->so), parent);
-    //cas se
+    //cas no
+        insererNoeudArbre(n, &((*a)->no), *a);
+    //cas ne
     if ((n->x >= parent->xc) && (n->y >= parent->yc))
-        insererNoeudArbre(n, &((*a)->se), parent);
+        insererNoeudArbre(n, &((*a)->ne), *a);
+    //cas so
+    if ((n->x <= parent->xc) && (n->y <= parent->yc))
+        insererNoeudArbre(n, &((*a)->so), *a);
+    //cas se
+    if ((n->x >= parent->xc) && (n->y <= parent->yc))
+        insererNoeudArbre(n, &((*a)->se), *a);
 
     return;
 
