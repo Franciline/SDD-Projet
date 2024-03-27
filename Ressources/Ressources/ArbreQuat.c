@@ -174,17 +174,71 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
 
     //Cas cellule interne
     if ((arbre != NULL) && (arbre->noeud == NULL)) {
-        if ((x < parent->xc) && (y < parent->yc)) {
-            return rechercheCreeNoeudArbre(R, arbre, parent->so, x, y);
+        if ((x < arbre->xc) && (y < arbre->yc)) {
+            return rechercheCreeNoeudArbre(R, &(arbre->so), arbre, x, y);
         }
-        if ((x > parent->xc) && (y > parent->yc)) {
-            return rechercheCreeNoeudArbre(R, arbre, parent->ne, x, y);
+        if ((x > arbre->xc) && (y > arbre->yc)) {
+            return rechercheCreeNoeudArbre(R, &(arbre->ne), arbre, x, y);
         }
-        if ((x < parent->xc) && (y > parent->yc)) {
-            return rechercheCreeNoeudArbre(R, arbre, parent->no, x, y);
+        if ((x < arbre->xc) && (y > arbre->yc)) {
+            return rechercheCreeNoeudArbre(R, &(arbre->no), arbre, x, y);
         }
-        if ((x > parent->xc) && (y < parent->yc)) {
-            return rechercheCreeNoeudArbre(R, arbre, parent->se, x, y);
+        if ((x > arbre->xc) && (y < arbre->yc)) {
+            return rechercheCreeNoeudArbre(R, &(arbre->se), arbre, x, y);
         }
     }
+    
+    return NULL;
+}
+
+//Question 4
+/*Retourne le noeud de R correspondant, sinon cree le noeud et l'ajoute dans R*/
+Reseau* reconstitueReseauArbre(Chaines* C) {
+    //Creation du réseau
+    Reseau* reseau = creer_reseau();
+    reseau->gamma=C->gamma;
+    CellChaine* liste = C->chaines;
+    
+    //Creation de l'arbre
+    double xmin, ymin, xmax, ymax;
+    chaineCoordMinMax(C, &xmin, &ymin, &xmax, &ymax);
+    ArbreQuat* a = creerArbreQuat(xmax/2, ymax/2, xmax, ymax);
+    ArbreQuat* parent = NULL;
+
+
+    //on parcourt toutes les CellChaines
+    while(liste){
+        //une chaine possede une commodite et une liste de CellNoeud avec des Noeuds
+        CellCommodite* commodite = creer_cellcommodite();   //on cree la commodité
+        CellPoint * liste_points = liste->points;           //liste des points dans la chaine 
+        CellPoint* prec = liste_points, *suiv = NULL;       //On garde le précedent et le suivant pour ajouter dans les voisins        
+        //premier point: on rechercher et l'ajoute si n'existe pas dans Reseau
+        Noeud* n = rechercheCreeNoeudArbre(reseau, &a, parent, liste_points->x, liste_points->y);
+        commodite->extrA = n;
+
+        //On parcourt tous les CellPoints
+        while(liste_points->suiv != NULL){
+            suiv = liste_points->suiv;
+            Noeud * n = rechercheCreeNoeudArbre(reseau, &a, parent, liste_points->x, liste_points->y);
+            //ajout des voisins 
+            
+            ajouter_voisin(n, rechercheCreeNoeudArbre(reseau, &a, parent, prec->x, prec->y));
+            ajouter_voisin(n, rechercheCreeNoeudArbre(reseau, &a, parent, suiv->x, suiv->y));
+
+            prec = liste_points;
+            liste_points = liste_points->suiv;
+        }
+
+        commodite->extrB = rechercheCreeNoeudArbre(reseau, &a, parent, liste_points->x, liste_points->y);
+        //le suivant est NULL, on ajoute le précédent
+        ajouter_voisin(commodite->extrB, rechercheCreeNoeudArbre(reseau, &a, parent, prec->x, prec->y));
+        
+        //on insere la commodité
+        commodite->suiv = reseau->commodites;
+        reseau->commodites = commodite;
+        //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
+        liste = liste->suiv;
+    }
+
+    return reseau;
 }
