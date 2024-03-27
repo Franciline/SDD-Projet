@@ -172,7 +172,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
 
             return new_noeud;
         }
-    
+    }
 
     //Cas cellule interne
     if ((arbre != NULL) && (arbre->noeud == NULL)) {
@@ -189,6 +189,4 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
             return rechercheCreeNoeudArbre(R, arbre, parent->se, x, y);
         }
     }
-    }
-
 }
