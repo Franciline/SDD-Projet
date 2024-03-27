@@ -64,12 +64,10 @@ ArbreQuat* creerArbreQuat(double xc, double yc, double coteX, double coteY) {
 /*Insere un Noeud du reseau dans un arbre*/
 void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     //cas 1 arbre vide
-    if (a == NULL){
+
+    if (*a == NULL){
         //on insère par rapport au parent en fonction de sa position
         //Les cotés correspondent à ceux du parent/2
-        ArbreQuat* new2 = creerArbreQuat(parent->coteX/4, parent->coteY/4, parent->coteX/2, parent->coteY/2);
-        new2->noeud = n; 
-        *a = new2;
         
         //cas no
         if ((n->x <= parent->xc) && (n->y >= parent->yc)){
@@ -113,9 +111,11 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         //et on reinsere dans l'arbre les deux noeuds
         Noeud* tmp_a = (*a)->noeud;
         (*a)->noeud = NULL;
+        ArbreQuat * nul = NULL;
+        ArbreQuat * nul2 = NULL;
         //on créer un nouveau noeud où on va insérer les deux noeuds
-        insererNoeudArbre(tmp_a, NULL, *a);
-        insererNoeudArbre(n, NULL, *a);
+        insererNoeudArbre(tmp_a, &nul, *a);
+        insererNoeudArbre(n, &nul2, *a);
         return;
     }
 
@@ -223,9 +223,8 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
     //Creation de l'arbre
     double xmin, ymin, xmax, ymax;
     chaineCoordMinMax(C, &xmin, &ymin, &xmax, &ymax);
-    ArbreQuat* a = creerArbreQuat(xmax/2, ymax/2, xmax, ymax);
+    ArbreQuat* a = creerArbreQuat((xmax - xmin)/2, (ymax - ymin)/2, xmax - xmin, ymax - ymin);
     ArbreQuat* parent = NULL;
-
 
     //on parcourt toutes les CellChaines
     while(liste){
@@ -235,6 +234,7 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
         CellPoint* prec = liste_points, *suiv = NULL;       //On garde le précedent et le suivant pour ajouter dans les voisins        
         //premier point: on rechercher et l'ajoute si n'existe pas dans Reseau
         Noeud* n = rechercheCreeNoeudArbre(reseau, &a, parent, liste_points->x, liste_points->y);
+        printf("passed there\n");
         commodite->extrA = n;
 
         //On parcourt tous les CellPoints
