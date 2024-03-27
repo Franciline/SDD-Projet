@@ -32,4 +32,9 @@ double longueurTotale(Chaines *C);
 int comptePoints(CellChaine *c);
 int comptePointsTotal(Chaines *C);
 
+//desallocation
+void liberer_chaine(Chaines *C);
+void liberer_cellchaine(CellChaine *c);
+void liberer_cellpoint(CellPoint * p);
+
 #endif	

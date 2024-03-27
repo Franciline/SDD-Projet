@@ -4,6 +4,8 @@
 #include "Reseau.h"
 #define TAILLE 20
 
+
+//fonction de bases
 /*clé de hachage*/
 int f(int x, int y){
     return y + (x + y)*(x + y + 1)/2;
@@ -121,6 +123,22 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
         //On a ajouté commodité et noeud de la chaine à réseau, on passe à la liste suivante
         liste = liste->suiv;
     }
-
+    
+    liberer_tablehachage(tableH);
     return reseau;
+}
+
+/*Libere le tableau de hachage*/
+void liberer_tablehachage(TableHachage* t){
+    //on lberer juste la table et les cellNoeuds
+    for (int i = 0; i < t->tailleMax;i ++){
+        CellNoeud * c = t->T[i];
+        while(c){
+            CellNoeud* next = c->suiv;
+            free(c);
+            c = next;
+        }
+    }
+    free(t->T);
+    free(t);
 }

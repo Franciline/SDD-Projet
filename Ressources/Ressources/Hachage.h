@@ -15,4 +15,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M);
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y);
 TableHachage* initTableHachage(int taille);
 
+//Desallocation
+void liberer_tablehachage(TableHachage* t);
+
 #endif

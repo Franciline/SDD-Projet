@@ -38,12 +38,19 @@ int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
 void afficheReseauSVG(Reseau *R, char* nomInstance);
 
-//fonctions implémenté par nous meme
+//fonctions implementees par nous meme
 Reseau* creer_reseau();
 CellCommodite* creer_cellcommodite();
 CellNoeud* creer_cellnoeud();
 Noeud* creer_noeud(); 
 void ajouter_voisin(Noeud* n, Noeud* voisin);
+
+//Desallocation
+void liberer_reseau(Reseau* r);
+void liberer_cellnoeud(CellNoeud * c);
+void liberer_commodite(CellCommodite* c);
+void liberer_voisins(Noeud* n);
+void liberer_Noeud(Noeud* n);
 
 #endif
 

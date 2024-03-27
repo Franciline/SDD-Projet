@@ -7,31 +7,11 @@
 
 #define TAILLE_MAX 512
 
-// Exercice 1
+//EXERCICE 1
 
-//Fonctions de bases
-/*Creer une chaine*/
-Chaines* creer_chaine() {
-    Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
-    chaine->gamma = 0;
-    chaine->nbChaines = 0;
-    chaine->chaines = NULL;
-    return chaine;
-}
+//QUESTION 1
 
-/*Calcule la distance entre deux points a et b*/
-double distance(CellPoint *a, CellPoint *b) {
-    double xa = a->x;
-    double ya = a->y;
-    double xb = b->x;
-    double yb = b->y;
-
-    return sqrt(((xb - xa)*(xb - xa)) + ((yb - ya)*(yb - ya)));
-}
-
-//Question 1
 /*Fonction de lecture des chaines depuis un fichier'*/
-//lecture ne fonctionne pas bien??
 Chaines* lectureChaines(FILE *f) {
     if (f == NULL) {
         printf("Erreur lors du chargement du fichier \n");
@@ -76,7 +56,8 @@ Chaines* lectureChaines(FILE *f) {
     return chaine;
 }
 
-//Question 2: fonction d'écriture
+//QUESTION 2
+
 /*Fonction écriture des chaines dans un fichier*/
 void ecrireChaines(Chaines *C, FILE* f){
     if (f == NULL) return;
@@ -107,7 +88,8 @@ void ecrireChaines(Chaines *C, FILE* f){
     return;
 }
 
-//Question 3
+//QUESTION 3
+
 /*Affichage des chaines*/
 void afficheChainesSVG(Chaines *C, char* nomInstance){
     //int i;
@@ -149,7 +131,8 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
     SVGfinalize(&svg);
 }
 
-//Question 4
+//QUESTION 4
+
 /* Calcul de la longueur d'une chaine */
 double longueurChaine(CellChaine *c) {
     double longueur = 0;
@@ -163,7 +146,6 @@ double longueurChaine(CellChaine *c) {
     return longueur;
 }
 
-//Question 4
 /* Calcul de la longueur totale de toutes les chaines */
 double longueurTotale(Chaines *C) {
     double longueur = 0;
@@ -177,8 +159,9 @@ double longueurTotale(Chaines *C) {
     return longueur;
 }
 
-//Question 5
-/* Calcul le nombre d'occurrences de points dans une chaine*/
+//QUESTION 5
+
+/* Renvoie le nombre d'occurrences de points dans une chaine*/
 int comptePoints(CellChaine *c) {
     int nb_pts = 0;
     CellPoint *liste_points = c->points;
@@ -191,7 +174,7 @@ int comptePoints(CellChaine *c) {
     return nb_pts;
 }
 
-/* Calcul le nombre total d'occurrences de points */
+/*Renvoie le nombre total d'occurrences de points dans le reseau*/
 int comptePointsTotal(Chaines *C) {
     int nb_pts = 0;
     CellChaine *liste_chaines = C->chaines;
@@ -202,4 +185,53 @@ int comptePointsTotal(Chaines *C) {
     }
 
     return nb_pts;
+}
+
+
+//-Fonctions de bases
+
+/*Initialise une chaine vide*/
+Chaines* creer_chaine() {
+    Chaines* chaine = (Chaines*)malloc(sizeof(Chaines));
+    chaine->gamma = 0;
+    chaine->nbChaines = 0;
+    chaine->chaines = NULL;
+    return chaine;
+}
+
+/*Calcule la distance entre deux points a et b*/
+double distance(CellPoint *a, CellPoint *b) {
+    double xa = a->x;
+    double ya = a->y;
+    double xb = b->x;
+    double yb = b->y;
+
+    return sqrt(((xb - xa)*(xb - xa)) + ((yb - ya)*(yb - ya)));
+}
+
+//desallocation
+
+/*Libere une Chaine*/
+void liberer_chaine(Chaines *C){
+    liberer_cellchaine(C->chaines);
+    free(C);
+}
+
+/*Libere une CellChaine*/
+void liberer_cellchaine(CellChaine *c){
+    while(c){
+        CellChaine * next = c->suiv;
+        liberer_cellpoint(c->points);
+        free(c);
+        c = next;
+    }
+}
+
+/*Libere un CellPoint*/
+void liberer_cellpoint(CellPoint * p){
+    while(p){
+        CellPoint * next = p->suiv;
+        free(p);
+        p = next;
+    }
 }
