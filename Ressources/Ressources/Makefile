@@ -1,7 +1,7 @@
 CC=gcc
 GCC_FLAGS=-Wall -g
 
-all: ChainMain ReconstitueReseau
+all: ChainMain ReconstitueReseau main_test_ABQ
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 
@@ -25,12 +25,17 @@ ArbreQuat.o: ArbreQuat.c ArbreQuat.h Reseau.h
 ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
+main_test_ABQ: main_test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
+	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
+
 clean:
 	rm -f *.o
 	rm -f ReconstitueReseau
 	rm -f ChainMain
 	rm -f test_ecriture_reseau_Hachage.txt
-	rm -f test_ecriture_reseau.txt
-	rm -f test_ecriture.txt
+	rm -f test_ecriture_reseau_Liste.txt
+	rm -f test_ecriture_reseau_Hachage.txt
+	rm -f test_ecriture_reseau_Arbre.txt
 	rm -f *.html
+	rm -f vgcore.*
 

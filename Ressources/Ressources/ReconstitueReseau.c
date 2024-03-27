@@ -36,12 +36,12 @@ int main(int argc, char** argv) {
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
-            FILE * fichier2 = fopen("test_ecriture_reseau.txt", "w");
+            FILE * fichier2 = fopen("test_ecriture_reseau_Liste.txt", "w");
             Chaines* test = lectureChaines(fichier);
 
             //on reconstitue le réseau depuis la chaine
             Reseau* test_reseau = reconstitueReseauListe(test);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Liste");
             ecrireReseau(test_reseau, fichier2);
 
         }
@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
 
             //on reconstitue le réseau depuis la chaine avec la table de hachage
             Reseau* test_reseau = reconstitueReseauHachage(test, TAILLE);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Hachage");
             ecrireReseau(test_reseau, fichier2);
         }
         else if (numero_methode == 3) {
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
             //on reconstitue le réseau depuis la chaine avec la table de hachage
             Reseau* test_reseau = reconstitueReseauArbre(test);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Arbre");
             ecrireReseau(test_reseau, fichier2);
         }
         else {
