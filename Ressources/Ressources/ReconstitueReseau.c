@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
         else if (numero_methode == 3) {
             printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
-            FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
+            FILE * fichier2 = fopen("test_ecriture_reseau_Arbre.txt", "w");
             Chaines* test = lectureChaines(fichier);
 
             //on reconstitue le réseau depuis la chaine avec la table de hachage
