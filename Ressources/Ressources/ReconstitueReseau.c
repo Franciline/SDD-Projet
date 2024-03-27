@@ -1,10 +1,11 @@
-#include "Reseau.h"
-#include "Hachage.h"
-#include "Chaine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define TAILLE 20
+
+#include "Chaine.h"
 #include "Reseau.h"
+#include "Hachage.h"
+#include "ArbreQuat.h"
+#define TAILLE 20
 
 // Exercice 2
 
@@ -36,8 +37,8 @@ int main(int argc, char** argv) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
             FILE * fichier = fopen(argv[1], "r");
             FILE * fichier2 = fopen("test_ecriture_reseau.txt", "w");
-            
             Chaines* test = lectureChaines(fichier);
+
             //on reconstitue le réseau depuis la chaine
             Reseau* test_reseau = reconstitueReseauListe(test);
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
@@ -49,16 +50,23 @@ int main(int argc, char** argv) {
             FILE * fichier = fopen(argv[1], "r");
             FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
             Chaines* test = lectureChaines(fichier);
+
             //on reconstitue le réseau depuis la chaine avec la table de hachage
             Reseau* test_reseau = reconstitueReseauHachage(test, TAILLE);
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
             ecrireReseau(test_reseau, fichier2);
         }
-
         else if (numero_methode == 3) {
             printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
-        }
+            FILE * fichier = fopen(argv[1], "r");
+            FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
+            Chaines* test = lectureChaines(fichier);
 
+            //on reconstitue le réseau depuis la chaine avec la table de hachage
+            Reseau* test_reseau = reconstitueReseauArbre(test);
+            afficheReseauSVG(test_reseau, "affichage_depuis_reseau");
+            ecrireReseau(test_reseau, fichier2);
+        }
         else {
             printf("Numéro de méthode invalide !\n");
             printf("numero_methode :\n"
