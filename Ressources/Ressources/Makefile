@@ -41,6 +41,7 @@ clean:
 	rm -f ecriture_reseau_Liste.txt
 	rm -f ecriture_reseau_Hachage.txt
 	rm -f ecriture_reseau_Arbre.txt
+	rm -f comparaison.txt
 	rm -f *.html
 	rm -f vgcore.*
 

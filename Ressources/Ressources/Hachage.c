@@ -124,7 +124,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
         liste = liste->suiv;
     }
     
-    //liberer_tablehachage(tableH);
+    liberer_tablehachage(tableH);
     return reseau;
 }
 
