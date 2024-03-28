@@ -39,6 +39,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 
 //QUESTION 2
 
+
 /*Reconstitue le reseau à partir de la liste chainee*/
 Reseau* reconstitueReseauListe(Chaines *C){
 

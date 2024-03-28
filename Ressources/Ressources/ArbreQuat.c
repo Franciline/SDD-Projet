@@ -68,23 +68,24 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         //cas NO
         if ((n->x <= parent->xc) && (n->y >= parent->yc)){
             *a = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            (*a)->noeud = n; 
+            
         }
         //cas NE
         if ((n->x >= parent->xc) && (n->y >= parent->yc)){
             *a = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            (*a)->noeud = n; 
+            
         }
         //cas SO
         if ((n->x <= parent->xc) && (n->y <= parent->yc)){
             *a = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            (*a)->noeud = n; 
+            
         }
         //cas SE
         if ((n->x >= parent->xc) && (n->y <= parent->yc)){
             *a = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            (*a)->noeud = n;
+            
         }
+        (*a)->noeud = n; 
         return;
     }
 
@@ -242,5 +243,18 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
         liste = liste->suiv;
     }
 
+    liberer_arbre(a);
+
     return reseau;
+}
+
+
+/*Libere l'arbre quaternaire*/
+void liberer_arbre(ArbreQuat* a){
+    if (a == NULL) return;
+    liberer_arbre(a->se);
+    liberer_arbre(a->so);
+    liberer_arbre(a->ne);
+    liberer_arbre(a->no);
+    free(a);
 }

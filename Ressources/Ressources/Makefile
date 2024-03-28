@@ -32,10 +32,10 @@ clean:
 	rm -f *.o
 	rm -f ReconstitueReseau
 	rm -f ChainMain
-	rm -f test_ecriture_reseau_Hachage.txt
-	rm -f test_ecriture_reseau_Liste.txt
-	rm -f test_ecriture_reseau_Hachage.txt
-	rm -f test_ecriture_reseau_Arbre.txt
+	rm -f main_test_ABQ
+	rm -f ecriture_reseau_Liste.txt
+	rm -f ecriture_reseau_Hachage.txt
+	rm -f ecriture_reseau_Arbre.txt
 	rm -f *.html
 	rm -f vgcore.*
 

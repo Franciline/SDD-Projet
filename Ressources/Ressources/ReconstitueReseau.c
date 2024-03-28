@@ -10,7 +10,6 @@
 // Exercice 2
 
 // Question 3
-
 int main(int argc, char** argv) {
     if (argc < 3) {
         printf("Il faut des arguments ! : ./%s <nom_fichier> <numero_methode>\n", argv[0]);
@@ -28,7 +27,7 @@ int main(int argc, char** argv) {
             printf("Vous ouvrez le fichier %s avec la méthode Liste\n", argv[1]);
 
             FILE * fichier = fopen(argv[1], "r");
-            FILE * fichier2 = fopen("test_ecriture_reseau_Liste.txt", "w");
+            FILE * fichier2 = fopen("ecriture_reseau_Liste.txt", "w");
             Chaines* test = lectureChaines(fichier);
 
             //on reconstitue le réseau depuis la chaine
@@ -47,7 +46,7 @@ int main(int argc, char** argv) {
             printf("Vous ouvrez le fichier %s avec la méthode Table de hachage\n", argv[1]);
 
             FILE * fichier = fopen(argv[1], "r");
-            FILE * fichier2 = fopen("test_ecriture_reseau_Hachage.txt", "w");
+            FILE * fichier2 = fopen("ecriture_reseau_Hachage.txt", "w");
             Chaines* test = lectureChaines(fichier);
 
             //on reconstitue le réseau depuis la chaine avec la table de hachage
@@ -66,13 +65,19 @@ int main(int argc, char** argv) {
             printf("Vous ouvrez le fichier %s avec la méthode Arbre\n", argv[1]);
 
             FILE * fichier = fopen(argv[1], "r");
-            FILE * fichier2 = fopen("test_ecriture_reseau_Arbre.txt", "w");
+            FILE * fichier2 = fopen("ecriture_reseau_Arbre.txt", "w");
             Chaines* test = lectureChaines(fichier);
 
             //on reconstitue le réseau depuis la chaine avec l'arbre quaternaire
             Reseau* test_reseau = reconstitueReseauArbre(test);
             afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Arbre");
             ecrireReseau(test_reseau, fichier2);
+
+            liberer_chaine(test);
+            liberer_reseau(test_reseau);
+            fclose(fichier);
+            fclose(fichier2);
+
         }
         else {
             
