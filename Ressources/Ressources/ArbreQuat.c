@@ -243,7 +243,7 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
         liste = liste->suiv;
     }
 
-    liberer_arbre(a);
+    //liberer_arbre(a);
 
     return reseau;
 }
