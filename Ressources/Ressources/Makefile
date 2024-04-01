@@ -31,6 +31,8 @@ main_test_ABQ: main_test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
 comparaison_structure: comparaison_structure.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
+comparaison_structure_graphe: comparaison_structure_graphe.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
+	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 clean:
 	rm -f *.o
@@ -38,6 +40,7 @@ clean:
 	rm -f comparaison_structure
 	rm -f ChainMain
 	rm -f main_test_ABQ
+	rm -f comparaison_structure_graphe
 	rm -f ecriture_reseau_Liste.txt
 	rm -f ecriture_reseau_Hachage.txt
 	rm -f ecriture_reseau_Arbre.txt
