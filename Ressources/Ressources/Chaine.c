@@ -187,6 +187,9 @@ int comptePointsTotal(Chaines *C) {
     return nb_pts;
 }
 
+/*Genere aleatoirement nbChaines contenant nbPointsChaine*/
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax){}
+
 
 //-Fonctions de bases
 
