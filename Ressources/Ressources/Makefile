@@ -19,6 +19,9 @@ ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
 Hachage.o: Hachage.c Hachage.h Reseau.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm
 
+graphe.o: graphe.c graphe.h 
+	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm
+
 ArbreQuat.o: ArbreQuat.c ArbreQuat.h Reseau.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ 
 
