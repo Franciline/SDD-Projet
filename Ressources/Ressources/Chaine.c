@@ -187,8 +187,32 @@ int comptePointsTotal(Chaines *C) {
     return nb_pts;
 }
 
+//Exercice 6
+//Question 2
 /*Genere aleatoirement nbChaines contenant nbPointsChaine*/
-Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax){}
+Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax) {
+    Chaines* chaines = creer_chaine();
+
+    for (int i = 0; i < nbChaines; i++) {
+        CellChaine* cellC = (CellChaine*) malloc(sizeof(CellChaine));
+        cellC->points = NULL;
+        cellC->numero = i;
+
+        for (int j = 0; j < nbPointsChaine; j++) {
+            CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
+            cellP->x = rand() % xmax;
+            cellP->y = rand() % ymax;
+            cellP->suiv = cellC->points;
+            cellC->points = cellP;
+        }
+
+        cellC->suiv = chaines->chaines;
+        chaines->chaines = cellC;
+        chaines->nbChaines++;
+    }
+
+    return chaines;
+}
 
 
 //-Fonctions de bases

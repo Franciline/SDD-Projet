@@ -15,15 +15,10 @@ double temps_cpu_liste, temps_cpu_hachage, temps_cpu_arbre;
 /*Exécute les 3 fonctions de reconstructions*/
 int main(int argc, char** argv){
 
-    if (argc < 2) {
-        printf("Il faut un argument ! : ./%s <nom_fichier_lecture> \n", argv[0]);
-        return 1;
-    }
-
     //ouverture du fichier de chaines
-    FILE * fichier = fopen(argv[1], "r");
     FILE * fichier2 = fopen("comparaison.txt", "w");
-    Chaines* test = lectureChaines(fichier);
+    //Chaines* test = lectureChaines(fichier);
+    Chaines* test = generationAleatoire(100, 100, 500, 500);
     int taille_tab = 20;
     Reseau* test_reseau = NULL;
 
@@ -44,7 +39,7 @@ int main(int argc, char** argv){
     fprintf(fichier2, "Temps de calcul pour liste chainee\n%lf\n",temps_cpu_liste);
 
     //Table de hachage
-    for (taille_tab = 10; taille_tab <= 200; taille_tab+=20){
+    for (taille_tab = 10; taille_tab <= 500; taille_tab+=50){
         temps_initial = clock();
         test_reseau = reconstitueReseauHachage(test, taille_tab);
         temps_final = clock();
@@ -57,6 +52,5 @@ int main(int argc, char** argv){
 
     liberer_chaine(test);
     liberer_reseau(test_reseau);
-    fclose(fichier);
 
 }

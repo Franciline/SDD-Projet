@@ -1,7 +1,7 @@
 CC=gcc
 GCC_FLAGS=-Wall -g
 
-all: ChainMain ReconstitueReseau comparaison_structure
+all: ChainMain ReconstitueReseau comparaison_structure comparaison_structure_graphe
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 
@@ -44,6 +44,8 @@ clean:
 	rm -f ChainMain
 	rm -f main_test_ABQ
 	rm -f comparaison_structure_graphe
+	rm -f cpu_lc.txt
+	rm -f cpu_hash_abr.txt
 	rm -f ecriture_reseau_Liste.txt
 	rm -f ecriture_reseau_Hachage.txt
 	rm -f ecriture_reseau_Arbre.txt
