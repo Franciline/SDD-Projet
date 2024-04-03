@@ -2,6 +2,7 @@
 #define __GRAPHE_H__
 #include <stdlib.h>
 #include <stdio.h>
+#include "Reseau.h"
 
 typedef struct {
 int u ,v ; /* Numeros des sommets extremite */
@@ -36,4 +37,18 @@ Graphe* creerGraphe(Reseau* r);
 int plus_petit_nb_aretes(Sommet u, Sommet v);
 //stockage en largeur/profondeur
 int reorganiseReseau(Reseau* r);
+
+//fonctions implementees par nous meme
+Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod);
+Commod* creerCommod(int e1, int e2);
+Sommet* creerSommet(int num, double x, double y);
+Arete* creerArete(int u, int v);
+Cellule_arete* creerCellule_arete(Arete * a);
+
+//Desallocation
+void libererGraphe(Graphe* graphe);
+void libererCommod(Commod* commod);
+void libererSommet(Sommet* sommet);
+void libererCellule_arete(Cellule_arete* ca);
+void libererArete(Arete* a);
 # endif

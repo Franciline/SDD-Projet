@@ -7,7 +7,7 @@ typedef struct noeud Noeud;
 
 /* Liste chainee de noeuds (pour la liste des noeuds du reseau ET les listes des voisins de chaque noeud) */
 typedef struct cellnoeud {
-    Noeud *nd;               /* Pointeur vers le noeud stocké */
+    Noeud *nd;                      /* Pointeur vers le noeud stocké */
     struct cellnoeud *suiv;         /* Cellule suivante dans la liste */
 } CellNoeud;
 
@@ -20,7 +20,7 @@ struct noeud{
 
 /* Liste chainee de commodites */
 typedef struct cellCommodite {
-    Noeud *extrA, *extrB;       /* Noeuds aux extremites de la commodite */
+    Noeud *extrA, *extrB;           /* Noeuds aux extremites de la commodite */
     struct cellCommodite *suiv;     /* Cellule suivante dans la liste */
 } CellCommodite;
 
@@ -45,6 +45,7 @@ CellCommodite* creer_cellcommodite();
 CellNoeud* creer_cellnoeud();
 Noeud* creer_noeud(); 
 void ajouter_voisin(Noeud* n, Noeud* voisin);
+int nb_commodite(Reseau* r);
 
 //Desallocation
 void liberer_reseau(Reseau* r);
@@ -54,4 +55,3 @@ void liberer_voisins(Noeud* n);
 void liberer_Noeud(Noeud* n);
 
 #endif
-
