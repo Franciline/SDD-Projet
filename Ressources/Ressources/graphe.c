@@ -1,7 +1,9 @@
 #include "graphe.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "File.h"
 
+//Question 1
 
 /*Cree un graphe a partir d'un reseau*/
 Graphe* creerGraphe(Reseau* r){
@@ -52,6 +54,69 @@ Graphe* creerGraphe(Reseau* r){
     }
   return graphe;
 }
+
+
+//Question 2
+
+/*Retourne le plus petit nombre d'arete entre deux sommets*/
+int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
+    //tableau pour savoir si le sommet est deja visite ou non
+
+    int * tableau = malloc(sizeof(int)*g->nbsom);
+    //le tableau va contenir 0 si le sommet n'a pas ete visite, sinon 1
+    
+    File * file = creer_file();
+    for (int i = 0; i < g->nbsom; i++){
+        tableau[i] = 0; 
+    }
+
+    tableau[u->num] = 1;
+    int dist = 0; //distance entre les deux sommets
+    int num_voisin;
+
+    //on ajoute dans la file le sommet u
+    enfiler(file, u);
+
+    Sommet* actuel = u;
+    Sommet* actuel_num = u->num;
+
+    while(g->T_som[v->num] != 1){ //tant qu'on est pas arrive a v
+
+        //on parcourt les voisins
+        Cellule_arete* voisins = u->L_voisin;
+
+        while(voisins){
+
+            //on recupere le numero du voisin qui est soit u, soit v de l'arete a
+            if (voisins->a->u == actuel_num){ 
+                num_voisin = voisins->a->v;
+            } else { num_voisin = voisins->a->u; }
+            
+            //on verifie si ce n'est pas le sommet v
+            if (num_voisin == v->num){ return actuel_num + 1;}
+
+            //on verifie que le sommet n'a pas ete visite
+            if (tableau[num_voisin] == 0){
+                tableau[num_voisin] = actuel_num + 1; //il a alors ete visite
+                enfiler(file, g->T_som[num_voisin]);
+            } 
+            //si c'est le cas on passe au suivant
+
+            voisins = voisins->suiv;
+            
+        }
+        //on passe aux prochains sommets dans la file
+        //depiler un sommet qui est ouvert, si ferme revient au meme que checker
+        actuel = depiler(file);
+        actuel_num = actuel->num;
+
+    }
+    //on regarde si ouvert ou ferme, si fermer on passe au suivant;
+
+    return -1;
+}
+
+
 
 //fonctions implementees par nous meme
 
@@ -107,6 +172,8 @@ Cellule_arete* creerCellule_arete(Arete * a){
     ca->suiv = NULL;
     return ca;
 }
+
+
 
 //Desallocation
 void libererGraphe(Graphe* graphe){

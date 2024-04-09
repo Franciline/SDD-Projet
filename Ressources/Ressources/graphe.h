@@ -34,7 +34,7 @@ typedef struct {
 
 //fonctions demandees
 Graphe* creerGraphe(Reseau* r);
-int plus_petit_nb_aretes(Sommet u, Sommet v);
+int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);
 //stockage en largeur/profondeur
 int reorganiseReseau(Reseau* r);
 
