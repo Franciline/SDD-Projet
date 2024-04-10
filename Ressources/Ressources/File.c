@@ -9,6 +9,7 @@ File* creer_file() {
     File* f = (File*) malloc(sizeof(File));
     f->premier = NULL;
     f->dernier = NULL;
+    return f;
 }
 
 //Fonction qui test si la file est vide (1 si vide et 0 sinon)
@@ -25,6 +26,7 @@ void enfiler(File* f, Sommet* s) {
         e->suiv = NULL;
 
         f->premier = e;
+        f->dernier = e;
     }
     else {
         Element* e = (Element*) malloc(sizeof(Element));
@@ -44,8 +46,10 @@ Sommet* defiler(File* f) {
         return NULL;
     }
     else {
-        Sommet* s = f->premier;
+        Sommet* s = f->premier->s;
         f->premier = f->premier->suiv;
+        //on libere l'element
+        free(f->premier->prec);
         f->premier->prec = NULL;
 
         return s;
