@@ -16,9 +16,10 @@ double temps_cpu_liste, temps_cpu_hachage, temps_cpu_arbre;
 int main(int argc, char** argv){
 
     //ouverture du fichier de chaines
+    FILE * fichier1 = fopen("00014_burma.cha", "r");
     FILE * fichier2 = fopen("comparaison.txt", "w");
-    //Chaines* test = lectureChaines(fichier);
-    Chaines* test = generationAleatoire(100, 100, 500, 500);
+    Chaines* test = lectureChaines(fichier1);
+    //Chaines* test = generationAleatoire(100, 100, 500, 500);
     int taille_tab = 20;
     Reseau* test_reseau = NULL;
 
