@@ -65,11 +65,15 @@ void afficher_file(File* f) {
     File* prec = f->prec;
     File* suiv = f->suiv;
 
-    while(prec != NULL) {
-        return;
+    while(prec->prec != NULL) {
+        prec = prec->prec;
     }
 
+    suiv = prec;
+
     while(suiv != NULL) {
-        return;
+        //afficher_sommet(suiv->elem);
+        printf("Sommet numéro %d\n", suiv->elem->num);
+        suiv = suiv->suiv;
     }
 }
