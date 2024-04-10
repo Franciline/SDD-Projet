@@ -7,6 +7,55 @@
 //Fonction qui cree une nouvelle file
 File* creer_file() {
     File* f = (File*) malloc(sizeof(File));
+    f->premier = NULL;
+    f->dernier = NULL;
+}
+
+//Fonction qui test si la file est vide (1 si vide et 0 sinon)
+int est_vide(File* f) {
+    return (f->premier == NULL) || (f->dernier == NULL);
+}
+
+//Fonction qui permet d'ajouter un nouvel element a la fin de la file
+void enfiler(File* f, Sommet* s) {
+    if (f->premier == NULL) {
+        Element* e = (Element*) malloc(sizeof(Element));
+        e->s = s;
+        e->prec = NULL;
+        e->suiv = NULL;
+
+        f->premier = e;
+    }
+    else {
+        Element* e = (Element*) malloc(sizeof(Element));
+        e->s = s;
+        e->prec = f->dernier;
+        e->suiv = NULL;
+
+        f->dernier->suiv = e;
+
+        f->dernier = e;
+    }
+}
+
+//Fonction qui retire et renvoie le premier element de la file
+Sommet* defiler(File* f) {
+    if (est_vide(f) == 1) {
+        return NULL;
+    }
+    else {
+        Sommet* s = f->premier;
+        f->premier = f->premier->suiv;
+        f->premier->prec = NULL;
+
+        return s;
+    }
+}
+
+/*
+//Fonction qui cree une nouvelle file
+File* creer_file() {
+    File* f = (File*) malloc(sizeof(File));
     f->elem = NULL;
     f->prec = NULL;
     f->suiv = NULL;
@@ -77,3 +126,4 @@ void afficher_file(File* f) {
         suiv = suiv->suiv;
     }
 }
+*/
