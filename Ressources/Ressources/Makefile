@@ -1,7 +1,7 @@
 CC=gcc
 GCC_FLAGS=-Wall -g
 
-all: ChainMain ReconstitueReseau comparaison_structure comparaison_structure_graphe
+all: ChainMain ReconstitueReseau comparaison_structure comparaison_structure_graphe main_test_ABQ
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 

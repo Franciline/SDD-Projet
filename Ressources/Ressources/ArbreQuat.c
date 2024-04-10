@@ -68,22 +68,24 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         //cas NO
         if ((n->x <= parent->xc) && (n->y >= parent->yc)){
             *a = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            parent->no = *a;
             
         }
         //cas NE
         if ((n->x >= parent->xc) && (n->y >= parent->yc)){
             *a = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc + parent->coteY/4, parent->coteX/2, parent->coteY/2);
+            parent->ne = *a;
             
         }
         //cas SO
         if ((n->x <= parent->xc) && (n->y <= parent->yc)){
             *a = creerArbreQuat(parent->xc - parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            
+            parent->so = *a;
         }
         //cas SE
         if ((n->x >= parent->xc) && (n->y <= parent->yc)){
             *a = creerArbreQuat(parent->xc + parent->coteX/4, parent->yc - parent->coteY/4, parent->coteX/2, parent->coteY/2);
-            
+            parent->se = *a;
         }
         (*a)->noeud = n; 
         return;
@@ -106,15 +108,19 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     if (((*a != NULL) && ((*a)->noeud == NULL))){
         //cas SO
         if ((n->x <= (*a)->xc) && (n->y <= (*a)->yc)){
+            //printf("so\n");
             return insererNoeudArbre(n, &((*a)->so), *a);}
         //cas NE
         if ((n->x >= (*a)->xc) && (n->y >= (*a)->yc)){
+            //printf("ne\n");
             return insererNoeudArbre(n, &((*a)->ne), *a);}
         //cas NO
         if ((n->x <= (*a)->xc) && (n->y >= (*a)->yc)){
+            //printf("no\n");
             return insererNoeudArbre(n, &((*a)->no), *a);}
         //cas SE
         if ((n->x >= (*a)->xc) && (n->y <= (*a)->yc)){
+            //printf("se\n");
             return insererNoeudArbre(n, &((*a)->se), *a);}
     }
     return;
