@@ -6,8 +6,8 @@
 
 typedef struct element {
     Sommet* s;
-    struct file* prec;
-    struct file* suiv;
+    struct element* prec;
+    struct element* suiv;
 } Element;
 
 typedef struct file {
