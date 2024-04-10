@@ -115,6 +115,46 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
 }
 
 
+// Question 4
+
+/* Fonction qui renvoie 1 (vrai) si le nombre de chaines qui passe par chaque arete est inferieur a gamma, 0 (faux) sinon*/
+int reorganiseReseau(Reseau* r) {
+    Graphe* g = creerGraphe(r);
+    int n = g->nbsom;
+
+    // Creation de la matrice
+    int** matrice = (int**) malloc(sizeof(int*) * n);
+    for (int i = 0; i<n; i++) {
+        matrice[i] = (int*) malloc(sizeof(int) * n);
+        for (int j = 0; j<n; j++) {
+            matrice[i][j] = 0;
+        }
+    }
+
+    Commod* liste_commodites = g->T_commod;
+    Sommet** liste_sommets = g->T_som;
+
+    // Calcul de la plus courte chaine pour chaque commodite
+    while(liste_commodites != NULL) {
+        int u = liste_commodites->e1;
+        int v = liste_commodites->e2;
+        int plus_courte_chaine = plus_petit_nb_aretes(g, liste_sommets[u], liste_sommets[v]);
+
+        matrice[u][v] = plus_courte_chaine;
+
+        liste_commodites++;
+    }
+
+    // Verification que le nombre de chaines qui passe par chaque arete du graphe est inferieur a gamma
+    for (int i = 0; i<n; i++) {
+        for (int j = 0; j<n; j++) {
+            if (matrice[i][j] > g->gamma) {
+                return 0;
+            }
+        }
+    }
+}
+
 
 //fonctions implementees par nous meme
 
