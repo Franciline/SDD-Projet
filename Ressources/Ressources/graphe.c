@@ -60,31 +60,30 @@ Graphe* creerGraphe(Reseau* r){
 
 /*Retourne le plus petit nombre d'arete entre deux sommets*/
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
-    //tableau pour savoir si le sommet est deja visite ou non
 
+    //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance par rapport au noeud de depart
     int * tableau = malloc(sizeof(int)*g->nbsom);
-    //le tableau va contenir 0 si le sommet n'a pas ete visite, sinon 1
     
     File * file = creer_file();
     for (int i = 0; i < g->nbsom; i++){
-        tableau[i] = 0; 
+        tableau[i] = -1; 
     }
 
-    tableau[u->num] = 1;
-    int dist = 0; //distance entre les deux sommets
+    tableau[u->num] = 0;
     int num_voisin;
 
     //on ajoute dans la file le sommet u
     enfiler(file, u);
 
     Sommet* actuel = u;
-    Sommet* actuel_num = u->num;
+    int actuel_num = u->num;
 
-    while(g->T_som[v->num] != 1){ //tant qu'on est pas arrive a v
+    while(!est_vide(file)){ //Tant que la file n'est pas vide
 
-        //on parcourt les voisins
-        Cellule_arete* voisins = u->L_voisin;
+        //on parcourt les voisins du sommet actuel
+        Cellule_arete* voisins = actuel->L_voisin;
 
+        //on parcours les sommets voisins
         while(voisins){
 
             //on recupere le numero du voisin qui est soit u, soit v de l'arete a
@@ -92,15 +91,14 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
                 num_voisin = voisins->a->v;
             } else { num_voisin = voisins->a->u; }
             
-            //on verifie si ce n'est pas le sommet v
-            if (num_voisin == v->num){ return actuel_num + 1;}
-
             //on verifie que le sommet n'a pas ete visite
-            if (tableau[num_voisin] == 0){
-                tableau[num_voisin] = actuel_num + 1; //il a alors ete visite
+            if (tableau[num_voisin] == -1){
+                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite
                 enfiler(file, g->T_som[num_voisin]);
             } 
-            //si c'est le cas on passe au suivant
+
+            //on verifie si ce n'est pas le sommet v
+            if (num_voisin == v->num){ return tableau[num_voisin];}
 
             voisins = voisins->suiv;
             
