@@ -42,10 +42,20 @@ void enfiler(File* f, Sommet* s) {
 
 //Fonction qui retire et renvoie le premier element de la file
 Sommet* defiler(File* f) {
+    //cas vide
     if (est_vide(f) == 1) {
         return NULL;
     }
+    //cas 1 element
+    else if (f->premier==f->dernier){
+        Sommet* s = f->premier->s;
+        free(f->premier);
+        f->premier = NULL;
+        f->dernier = NULL;
+        return s;
+    }
     else {
+        //recupere sommet du premier element dans la file
         Sommet* s = f->premier->s;
         f->premier = f->premier->suiv;
         //on libere l'element

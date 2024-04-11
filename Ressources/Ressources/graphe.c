@@ -1,4 +1,5 @@
 #include "graphe.h"
+#include "Reseau.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "File.h"
@@ -105,7 +106,7 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
         }
         //on passe aux prochains sommets dans la file
         //depiler un sommet qui est ouvert, si ferme revient au meme que checker
-        actuel = depiler(file);
+        actuel = defiler(file);
         actuel_num = actuel->num;
 
     }

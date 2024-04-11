@@ -2,6 +2,7 @@
 #define FILE_H
 
 #include "graphe.h"
+#include "Reseau.h"
 
 
 typedef struct element {
