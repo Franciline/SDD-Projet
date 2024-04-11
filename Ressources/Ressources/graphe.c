@@ -154,6 +154,7 @@ int reorganiseReseau(Reseau* r) {
             }
         }
     }
+    return -1;
 }
 
 
