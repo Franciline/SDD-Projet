@@ -291,6 +291,7 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
 
 /*Renvoie le nombre de commodites dans le reseau*/
 int nb_commodite(Reseau* r){
+    if (r == NULL) return;
     int nb = 0;
     CellCommodite* parcours = r->commodites;
     while (parcours){

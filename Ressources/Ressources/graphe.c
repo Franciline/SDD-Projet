@@ -8,9 +8,9 @@
 
 /*Cree un graphe a partir d'un reseau*/
 Graphe* creerGraphe(Reseau* r){
-
+    if (r == NULL) return NULL;
     Graphe* graphe = initGrapheVide(r->nbNoeuds,r->gamma,nb_commodite(r));
-
+    
     //on cree les commodites
     CellCommodite* parcours = r->commodites;
     int nb_tab = 0;     //indice dans le tableau de commodites
@@ -21,13 +21,16 @@ Graphe* creerGraphe(Reseau* r){
         //ajout au tableau de commodites
         graphe->T_commod[nb_tab] = *commod;     //on ajoute la structure et non pointeur
         nb_tab++;
+
+        //suivant
+        parcours = parcours->suiv;
     }
 
     //on cree les sommets en parcourant la liste des noeuds
     CellNoeud *noeuds = r->noeuds;
     while (noeuds){     //parcours des noeuds
         Sommet* sommet = creerSommet(noeuds->nd->num,noeuds->nd->x, noeuds->nd->y);
-        graphe->T_som[sommet->num] = sommet; //on le sauvegarde dans le tableau
+        graphe->T_som[sommet->num] = sommet; //on le sauvegarde dans le tableau, -1 car les sommets commencent à 1
         noeuds = noeuds->suiv;
     }
 
@@ -59,59 +62,65 @@ Graphe* creerGraphe(Reseau* r){
 
 //Question 2
 
-/*Retourne le plus petit nombre d'arete entre deux sommets*/
+/*Retourne le plus petit nombre d'aretes entre deux sommets*/
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
 
-    //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance par rapport au noeud de depart
-    int * tableau = malloc(sizeof(int)*g->nbsom);
+    //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance minimum par rapport au noeud de depart
+    int * tableau = malloc(sizeof(int)*(g->nbsom+1)); //comme les sommets commencent à 1, on rajoute nbsomme + 1 pour le tableau
     
     File * file = creer_file();
-    for (int i = 0; i < g->nbsom; i++){
+    for (int i = 0; i < g->nbsom+1; i++){
         tableau[i] = -1; 
     }
 
-    tableau[u->num] = 0;
-    int num_voisin;
+    tableau[u->num] = 0; //distance entre u et lui meme
+    int num_voisin = -1; //stock le numero de l'extremite de l'arete 
 
     //on ajoute dans la file le sommet u
     enfiler(file, u);
 
-    Sommet* actuel = u;
-    int actuel_num = u->num;
+    //on ajoute les voisins de u dans la file
+    Cellule_arete* voisins_u = u->L_voisin;
+
+    while(voisins_u){ 
+        //on cherche le sommet correspondant dans l'arete a
+        if (voisins_u->a->u == u->num)
+            enfiler(file, g->T_som[voisins_u->a->v]);
+        else enfiler(file, g->T_som[voisins_u->a->u]);
+
+        voisins_u = voisins_u->suiv;
+    }
 
     while(!est_vide(file)){ //Tant que la file n'est pas vide
+
+        Sommet* actuel = defiler(file) ; //parcours en largeur
+        int actuel_num = actuel->num; //le numero du sommet actuel
 
         //on parcourt les voisins du sommet actuel
         Cellule_arete* voisins = actuel->L_voisin;
 
         //on parcours les sommets voisins
         while(voisins){
-
             //on recupere le numero du voisin qui est soit u, soit v de l'arete a
-            if (voisins->a->u == actuel_num){ 
+            if (voisins->a->u == actuel_num)
                 num_voisin = voisins->a->v;
-            } else { num_voisin = voisins->a->u; }
+            else num_voisin = voisins->a->u;
             
             //on verifie que le sommet n'a pas ete visite
             if (tableau[num_voisin] == -1){
-                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite
-                enfiler(file, g->T_som[num_voisin]);
+                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite, la distance est incrementee
+                enfiler(file, g->T_som[num_voisin]); //on ajoute ce sommet a la file
             } 
+            else{
+                if (tableau[num_voisin] > tableau[actuel_num] + 1) //si il existait un chemin plus court
+                    tableau[num_voisin] = tableau[actuel_num] + 1;
+            }
 
-            //on verifie si ce n'est pas le sommet v
+            //on verifie si c'est le sommet v
             if (num_voisin == v->num){ return tableau[num_voisin];}
-
             voisins = voisins->suiv;
-            
         }
-        //on passe aux prochains sommets dans la file
-        //depiler un sommet qui est ouvert, si ferme revient au meme que checker
-        actuel = defiler(file);
-        actuel_num = actuel->num;
-
     }
-    //on regarde si ouvert ou ferme, si fermer on passe au suivant;
-
     return -1;
 }
 
@@ -168,13 +177,13 @@ Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod){
     graphe->gamma = gamma;
     graphe->nbcommod = nbcommod;
 
-    graphe->T_som = (Sommet**)malloc(sizeof(Sommet*)*nbsom);
+    graphe->T_som = (Sommet**)malloc(sizeof(Sommet*)*(nbsom + 1));
 
-    for (int i = 0; i < graphe->nbsom; i++){
+    for (int i = 0; i < graphe->nbsom + 1; i++){
         graphe->T_som[i] = (Sommet*) malloc(sizeof(Sommet));
         graphe->T_som[i] = NULL;
     }
-    graphe->T_commod = (Commod*) malloc(sizeof(graphe->T_commod)*nbcommod);
+    graphe->T_commod = (Commod*) malloc(sizeof(Commod)*nbcommod);
 
     return graphe;
 }
