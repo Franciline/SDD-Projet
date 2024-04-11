@@ -125,6 +125,75 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
 }
 
 
+//Question 3
+
+/*Retourne le plus petit nombre d'aretes entre deux sommets*/
+int plus_petit_nb_aretes2(Graphe* g, Sommet* u, Sommet* v){
+
+    //stockage dans un arbre 
+    Arbre_chemin* chemin = creerArbreChemin(u->num);
+
+    //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance minimum par rapport au noeud de depart
+    int * tableau = malloc(sizeof(int)*(g->nbsom+1)); //comme les sommets commencent à 1, on rajoute nbsomme + 1 pour le tableau
+    
+    File * file = creer_file();
+    for (int i = 0; i < g->nbsom+1; i++){
+        tableau[i] = -1; 
+    }
+
+    tableau[u->num] = 0; //distance entre u et lui meme
+    int num_voisin = -1; //stock le numero de l'extremite de l'arete 
+
+    //on ajoute dans la file le sommet u
+    enfiler(file, u);
+
+    //on ajoute les voisins de u dans la file
+    Cellule_arete* voisins_u = u->L_voisin;
+
+    while(voisins_u){ 
+        //on cherche le sommet correspondant dans l'arete a
+        if (voisins_u->a->u == u->num)
+            enfiler(file, g->T_som[voisins_u->a->v]);
+        else enfiler(file, g->T_som[voisins_u->a->u]);
+
+        voisins_u = voisins_u->suiv;
+    }
+
+    while(!est_vide(file)){ //Tant que la file n'est pas vide
+
+        Sommet* actuel = defiler(file) ; //parcours en largeur
+        int actuel_num = actuel->num; //le numero du sommet actuel
+
+        //on parcourt les voisins du sommet actuel
+        Cellule_arete* voisins = actuel->L_voisin;
+
+        //on parcours les sommets voisins
+        while(voisins){
+            //on recupere le numero du voisin qui est soit u, soit v de l'arete a
+            if (voisins->a->u == actuel_num)
+                num_voisin = voisins->a->v;
+            else num_voisin = voisins->a->u;
+            
+            //on verifie que le sommet n'a pas ete visite
+            if (tableau[num_voisin] == -1){
+                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite, la distance est incrementee
+                enfiler(file, g->T_som[num_voisin]); //on ajoute ce sommet a la file
+            } 
+            else{
+                if (tableau[num_voisin] > tableau[actuel_num] + 1) //si il existait un chemin plus court
+                    tableau[num_voisin] = tableau[actuel_num] + 1;
+            }
+
+            //on verifie si c'est le sommet v
+            if (num_voisin == v->num){ break;}
+            voisins = voisins->suiv;
+        }
+    }
+
+    return tableau[num_voisin];
+}
+
+
 // Question 4
 
 /* Fonction qui renvoie 1 (vrai) si le nombre de chaines qui passe par chaque arete est inferieur a gamma, 0 (faux) sinon*/
@@ -222,6 +291,19 @@ Cellule_arete* creerCellule_arete(Arete * a){
     return ca;
 }
 
+Arbre_chemin* creerArbreChemin(int n){
+    Arbre_chemin* ac = (Arbre_chemin*) malloc(sizeof(Arbre_chemin));
+    ac->num = n;
+    ac->fils = NULL;
+    ac->suivant = NULL;
+    return ac;
+}
+
+void ajouterFilsArbreChemin(Arbre_chemin* a, int n){
+    Arbre_chemin* ac = creerArbreChemin(n);
+    ac->suivant = a->suivant;
+    a->suivant = ac;
+}
 
 
 //Desallocation

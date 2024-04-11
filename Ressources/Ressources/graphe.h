@@ -32,6 +32,16 @@ typedef struct {
     Commod * T_commod ; /* Tableau des commodites */
 } Graphe ;
 
+//nos propres structure a implementer
+typedef struct arbre_chemin {
+    int num;
+    struct arbre_chemin* fils;
+    struct arbre_chemin* suivant;
+} Arbre_chemin;
+
+Arbre_chemin* creerArbreChemin(int n);
+void ajouterFilsArbreChemin(Arbre_chemin* a,int n);
+
 //fonctions demandees
 Graphe* creerGraphe(Reseau* r);
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);

@@ -1,7 +1,7 @@
 CC=gcc
 GCC_FLAGS=-Wall -g
 
-all: ChainMain ReconstitueReseau comparaison_structure comparaison_structure_graphe main_test_ABQ main_test_file main_test_graphe
+all: test_ChainMain ReconstitueReseau comparaison_structure comparaison_structure_graphe test_ABQ test_file test_graphe
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 
@@ -27,22 +27,22 @@ File.o: File.c File.h Reseau.o SVGwriter.o graphe.o
 ReconstitueReseau: ReconstitueReseau.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-main_test_ABQ: main_test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
+test_ABQ: test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 comparaison_structure: comparaison_structure.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-ChainMain: Chaine.h ChainMain.c Chaine.o SVGwriter.o Reseau.o
+test_ChainMain: Chaine.h test_ChainMain.c Chaine.o SVGwriter.o Reseau.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 comparaison_structure_graphe: comparaison_structure_graphe.c Reseau.o Chaine.o SVGwriter.o Hachage.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-main_test_file: main_test_file.c File.o graphe.o Reseau.o SVGwriter.o
+test_file: test_file.c File.o graphe.o Reseau.o SVGwriter.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ 
 
-main_test_graphe: main_test_graphe.c File.o graphe.o Reseau.o SVGwriter.o ArbreQuat.o Chaine.o
+test_graphe: test_graphe.c File.o graphe.o Reseau.o SVGwriter.o ArbreQuat.o Chaine.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 
@@ -51,10 +51,10 @@ clean:
 	rm -f ReconstitueReseau
 	rm -f comparaison_structure
 	rm -f ChainMain
-	rm -f main_test_ABQ
+	rm -f test_ABQ
 	rm -f comparaison_structure_graphe
-	rm -f main_test_file
-	rm -f main_test_graphe
+	rm -f test_file
+	rm -f test_graphe
 	rm -f cpu_lc.txt
 	rm -f cpu_hash_abr.txt
 	rm -f comparaison.txt
