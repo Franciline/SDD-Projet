@@ -126,7 +126,10 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
             }
 
             //on verifie si c'est le sommet v
-            if (num_voisin == v->num) return tableau[num_voisin];
+            if (num_voisin == v->num) {
+                liberer_file(file);
+                return tableau[num_voisin];
+            }
             voisins = voisins->suiv;
         }
     }

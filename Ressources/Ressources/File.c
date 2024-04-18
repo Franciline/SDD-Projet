@@ -19,23 +19,16 @@ int est_vide(File* f) {
 
 //Fonction qui permet d'ajouter un nouvel element a la fin de la file
 void enfiler(File* f, Sommet* s) {
-    if (f->premier == NULL) {
-        Element* e = (Element*) malloc(sizeof(Element));
-        e->s = s;
-        e->prec = NULL;
-        e->suiv = NULL;
+    Element* e = (Element*) malloc(sizeof(Element));
+    e->s = s;
+    e->suiv = NULL;
 
+    if (f->premier == NULL) {
         f->premier = e;
         f->dernier = e;
     }
     else {
-        Element* e = (Element*) malloc(sizeof(Element));
-        e->s = s;
-        e->prec = f->dernier;
-        e->suiv = NULL;
-
         f->dernier->suiv = e;
-
         f->dernier = e;
     }
 }
@@ -50,7 +43,6 @@ Sommet* defiler(File* f) {
     else if (f->premier==f->dernier){
         Sommet* s = f->premier->s;
         free(f->premier);
-        assert(f->premier == NULL);
         f->premier = NULL;
         f->dernier = NULL;
         return s;
@@ -58,24 +50,20 @@ Sommet* defiler(File* f) {
     else {
         //recupere sommet du premier element dans la file
         Sommet* s = f->premier->s;
-        
-        f->premier->prec = NULL;
+        Element* tmp = f->premier;
         f->premier = f->premier->suiv;
-        f->premier->prec->suiv = NULL;
         //on libere l'element
-        free(f->premier->prec);
-        f->premier->prec = NULL;
+        free(tmp);
         return s;
     }
 }
 
 void liberer_file(File* f){
-    Element* element = f->premier, *tmp = f->premier;
-    while(tmp){
-        element = element->suiv;
-        free(tmp);
-        tmp = element;
-        
+    Element* element = f->premier, *tmp;
+    while(element){
+        tmp = element->suiv;
+        free(element);
+        element = tmp;
     }
     free(f);
 }

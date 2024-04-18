@@ -32,15 +32,12 @@ int main(){
         }
     }
     
-    
     //test question 2
     //affichage du plus petit nombre d'aretes entre deux extremites
     printf("\nAffichage du plus petit nombre d'aretes entre deux extremites\n");
     for (int i = 0; i < g->nbcommod; i++){
         printf("Nombre d'aretes minimal entre %d et %d : %d \n", g->T_commod[i].e1,g->T_commod[i].e2, plus_petit_nb_aretes(g, g->T_som[g->T_commod[i].e1], g->T_som[g->T_commod[i].e2]));
     }
-    
-
     
     fclose(lecture);
     liberer_Graphe(g);

@@ -7,7 +7,6 @@
 
 typedef struct element {
     Sommet* s;
-    struct element* prec;
     struct element* suiv;
 } Element;
 
