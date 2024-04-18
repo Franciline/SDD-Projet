@@ -71,8 +71,9 @@ void liberer_file(File* f){
         element = element->suiv;
         free(tmp);
         tmp = element;
-        free(f);
+        
     }
+    free(f);
 }
 
 /*

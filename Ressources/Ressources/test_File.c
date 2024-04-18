@@ -27,15 +27,15 @@ int main(){
     //on defile des sommets
     Sommet * s = defiler(file);
     assert(s->num == 1); 
-    libererSommet(s);
+    free(s);
 
     s = defiler(file);
     assert(s->num == 2); 
-    libererSommet(s);
+    free(s);
 
     s = defiler(file);
     assert(s->num == 3);
-    libererSommet(s);
+    free(s);
 
     assert(est_vide(file) == 1);
     liberer_file(file);

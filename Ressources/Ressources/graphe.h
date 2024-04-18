@@ -43,22 +43,23 @@ Arbre_chemin* creerArbreChemin(int n);
 void ajouterFilsArbreChemin(Arbre_chemin* a,int n);
 
 //fonctions demandees
+
 Graphe* creerGraphe(Reseau* r);
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);
-//stockage en largeur/profondeur
 int reorganiseReseau(Reseau* r);
 
 //fonctions implementees par nous meme
+
 Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod);
-Commod* creerCommod(int e1, int e2);
+Commod* creerCommod2(int e1, int e2);
+Commod creerCommod(int e1, int e2);
 Sommet* creerSommet(int num, double x, double y);
 Arete* creerArete(int u, int v);
 Cellule_arete* creerCellule_arete(Arete * a);
 
 //Desallocation
-void libererGraphe(Graphe* graphe);
-void libererCommod(Commod* commod);
-void libererSommet(Sommet* sommet);
-void libererCellule_arete(Cellule_arete* ca);
-void libererArete(Arete* a);
+
+void liberer_Graphe(Graphe* graphe);
+void liberer_Commod(Commod* commod);
+void liberer_Sommet(Graphe* graphe, Sommet* sommet);
 # endif

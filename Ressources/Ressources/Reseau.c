@@ -245,9 +245,9 @@ CellCommodite* creer_cellcommodite(){
 }
 
 /*Renvoie un CellNoeud vide*/
-CellNoeud* creer_cellnoeud(){
+CellNoeud* creer_cellnoeud(Noeud* noeud){
     CellNoeud* celln = (CellNoeud*)(malloc(sizeof(CellNoeud)));
-    celln -> nd = NULL;
+    celln -> nd = noeud;
     celln->suiv=NULL;
     return celln;
 }
@@ -276,8 +276,7 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
     }
 
     //sinon on créer CellNoeud et on ajoute le noeud
-    CellNoeud* new_voisin = creer_cellnoeud();
-    new_voisin -> nd = voisin; 
+    CellNoeud* new_voisin = creer_cellnoeud(voisin);
 
     //in insère le voisin dans la liste des voisins
     new_voisin->suiv = n->voisins;

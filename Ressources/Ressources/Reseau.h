@@ -42,7 +42,7 @@ void afficheReseauSVG(Reseau *R, char* nomInstance);
 //fonctions implementees par nous meme
 Reseau* creer_reseau();
 CellCommodite* creer_cellcommodite();
-CellNoeud* creer_cellnoeud();
+CellNoeud* creer_cellnoeud(Noeud* noeud);
 Noeud* creer_noeud(double x, double y, int num); 
 void ajouter_voisin(Noeud* n, Noeud* voisin);
 int nb_commodite(Reseau* r);

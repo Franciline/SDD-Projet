@@ -1,7 +1,7 @@
 CC=gcc
 GCC_FLAGS=-Wall -g
 
-all: test_Chaine ReconstitueReseau comparaison_structure comparaison_structure_graphe test_ABQ test_File test_graphe
+all: test_Chaine ReconstitueReseau comparaison_structure comparaison_structure_graphe test_ABQ test_File test_graphe test_Hachage
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 
@@ -36,6 +36,9 @@ comparaison_structure_graphe: comparaison_structure_graphe.c Reseau.o Chaine.o S
 test_Chaine: Chaine.h test_Chaine.c Chaine.o SVGwriter.o Reseau.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
+test_Hachage: test_Hachage.c Reseau.o Chaine.o SVGwriter.o Hachage.o
+	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
+
 test_ABQ: test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
@@ -57,6 +60,7 @@ clean:
 	rm -f test_ABQ
 	rm -f comparaison_structure_graphe
 	rm -f test_File
+	rm -f test_Hachage
 	rm -f test_graphe
 	rm -f cpu_lc.txt
 	rm -f cpu_hash_abr.txt

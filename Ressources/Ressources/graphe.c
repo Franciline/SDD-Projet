@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "File.h"
+#include "assert.h"
 
 //Question 1
 
 /*Cree un graphe a partir d'un reseau*/
 Graphe* creerGraphe(Reseau* r){
     if (r == NULL) return NULL;
+
     Graphe* graphe = initGrapheVide(r->nbNoeuds,r->gamma,nb_commodite(r));
     
     //on cree les commodites
@@ -16,10 +18,9 @@ Graphe* creerGraphe(Reseau* r){
     int nb_tab = 0;     //indice dans le tableau de commodites
 
     while(parcours){
-        Commod * commod = creerCommod(parcours->extrA->num,parcours->extrB->num);
-
+        Commod commod = creerCommod(parcours->extrA->num,parcours->extrB->num);
         //ajout au tableau de commodites
-        graphe->T_commod[nb_tab] = *commod;     //on ajoute la structure et non pointeur
+        graphe->T_commod[nb_tab] = commod;     //on ajoute la structure et non pointeur
         nb_tab++;
 
         //suivant
@@ -30,7 +31,7 @@ Graphe* creerGraphe(Reseau* r){
     CellNoeud *noeuds = r->noeuds;
     while (noeuds){     //parcours des noeuds
         Sommet* sommet = creerSommet(noeuds->nd->num,noeuds->nd->x, noeuds->nd->y);
-        graphe->T_som[sommet->num] = sommet; //on le sauvegarde dans le tableau, -1 car les sommets commencent à 1
+        graphe->T_som[sommet->num] = sommet; //on le sauvegarde dans le tableau, l'indice commence à 1 
         noeuds = noeuds->suiv;
     }
 
@@ -38,12 +39,13 @@ Graphe* creerGraphe(Reseau* r){
     while(noeuds){ //On parcourt les noeuds et leurs voisins pour creer les aretes
         CellNoeud* voisin = noeuds->nd->voisins;
         while(voisin){  //on parcours les voisins
-            if (noeuds->nd->num < voisin->nd->num){ //pour n'ajouter qu'une fois une arete
+            if (noeuds->nd->num < voisin->nd->num){ //pour n'ajouter qu'une fois l'arete
                 Arete * arete = creerArete(noeuds->nd->num, voisin->nd->num);
 
                 //on creer deux structures pour les mettre dans sommet
                 Cellule_arete * cella1 = creerCellule_arete(arete);
                 Cellule_arete * cella2 = creerCellule_arete(arete);
+                assert(cella2->a == cella1->a);
                 
                 //on insere l'arete dans les voisins des sommets concernes
                 cella1->suiv = graphe->T_som[arete->u]->L_voisin; 
@@ -91,9 +93,11 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
         voisins_u = voisins_u->suiv;
     }
 
+    Sommet* actuel;
+    
     while(!est_vide(file)){ //Tant que la file n'est pas vide
 
-        Sommet* actuel = defiler(file) ; //parcours en largeur
+        actuel = defiler(file) ; //parcours en largeur
         int actuel_num = actuel->num; //le numero du sommet actuel
 
         //on parcourt les voisins du sommet actuel
@@ -121,78 +125,13 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
             voisins = voisins->suiv;
         }
     }
+    for (int i = 0; i < g->nbsom+1; i++){
+        free(&(tableau[i])); 
+    }
+    free(tableau);
+    liberer_file(file);
     return -1;
 }
-
-
-//Question 3
-
-/*Retourne le plus petit nombre d'aretes entre deux sommets*/
-int plus_petit_nb_aretes2(Graphe* g, Sommet* u, Sommet* v){
-
-    //stockage dans un arbre 
-    Arbre_chemin* chemin = creerArbreChemin(u->num);
-
-    //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance minimum par rapport au noeud de depart
-    int * tableau = malloc(sizeof(int)*(g->nbsom+1)); //comme les sommets commencent à 1, on rajoute nbsomme + 1 pour le tableau
-    
-    File * file = creer_file();
-    for (int i = 0; i < g->nbsom+1; i++){
-        tableau[i] = -1; 
-    }
-
-    tableau[u->num] = 0; //distance entre u et lui meme
-    int num_voisin = -1; //stock le numero de l'extremite de l'arete 
-
-    //on ajoute dans la file le sommet u
-    enfiler(file, u);
-
-    //on ajoute les voisins de u dans la file
-    Cellule_arete* voisins_u = u->L_voisin;
-
-    while(voisins_u){ 
-        //on cherche le sommet correspondant dans l'arete a
-        if (voisins_u->a->u == u->num)
-            enfiler(file, g->T_som[voisins_u->a->v]);
-        else enfiler(file, g->T_som[voisins_u->a->u]);
-
-        voisins_u = voisins_u->suiv;
-    }
-
-    while(!est_vide(file)){ //Tant que la file n'est pas vide
-
-        Sommet* actuel = defiler(file) ; //parcours en largeur
-        int actuel_num = actuel->num; //le numero du sommet actuel
-
-        //on parcourt les voisins du sommet actuel
-        Cellule_arete* voisins = actuel->L_voisin;
-
-        //on parcours les sommets voisins
-        while(voisins){
-            //on recupere le numero du voisin qui est soit u, soit v de l'arete a
-            if (voisins->a->u == actuel_num)
-                num_voisin = voisins->a->v;
-            else num_voisin = voisins->a->u;
-            
-            //on verifie que le sommet n'a pas ete visite
-            if (tableau[num_voisin] == -1){
-                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite, la distance est incrementee
-                enfiler(file, g->T_som[num_voisin]); //on ajoute ce sommet a la file
-            } 
-            else{
-                if (tableau[num_voisin] > tableau[actuel_num] + 1) //si il existait un chemin plus court
-                    tableau[num_voisin] = tableau[actuel_num] + 1;
-            }
-
-            //on verifie si c'est le sommet v
-            if (num_voisin == v->num){ break;}
-            voisins = voisins->suiv;
-        }
-    }
-
-    return tableau[num_voisin];
-}
-
 
 // Question 4
 
@@ -235,7 +174,6 @@ int reorganiseReseau(Reseau* r) {
     return -1;
 }
 
-
 //fonctions implementees par nous meme
 
 /*Cree un graphe et l'initialise*/
@@ -249,19 +187,19 @@ Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod){
     graphe->T_som = (Sommet**)malloc(sizeof(Sommet*)*(nbsom + 1));
 
     for (int i = 0; i < graphe->nbsom + 1; i++){
-        graphe->T_som[i] = (Sommet*) malloc(sizeof(Sommet));
+        graphe->T_som[i] = (Sommet*)malloc(sizeof(Sommet));
         graphe->T_som[i] = NULL;
     }
-    graphe->T_commod = (Commod*) malloc(sizeof(Commod)*nbcommod);
+    graphe->T_commod = (Commod*)malloc(sizeof(Commod)*nbcommod);
 
     return graphe;
 }
 
-/*Cree une commodite et l'initialise*/
-Commod* creerCommod(int e1, int e2){
-    Commod * commod = (Commod*)malloc(sizeof(Commod));
-    commod->e1 = e1;
-    commod->e2 = e2;
+/*Renvoie une commodite (structure) et l'initialise*/
+Commod creerCommod(int e1, int e2){
+    Commod commod;
+    commod.e1 = e1;
+    commod.e2 = e2;
     return commod;
 }
 
@@ -307,29 +245,48 @@ void ajouterFilsArbreChemin(Arbre_chemin* a, int n){
 
 
 //Desallocation
-void libererGraphe(Graphe* graphe){
-    //unknown
+
+/*Libere le graphe*/
+void liberer_Graphe(Graphe* graphe){
+    //Libere les commodites
+    free(graphe->T_commod);
+
+    //libere tableau de sommets
+    for (int i = 0; i < graphe->nbsom + 1; i++) liberer_Sommet(graphe, graphe->T_som[i]);
+    free(graphe->T_som);
+    
+    free(graphe);
 }
 
-//Libere une commodite
-void libererCommod(Commod* commod){
-    free(commod);
-}
+/*Libere un sommet et ses aretes voisins*/
+void liberer_Sommet(Graphe* graphe, Sommet* sommet){
+    if (sommet == NULL) return;
 
-/*Libere un sommet*/
-void libererSommet(Sommet* sommet){
-    //on libere les voisins CA sans liberer les aretes
-    //Comment faire pour libere qu'une fois les aretes?
-    //verifier si existe et si non, oui, alors supprimer
-}
+    Cellule_arete* voisins = sommet->L_voisin, *vois_suiv;
 
-/*Libere une cellule_arete*/
-void libererCellule_arete(Cellule_arete* ca){
-    libererArete(ca->a);
-    free(ca);    
-}
+    while(voisins){
 
-/*Libere une arete*/
-void libererArete(Arete* a){
-    free(a);
+        //on libere l'arete
+        if (voisins->a != NULL) {
+
+            //on recherche l'autre Cellule arete dans les voisins de l'autre sommet 
+            Sommet* extremite;
+            if (sommet->num == voisins->a->u) extremite = graphe->T_som[voisins->a->v];
+            else extremite = graphe->T_som[voisins->a->u];
+
+            Cellule_arete* parcours = extremite->L_voisin;
+            while(parcours->a!=voisins->a) parcours = parcours->suiv;
+            free(voisins->a);
+            voisins->a = NULL;
+            parcours->a = NULL;
+        }
+
+        vois_suiv = voisins->suiv;
+
+        //on liberere la Cellule arete 
+        assert(voisins->a == NULL);
+        free(voisins);
+        voisins = vois_suiv;
+    }
+    free(sommet);
 }

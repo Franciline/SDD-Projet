@@ -55,8 +55,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     Noeud* new_noeud = creer_noeud(x, y,  R->nbNoeuds + 1);
 
     //creation de la cellule pour R
-    CellNoeud * new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));
-    new_cellnR -> nd = new_noeud; //on affecte le noeud dans la cellule
+    CellNoeud * new_cellnR = creer_cellnoeud(new_noeud); //on affecte le noeud dans la cellule
     new_cellnR -> suiv = R->noeuds; //on ajoute à la suite de la liste de CellNoeud dans Reseau
     
     //ajout dans R
@@ -64,8 +63,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
     R->nbNoeuds = R->nbNoeuds + 1; //on incrémente le nombre de noeuds
 
     //creation de la cellule pour H
-    CellNoeud * new_cellnH = (CellNoeud*)(malloc(sizeof(CellNoeud)));
-    new_cellnH -> nd = new_noeud; //on affecte le noeud dans la cellule
+    CellNoeud * new_cellnH = creer_cellnoeud(new_noeud); //on affecte le noeud dans la cellule
     new_cellnH -> suiv = H->T[i]; //on ajoute à la suite de la liste de CellNoeud dans TableHachage
 
     //ajout dans H
@@ -126,7 +124,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
 
 /*Libere le tableau de hachage*/
 void liberer_tablehachage(TableHachage* t){
-    //on lberer juste la table et les cellNoeuds
+    //on libere juste la table et les cellNoeuds
     for (int i = 0; i < t->tailleMax;i ++){
         CellNoeud * c = t->T[i];
         while(c){
