@@ -5,13 +5,14 @@
 #include "ArbreQuat.h"
 #include "assert.h"
 
+/*Test de la structure grahe*/
 int main(){
-    FILE * fichier1 = fopen("00014_burma.cha", "r");
-    Chaines* test = lectureChaines(fichier1);
+
+    FILE * lecture = fopen("00014_burma.cha", "r");
+    Chaines* test = lectureChaines(lecture);
     Reseau* test_reseau = reconstitueReseauArbre(test);
 
     //test question 1
-    
     Graphe* g = creerGraphe(test_reseau);
     assert(g->gamma == test_reseau->gamma);
     assert(g->nbcommod == nb_commodite(test_reseau));
@@ -37,4 +38,6 @@ int main(){
         printf("les sommets %d %d ",g->T_commod[i].e1,g->T_commod[i].e2);
         printf("nb aretes %d \n", plus_petit_nb_aretes(g, g->T_som[g->T_commod[i].e1], g->T_som[g->T_commod[i].e2]));
     }
+
+    libererGraphe(g);
 }

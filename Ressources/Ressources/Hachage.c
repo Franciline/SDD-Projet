@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include "Reseau.h"
-#define TAILLE 20
 
 
 //fonction de bases
@@ -53,10 +52,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
 
     //Cas ou le noeud n'existe pas
     //On cree un nouveau noeud
-    Noeud* new_noeud = creer_noeud();
-    new_noeud->x = x;
-    new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds + 1;
+    Noeud* new_noeud = creer_noeud(x, y,  R->nbNoeuds + 1);
 
     //creation de la cellule pour R
     CellNoeud * new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));
@@ -87,7 +83,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     Reseau* reseau = creer_reseau();
     reseau->gamma=C->gamma;
     CellChaine* liste = C->chaines;
-    TableHachage * tableH = initTableHachage(TAILLE);
+    TableHachage * tableH = initTableHachage(M);
 
     //on parcourt toutes les CellChaines
     while(liste){

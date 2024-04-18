@@ -20,10 +20,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 
     //cas ou n'existe pas
     //creation du noeud si n'existe pas
-    Noeud * new_noeud = creer_noeud();
-    new_noeud->x = x;
-    new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds + 1;
+    Noeud * new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
     //creation de la cellule
     CellNoeud * new_celln = (CellNoeud*)(malloc(sizeof(CellNoeud)));
@@ -256,11 +253,11 @@ CellNoeud* creer_cellnoeud(){
 }
 
 /*Renvoie un noeud vide*/
-Noeud* creer_noeud(){
+Noeud* creer_noeud(double x, double y, int num){
     Noeud* n = (Noeud*)(malloc(sizeof(Noeud)));
-    n->num = 0;
-    n->x = 0;
-    n->y = 0;
+    n->num = num;
+    n->x = x;
+    n->y = y;
     n->voisins = NULL;
     return n;
 }

@@ -61,8 +61,17 @@ Sommet* defiler(File* f) {
         //on libere l'element
         free(f->premier->prec);
         f->premier->prec = NULL;
-
         return s;
+    }
+}
+
+void liberer_file(File* f){
+    Element* element = f->premier, *tmp = f->premier;
+    while(tmp){
+        element = element->suiv;
+        free(tmp);
+        tmp = element;
+        free(f);
     }
 }
 

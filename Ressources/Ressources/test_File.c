@@ -2,33 +2,42 @@
 #include "graphe.h"
 #include <assert.h>
 
+/*Test de la structure File*/
 int main(){
-    File* f = creer_file();
-    Sommet* s1 = creerSommet(1, 0, 0);
-    Sommet* s2 = creerSommet(2, 0 ,0);
-    Sommet* s3 = creerSommet(3, 0, 0);
 
-    assert( est_vide(f) ==  1);
+    //Creation des sommets et de la file
+    File* file = creer_file();
+    assert(est_vide(file) ==  1);
+
+    Sommet* s1 = creerSommet(1, 1, 1);
+    Sommet* s2 = creerSommet(2, 2 ,2);
+    Sommet* s3 = creerSommet(3, 3, 3);
+    assert(s1 != NULL); assert(s2 != NULL); assert(s3 != NULL);
 
     //on enfile des sommets
-    enfiler(f, s1);
-    printf("on enfile s1, premier element sommet %d, dernier sommet %d\n", f->premier->s->num,f->dernier->s->num);
-    enfiler(f, s2);
-    printf("on enfile s2, premier element sommet %d, dernier sommet %d\n", f->premier->s->num,f->dernier->s->num);
-    enfiler(f, s3);
-    printf("on enfile s3, premier element sommet %d, dernier sommet %d\n", f->premier->s->num,f->dernier->s->num);
+    enfiler(file, s1);
+    assert(file->premier->s->num == file->dernier->s->num);
+    enfiler(file, s2);
+    assert(file->premier->s->num == 1); assert(file->dernier->s->num == 2);
+    enfiler(file, s3);
+    assert(file->premier->s->num == 1); assert(file->dernier->s->num == 3);
 
-    assert( est_vide(f) ==  0 );
+    assert(est_vide(file) ==  0);
 
     //on defile des sommets
-    Sommet * s = defiler(f);
-    printf("On defile: sommet %d \n", s->num);
-    s = defiler(f);
-    printf("On defile: sommet %d \n", s->num);
-    s = defiler(f);
-    printf("On defile: sommet %d \n", s->num);
+    Sommet * s = defiler(file);
+    assert(s->num == 1); 
+    libererSommet(s);
 
-    assert( est_vide(f) ==  1);
+    s = defiler(file);
+    assert(s->num == 2); 
+    libererSommet(s);
 
+    s = defiler(file);
+    assert(s->num == 3);
+    libererSommet(s);
+
+    assert(est_vide(file) == 1);
+    liberer_file(file);
     return 0;
 }

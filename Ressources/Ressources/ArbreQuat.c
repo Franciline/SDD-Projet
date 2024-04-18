@@ -134,10 +134,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     //Cas arbre vide
     if (arbre == NULL) { 
         //on cree un nouveau noeud
-        Noeud* new_noeud = creer_noeud();
-        new_noeud->x = x;
-        new_noeud->y = y;
-        new_noeud->num = R->nbNoeuds + 1;
+        Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
         //creation de la cellule pour R
         CellNoeud* new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));
@@ -161,10 +158,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
         }
         else {
             //on cree un nouveau noeud
-            Noeud* new_noeud = creer_noeud();
-            new_noeud->x = x;
-            new_noeud->y = y;
-            new_noeud->num = R->nbNoeuds + 1;
+            Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
             //creation de la cellule pour R
             CellNoeud* new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));

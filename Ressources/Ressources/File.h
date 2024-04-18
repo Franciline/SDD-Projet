@@ -22,5 +22,6 @@ int est_vide(File* f);
 void enfiler(File* f, Sommet* s);
 Sommet* defiler(File* f);
 //void afficher_file(File* f);
+void liberer_file(File* f);
 
 #endif
