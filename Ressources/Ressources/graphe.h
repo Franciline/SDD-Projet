@@ -32,6 +32,7 @@ typedef struct {
     Commod * T_commod ; /* Tableau des commodites */
 } Graphe ;
 
+
 //nos propres structure a implementer
 typedef struct arbre_chemin {
     int num;

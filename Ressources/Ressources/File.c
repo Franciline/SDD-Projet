@@ -1,12 +1,12 @@
 #include "File.h"
-
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 
 //Fonction qui cree une nouvelle file
 File* creer_file() {
-    File* f = (File*) malloc(sizeof(File));
+    File* f = (File*)malloc(sizeof(File));
     f->premier = NULL;
     f->dernier = NULL;
     return f;
@@ -50,6 +50,7 @@ Sommet* defiler(File* f) {
     else if (f->premier==f->dernier){
         Sommet* s = f->premier->s;
         free(f->premier);
+        assert(f->premier == NULL);
         f->premier = NULL;
         f->dernier = NULL;
         return s;
@@ -57,7 +58,10 @@ Sommet* defiler(File* f) {
     else {
         //recupere sommet du premier element dans la file
         Sommet* s = f->premier->s;
+        
+        f->premier->prec = NULL;
         f->premier = f->premier->suiv;
+        f->premier->prec->suiv = NULL;
         //on libere l'element
         free(f->premier->prec);
         f->premier->prec = NULL;

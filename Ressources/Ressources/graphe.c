@@ -13,36 +13,40 @@ Graphe* creerGraphe(Reseau* r){
 
     Graphe* graphe = initGrapheVide(r->nbNoeuds,r->gamma,nb_commodite(r));
     
-    //on cree les commodites
+    //On cree les commodites du graphe
     CellCommodite* parcours = r->commodites;
     int nb_tab = 0;     //indice dans le tableau de commodites
 
     while(parcours){
         Commod commod = creerCommod(parcours->extrA->num,parcours->extrB->num);
         //ajout au tableau de commodites
-        graphe->T_commod[nb_tab] = commod;     //on ajoute la structure et non pointeur
+        graphe->T_commod[nb_tab] = commod; 
         nb_tab++;
 
-        //suivant
         parcours = parcours->suiv;
     }
 
-    //on cree les sommets en parcourant la liste des noeuds
+    //On cree les sommets du graphe
     CellNoeud *noeuds = r->noeuds;
-    while (noeuds){     //parcours des noeuds
+
+    //parcours des noeuds
+    while (noeuds){     
         Sommet* sommet = creerSommet(noeuds->nd->num,noeuds->nd->x, noeuds->nd->y);
         graphe->T_som[sommet->num] = sommet; //on le sauvegarde dans le tableau, l'indice commence à 1 
         noeuds = noeuds->suiv;
     }
 
     noeuds = r->noeuds; 
-    while(noeuds){ //On parcourt les noeuds et leurs voisins pour creer les aretes
+    
+    //On parcourt les noeuds et leurs voisins pour creer les aretes
+    while(noeuds){ 
         CellNoeud* voisin = noeuds->nd->voisins;
-        while(voisin){  //on parcours les voisins
+        //on parcours les voisins
+        while(voisin){  
             if (noeuds->nd->num < voisin->nd->num){ //pour n'ajouter qu'une fois l'arete
                 Arete * arete = creerArete(noeuds->nd->num, voisin->nd->num);
 
-                //on creer deux structures pour les mettre dans sommet
+                //on creer deux Cellule_arete pour les deux sommets
                 Cellule_arete * cella1 = creerCellule_arete(arete);
                 Cellule_arete * cella2 = creerCellule_arete(arete);
                 assert(cella2->a == cella1->a);
@@ -64,19 +68,20 @@ Graphe* creerGraphe(Reseau* r){
 
 //Question 2
 
-/*Retourne le plus petit nombre d'aretes entre deux sommets*/
+/*Retourne le plus petit nombre d'aretes entre deux sommets avec un parcours en largeur*/
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
 
     //le tableau va contenir -1 si le sommet n'a pas ete visite, sinon la distance minimum par rapport au noeud de depart
-    int * tableau = malloc(sizeof(int)*(g->nbsom+1)); //comme les sommets commencent à 1, on rajoute nbsomme + 1 pour le tableau
+    int tableau[g->nbsom+1]; //comme les sommets commencent à 1, on rajoute nbsomme + 1 pour le tableau
     
     File * file = creer_file();
+
     for (int i = 0; i < g->nbsom+1; i++){
         tableau[i] = -1; 
     }
 
-    tableau[u->num] = 0; //distance entre u et lui meme
-    int num_voisin = -1; //stock le numero de l'extremite de l'arete 
+    tableau[u->num] = 0; //distance entre u et lui meme mis a 0
+    int num_voisin; //stock le numero de l'extremite de l'arete 
 
     //on ajoute dans la file le sommet u
     enfiler(file, u);
@@ -85,7 +90,7 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
     Cellule_arete* voisins_u = u->L_voisin;
 
     while(voisins_u){ 
-        //on cherche le sommet correspondant dans l'arete a
+        //on cherche le sommet voisin du noeud u puis on l'enfile
         if (voisins_u->a->u == u->num)
             enfiler(file, g->T_som[voisins_u->a->v]);
         else enfiler(file, g->T_som[voisins_u->a->u]);
@@ -112,7 +117,7 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
             
             //on verifie que le sommet n'a pas ete visite
             if (tableau[num_voisin] == -1){
-                tableau[num_voisin] = tableau[actuel_num] + 1; //il a alors ete visite, la distance est incrementee
+                tableau[num_voisin] = tableau[actuel_num] + 1; //on le visite et on store la distance 
                 enfiler(file, g->T_som[num_voisin]); //on ajoute ce sommet a la file
             } 
             else{
@@ -121,14 +126,11 @@ int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v){
             }
 
             //on verifie si c'est le sommet v
-            if (num_voisin == v->num){ return tableau[num_voisin];}
+            if (num_voisin == v->num) return tableau[num_voisin];
             voisins = voisins->suiv;
         }
     }
-    for (int i = 0; i < g->nbsom+1; i++){
-        free(&(tableau[i])); 
-    }
-    free(tableau);
+    
     liberer_file(file);
     return -1;
 }
@@ -187,7 +189,6 @@ Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod){
     graphe->T_som = (Sommet**)malloc(sizeof(Sommet*)*(nbsom + 1));
 
     for (int i = 0; i < graphe->nbsom + 1; i++){
-        graphe->T_som[i] = (Sommet*)malloc(sizeof(Sommet));
         graphe->T_som[i] = NULL;
     }
     graphe->T_commod = (Commod*)malloc(sizeof(Commod)*nbcommod);
@@ -252,7 +253,8 @@ void liberer_Graphe(Graphe* graphe){
     free(graphe->T_commod);
 
     //libere tableau de sommets
-    for (int i = 0; i < graphe->nbsom + 1; i++) liberer_Sommet(graphe, graphe->T_som[i]);
+    
+    for (int i = 0; i < graphe->nbsom + 1; i++) {liberer_Sommet(graphe, graphe->T_som[i]); graphe->T_som[i] = NULL;}
     free(graphe->T_som);
     
     free(graphe);
