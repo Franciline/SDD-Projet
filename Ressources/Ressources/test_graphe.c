@@ -44,11 +44,21 @@ int main(){
         printf("\n");
         free(here);
     }
-    
 
+    //test de l'affichage des aretes depuis la chaine
+    for (int j = 0; j < g->nbcommod; j++){
+        int* chainel = plus_petit_nb_aretes_liste(g, g->T_som[g->T_commod[j].e1], g->T_som[g->T_commod[j].e2]);
+        //printf("\n");
+        for (int i = 0; i < g->nbsom - 1; i++){
+            if (chainel[i+1] != 0) //printf("%d-%d,  ", chainel[i], chainel[i+1]);
+        ;}
+    }
+
+    int t = reorganiseReseau(reseau);
+    printf("\n%d\n", t);
+    
     fclose(lecture);
     liberer_Graphe(g);
     liberer_chaine(chaine);
-    liberer_reseau(reseau);
-    
+    liberer_reseau(reseau);   
 }

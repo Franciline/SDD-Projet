@@ -65,7 +65,6 @@ Graphe* creerGraphe(Reseau* r){
   return graphe;
 }
 
-
 //Question 2
 
 /*Retourne le plus petit nombre d'aretes entre deux sommets avec un parcours en largeur*/
@@ -221,29 +220,39 @@ int reorganiseReseau(Reseau* r) {
         }
     }
 
-    Commod* liste_commodites = g->T_commod;
     Sommet** liste_sommets = g->T_som;
 
-    // Calcul de la plus courte chaine pour chaque commodite
-    while(liste_commodites != NULL) {
-        int u = liste_commodites->e1;
-        int v = liste_commodites->e2;
-        int plus_courte_chaine = plus_petit_nb_aretes(g, liste_sommets[u], liste_sommets[v]);
-
-        matrice[u][v] = plus_courte_chaine;
-
-        liste_commodites++;
+    for (int i = 0; i < g->nbcommod; i++){
+        int u = g->T_commod[i].e1;
+        int v = g->T_commod[i].e2;
+        //la chaine
+        int* chaine = plus_petit_nb_aretes_liste(g, liste_sommets[u], liste_sommets[v]);
+        for (int i = 0; i < g->nbsom - 1; i++){
+            if (chaine[i+1] != 0) {
+                //pour matrice triangulaire superieur
+                if (chaine[i] < chaine[i+1]) matrice[chaine[i] - 1][chaine[i+1] - 1]++; 
+                else matrice[chaine[i+1] - 1][chaine[i] - 1]++;
+            }
+        }
     }
 
     // Verification que le nombre de chaines qui passe par chaque arete du graphe est inferieur a gamma
     for (int i = 0; i<n; i++) {
-        for (int j = 0; j<n; j++) {
+        for (int j = i; j<n; j++) {
             if (matrice[i][j] > g->gamma) {
                 return 0;
             }
         }
     }
-    return -1;
+
+    //desallocation
+    liberer_Graphe(g);
+    for (int i = 0; i < n; i++){
+        free(matrice[i]);
+    }
+    free(matrice);
+
+    return 1;
 }
 
 //fonctions implementees par nous meme
