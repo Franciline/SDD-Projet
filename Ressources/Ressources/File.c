@@ -68,6 +68,15 @@ void liberer_file(File* f){
     free(f);
 }
 
+void afficher_file(File* f) {
+    Element* el = f->premier;
+    printf("\n\nFile :");
+    while (el){
+        printf("%d ", el->s->num);
+        el = el->suiv;
+    }
+}
+
 /*
 //Fonction qui cree une nouvelle file
 File* creer_file() {
@@ -143,3 +152,4 @@ void afficher_file(File* f) {
     }
 }
 */
+

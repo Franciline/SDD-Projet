@@ -33,20 +33,11 @@ typedef struct {
 } Graphe ;
 
 
-//nos propres structure a implementer
-typedef struct arbre_chemin {
-    int num;
-    struct arbre_chemin* fils;
-    struct arbre_chemin* suivant;
-} Arbre_chemin;
-
-Arbre_chemin* creerArbreChemin(int n);
-void ajouterFilsArbreChemin(Arbre_chemin* a,int n);
-
 //fonctions demandees
 
 Graphe* creerGraphe(Reseau* r);
 int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);
+int* plus_petit_nb_aretes_liste(Graphe* g, Sommet* u, Sommet* v);
 int reorganiseReseau(Reseau* r);
 
 //fonctions implementees par nous meme
