@@ -16,73 +16,76 @@ double temps_cpu_liste, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_h
 #define NBPC 100
 
 int main(){
-    FILE * cpu_liste = fopen("cpu_lc.txt", "w");
-    FILE * cpu_hash_abr = fopen("cpu_hash_abr.txt", "w");
-    Chaines* test;
-    Reseau * test_reseau;
+    FILE * rec_liste = fopen("reconstitueR_lc2.txt", "w");
+    FILE * rec_hash_abr = fopen("reconstitueR_hash_abr2.txt", "w");
+    Chaines* chaine;
+    Reseau * reseau;
 
-    fprintf(cpu_liste,"n tmp_lc\n");
-    fprintf(cpu_hash_abr,"n h=50 h=100 h=500 h=1000 tmp_abr\n");
+    fprintf(rec_liste,"n tmp_lc\n");
+    fprintf(rec_hash_abr,"n h=50 h=100 h=500 h=1000 tmp_abr\n");
 
     for (int i = 500; i <= 5000; i+=500){
-        test = generationAleatoire(i, NBPC, XMAX, YMAX);
-
+        printf("boucle i = %d\n", i);
+        chaine = generationAleatoire(i, NBPC, XMAX, YMAX);
+        
         //liste chainee
         temps_initial = clock();
-        test_reseau = reconstitueReseauArbre(test);
+        reseau = reconstitueReseauArbre(chaine);
         temps_final = clock();
+        liberer_reseau(reseau);
 
         temps_cpu_liste = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-        fprintf(cpu_liste, "%d %lf\n", i, temps_cpu_liste);
+        fprintf(rec_liste, "%d %lf\n", i, temps_cpu_liste);
 
+        
         //table hachage taille 50 100 500 1000
         temps_initial = clock();
-        test_reseau = reconstitueReseauHachage(test, 50);
+        reseau = reconstitueReseauHachage(chaine, 50);
         temps_final = clock();
+        liberer_reseau(reseau);
 
-        /*
+        
         temps_cpu_hachage_50 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         temps_initial = clock();
-        test_reseau = reconstitueReseauHachage(test, 100); 
+        reseau = reconstitueReseauHachage(chaine, 100); 
         temps_final = clock();
-        liberer_reseau(test_reseau);
-
+        liberer_reseau(reseau);
         
         temps_cpu_hachage_100 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         temps_initial = clock();
-        test_reseau = reconstitueReseauHachage(test, 500); 
+        reseau = reconstitueReseauHachage(chaine, 500); 
         temps_final = clock();
-        liberer_reseau(test_reseau);
+        liberer_reseau(reseau);
 
         temps_cpu_hachage_500 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-
+        
+        
         temps_initial = clock();
-        test_reseau = reconstitueReseauHachage(test, 1000); 
+        reseau = reconstitueReseauHachage(chaine, 1000); 
         temps_final = clock();
-        liberer_reseau(test_reseau);
-
+        liberer_reseau(reseau);
         
         temps_cpu_hachage_1000 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-        */
-
+        
+        
         //arbre
         temps_initial = clock();
-        test_reseau = reconstitueReseauArbre(test); 
+        reseau = reconstitueReseauArbre(chaine); 
         temps_final = clock();
+        liberer_reseau(reseau);
         
         temps_cpu_arbre = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-        //fprintf(cpu_hash_abr, "%d %lf %lf %lf %lf %lf\n", i, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre);
-        fprintf(cpu_hash_abr, "%d %lf %lf \n", i, temps_cpu_hachage_50, temps_cpu_arbre);
-
+        fprintf(rec_hash_abr, "%d %lf %lf %lf %lf %lf\n", i, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre);
+        //fprintf(rec_hash_abr, "%d %lf %lf \n", i, temps_cpu_hachage_50, temps_cpu_arbre);
+        
+        liberer_chaine(chaine);   
         
     }
-    liberer_chaine(test);
-    liberer_reseau(test_reseau);
 
-    fclose(cpu_hash_abr);
-    fclose(cpu_liste);
+    fclose(rec_hash_abr);
+    fclose(rec_liste);
 
     return 0;
 }

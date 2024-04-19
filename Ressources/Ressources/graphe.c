@@ -225,21 +225,31 @@ int reorganiseReseau(Reseau* r) {
     for (int i = 0; i < g->nbcommod; i++){
         int u = g->T_commod[i].e1;
         int v = g->T_commod[i].e2;
-        //la chaine
+
+        //la chaine entre les deux extremites
         int* chaine = plus_petit_nb_aretes_liste(g, liste_sommets[u], liste_sommets[v]);
+
         for (int i = 0; i < g->nbsom - 1; i++){
+            //pour chaque arete de la chaine
             if (chaine[i+1] != 0) {
-                //pour matrice triangulaire superieur
-                if (chaine[i] < chaine[i+1]) matrice[chaine[i] - 1][chaine[i+1] - 1]++; 
-                else matrice[chaine[i+1] - 1][chaine[i] - 1]++;
+                //comme la matrice est symétrique, on opte pour une matrice diagonale supérieur
+                if (chaine[i] < chaine[i+1]) 
+                    matrice[chaine[i] - 1][chaine[i+1] - 1]++; 
+                else                         
+                    matrice[chaine[i+1] - 1][chaine[i] - 1]++;
             }
         }
+        free(chaine);
     }
 
     // Verification que le nombre de chaines qui passe par chaque arete du graphe est inferieur a gamma
     for (int i = 0; i<n; i++) {
         for (int j = i; j<n; j++) {
             if (matrice[i][j] > g->gamma) {
+                //desallocation
+                liberer_Graphe(g);
+                for (int i = 0; i < n; i++) free(matrice[i]);
+                free(matrice);
                 return 0;
             }
         }
@@ -247,9 +257,7 @@ int reorganiseReseau(Reseau* r) {
 
     //desallocation
     liberer_Graphe(g);
-    for (int i = 0; i < n; i++){
-        free(matrice[i]);
-    }
+    for (int i = 0; i < n; i++) free(matrice[i]);
     free(matrice);
 
     return 1;

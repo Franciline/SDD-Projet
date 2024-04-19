@@ -1,0 +1,8 @@
+plot "reconstitueR_hash_abr.txt" using 1:2 title 'H=50' with lines
+replot "reconstitueR_hash_abr.txt" using 1:3 title 'H=100' with lines
+replot "reconstitueR_hash_abr.txt" using 1:4 title 'H=500' with lines
+replot "reconstitueR_hash_abr.txt" using 1:5 title 'H=1000' with lines
+replot "reconstitueR_hash_abr.txt" using 1:6 title 'ABR' with lines
+set term postscript portrait
+set output "courbreABRHS.ps"
+set size 0.7, 0.7
