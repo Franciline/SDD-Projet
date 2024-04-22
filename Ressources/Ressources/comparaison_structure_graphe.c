@@ -30,7 +30,7 @@ int main(){
         
         //liste chainee
         temps_initial = clock();
-        reseau = reconstitueReseauArbre(chaine);
+        reseau = reconstitueReseauListe(chaine);
         temps_final = clock();
         liberer_reseau(reseau);
 
@@ -77,8 +77,8 @@ int main(){
         liberer_reseau(reseau);
         
         temps_cpu_arbre = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+
         fprintf(rec_hash_abr, "%d %lf %lf %lf %lf %lf\n", i, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre);
-        //fprintf(rec_hash_abr, "%d %lf %lf \n", i, temps_cpu_hachage_50, temps_cpu_arbre);
         
         liberer_chaine(chaine);   
         
