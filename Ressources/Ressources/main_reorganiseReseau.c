@@ -18,7 +18,7 @@ int main(){
     //Chaines* test = generationAleatoire(5, 100, 5000, 5000);
     //chaines->gamma = 3;
 
-    FILE* inst = fopen("00417_fl.cha", "r");
+    FILE* inst = fopen("08000_USA-road-d-NY.cha", "r");
     Chaines* chaines = lectureChaines(inst);
     //chaines->gamma = 10;
 

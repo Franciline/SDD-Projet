@@ -30,6 +30,7 @@ int main(int argc, char** argv){
     temps_final = clock();
     temps_cpu_arbre = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
     fprintf(fichier2, "Arbre Quaternaire \n%lf\n",temps_cpu_arbre);
+    liberer_reseau(test_reseau);
 
     //Liste chainée
     temps_initial = clock();
@@ -37,6 +38,7 @@ int main(int argc, char** argv){
     temps_final = clock();
     temps_cpu_liste = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
     fprintf(fichier2, "Liste chainee\n%lf\n",temps_cpu_liste);
+    liberer_reseau(test_reseau);
 
     //Table de hachage
     for (taille_tab = 10; taille_tab <= 500; taille_tab+=50){
@@ -45,9 +47,11 @@ int main(int argc, char** argv){
         temps_final = clock();
         temps_cpu_hachage = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
         fprintf(fichier2, "Table de hachage taille = %d\n%lf\n",taille_tab, temps_cpu_hachage);
+        liberer_reseau(test_reseau);
     }
 
     liberer_chaine(test);
-    liberer_reseau(test_reseau);
+    fclose(fichier1);
+    fclose(fichier2);
 
 }

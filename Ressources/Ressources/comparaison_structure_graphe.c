@@ -32,56 +32,53 @@ int main(){
         temps_initial = clock();
         reseau = reconstitueReseauListe(chaine);
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
 
         temps_cpu_liste = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
         fprintf(rec_liste, "%d %lf\n", i, temps_cpu_liste);
 
-        /*
+
         //table hachage taille 50 100 500 1000
         temps_initial = clock();
         reseau = reconstitueReseauHachage(chaine, 50);
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
 
-        
         temps_cpu_hachage_50 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         temps_initial = clock();
         reseau = reconstitueReseauHachage(chaine, 100); 
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
         
         temps_cpu_hachage_100 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         temps_initial = clock();
         reseau = reconstitueReseauHachage(chaine, 500); 
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
 
         temps_cpu_hachage_500 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-        
         
         temps_initial = clock();
         reseau = reconstitueReseauHachage(chaine, 1000); 
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
         
         temps_cpu_hachage_1000 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
         
-        
+    
         //arbre
         temps_initial = clock();
         reseau = reconstitueReseauArbre(chaine); 
         temps_final = clock();
-        liberer_reseau(reseau);
+        //liberer_reseau(reseau);
         
         temps_cpu_arbre = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         fprintf(rec_hash_abr, "%d %lf %lf %lf %lf %lf\n", i, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre);
-        */
-        liberer_chaine(chaine);   
         
+        //liberer_chaine(chaine);   
     }
 
     fclose(rec_hash_abr);
