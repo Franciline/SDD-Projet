@@ -11,7 +11,7 @@
 /* Fonction qui determine les coordonnees min et max de la chaine */
 void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
     if ((C == NULL) || (C->chaines == NULL)) return; 
-    CellChaine * cellchaine = C->chaines;
+    CellChaine* cellchaine = C->chaines;
 
     //On assigne les premieres valeurs
     double xmi = cellchaine->points->x, ymi = cellchaine->points->y, xma = cellchaine->points->x, yma = cellchaine->points->y;
@@ -19,7 +19,7 @@ void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, dou
 
     //On parcourt les cellules chaines de la chaine
     while(cellchaine){
-        CellPoint * points = cellchaine->points;
+        CellPoint* points = cellchaine->points;
         //On parcourt les points de la chaine
         while(points){
             if (points->x < xmi)
@@ -136,7 +136,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
         Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
         //Creation de la cellule pour R
-        CellNoeud* new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));
+        CellNoeud* new_cellnR = (CellNoeud *) malloc(sizeof(CellNoeud));
         new_cellnR->nd = new_noeud;     //On affecte le noeud dans la cellule
         new_cellnR->suiv = R->noeuds;   //On ajoute la liste de CellNoeud du Reseau au suivant de la cellule
         
@@ -160,7 +160,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
             Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
             //Creation de la cellule pour R
-            CellNoeud* new_cellnR = (CellNoeud*)(malloc(sizeof(CellNoeud)));
+            CellNoeud* new_cellnR = (CellNoeud *) malloc(sizeof(CellNoeud));
             new_cellnR->nd = new_noeud;     //On affecte le noeud dans la cellule
             new_cellnR->suiv = R->noeuds;   //On ajoute la liste de CellNoeud du Reseau au suivant de la cellule
             
