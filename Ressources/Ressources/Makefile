@@ -46,9 +46,6 @@ test_Hachage: test_Hachage.c Reseau.o Chaine.o SVGwriter.o Hachage.o
 test_ABQ: test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-test_file: test_file.c File.o graphe.o Reseau.o SVGwriter.o
-	$(CC) $(GCC_FLAGS) -o $@ $^ 
-
 test_File: test_File.c File.o graphe.o Reseau.o SVGwriter.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ 
 
