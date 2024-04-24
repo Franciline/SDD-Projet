@@ -2,9 +2,10 @@
 #define __CHAINE_H__	
 #include <stdio.h>
 
+
 /* Liste chainee de points */
 typedef struct cellPoint{
-  double x,y;                   /* Coordonnees du point */
+  double x, y;                   /* Coordonnees du point */
   struct cellPoint *suiv;       /* Cellule suivante dans la liste */
 } CellPoint;
 
@@ -22,21 +23,24 @@ typedef struct {
   CellChaine *chaines;          /* La liste chainee des chaines */
 } Chaines;
 
+
+Chaines* lectureChaines(FILE* f);                       // Exercice 1 Question 1
+void ecrireChaines(Chaines* C, FILE* f);                // Exercice 1 Question 2
+void afficheChainesSVG(Chaines* C, char* nomInstance);  // Exercice 1 Question 3
+double longueurChaine(CellChaine* c);                   // Exercice 1 Question 4
+double longueurTotale(Chaines* C);
+int comptePoints(CellChaine* c);                        // Exercice 1 Question 5
+int comptePointsTotal(Chaines* C);
+
+Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax);  // Exercice 6 Question 2
+
+// Fonctions de base
 Chaines* creer_chaine();
-double distance(CellPoint *a, CellPoint *b);
-Chaines* lectureChaines(FILE *f);
-void ecrireChaines(Chaines *C, FILE *f);
-void afficheChainesSVG(Chaines *C, char* nomInstance);
-double longueurChaine(CellChaine *c);
-double longueurTotale(Chaines *C);
-int comptePoints(CellChaine *c);
-int comptePointsTotal(Chaines *C);
+double distance(CellPoint* a, CellPoint* b);
 
-Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax);
+//Fonctions de desallocation
+void liberer_chaine(Chaines* C);
+void liberer_cellchaine(CellChaine* c);
+void liberer_cellpoint(CellPoint* p);
 
-//desallocation
-void liberer_chaine(Chaines *C);
-void liberer_cellchaine(CellChaine *c);
-void liberer_cellpoint(CellPoint * p);
-
-#endif	
+#endif
