@@ -178,9 +178,9 @@ int comptePoints(CellChaine* c) {
 }
 
 /* Renvoie le nombre total d'occurrences de points dans le reseau */
-int comptePointsTotal(Chaines *C) {
+int comptePointsTotal(Chaines* C) {
     int nb_pts = 0;
-    CellChaine *liste_chaines = C->chaines;
+    CellChaine* liste_chaines = C->chaines;
 
     while(liste_chaines != NULL) {
         nb_pts += comptePoints(liste_chaines);
