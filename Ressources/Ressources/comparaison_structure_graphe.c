@@ -37,7 +37,7 @@ int main(){
         temps_cpu_liste = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
         fprintf(rec_liste, "%d %lf\n", i, temps_cpu_liste);
 
-        
+        /*
         //table hachage taille 50 100 500 1000
         temps_initial = clock();
         reseau = reconstitueReseauHachage(chaine, 50);
@@ -79,7 +79,7 @@ int main(){
         temps_cpu_arbre = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
 
         fprintf(rec_hash_abr, "%d %lf %lf %lf %lf %lf\n", i, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre);
-        
+        */
         liberer_chaine(chaine);   
         
     }
