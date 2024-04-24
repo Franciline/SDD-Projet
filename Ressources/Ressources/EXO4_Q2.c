@@ -6,8 +6,8 @@ int f(int x, int y){
 } 
 
 int main(){
-    for (int i = 1; i < 11; i++){
-        for (int j = 1; j < 11; j++){
+    for (int i=1; i<11; i++){
+        for (int j=1; j<11; j++){
             printf("%d\n", f(i, j));
         }
     }
