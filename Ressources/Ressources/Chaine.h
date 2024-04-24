@@ -35,7 +35,7 @@ int comptePointsTotal(Chaines* C);
 
 Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax);  // Exercice 6 Question 2
 
-// Fonctions de base
+//Fonctions de base
 Chaines* creer_chaine();
 double distance(CellPoint* a, CellPoint* b);
 
