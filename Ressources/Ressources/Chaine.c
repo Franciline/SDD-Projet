@@ -41,13 +41,13 @@ Chaines* lectureChaines(FILE* f) {
     for (int i=0; i<nbChain; i++){
         fgets(ligne, sizeof(ligne), f);
         sscanf(ligne, "%d %d %[^\n]\n", &num, &nb_pts, ligne);
-        CellChaine* cellC = (CellChaine*) malloc(sizeof(CellChaine));
+        CellChaine* cellC = (CellChaine *) malloc(sizeof(CellChaine));
         cellC->points = NULL;
         cellC->numero = num;
 
         for (int j=0; j<nb_pts; j++) {
             sscanf(ligne, "%lf %lf %[^\n]\n", &x, &y, ligne);
-            CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
+            CellPoint* cellP = (CellPoint *) malloc(sizeof(CellPoint));
             cellP->x = x;
             cellP->y = y;
             cellP->suiv = cellC->points;
@@ -56,6 +56,7 @@ Chaines* lectureChaines(FILE* f) {
         cellC->suiv = chaine->chaines;
         chaine->chaines = cellC;
     }
+
     return chaine;
 }
 
@@ -90,6 +91,8 @@ void ecrireChaines(Chaines* C, FILE* f){
         fprintf(f, "\n");
         tmp_cell = tmp_cell->suiv;
     }
+
+    return;
 }
 
 //Question 3
@@ -105,14 +108,20 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
     while(ccour != NULL){
         pcour = ccour->points;
         while(pcour != NULL){
-            if (maxx < pcour->x) maxx = pcour->x;
-            if (maxy < pcour->y) maxy = pcour->y;
-            if (minx > pcour->x) minx = pcour->x;
-            if (miny > pcour->y) miny = pcour->y;  
+            if (maxx < pcour->x)
+                maxx = pcour->x;
+            if (maxy < pcour->y)
+                maxy = pcour->y;
+            if (minx > pcour->x)
+                minx = pcour->x;
+            if (miny > pcour->y)
+                miny = pcour->y;
+                
             pcour = pcour->suiv;
         }
-    ccour = ccour->suiv;
+        ccour = ccour->suiv;
     }
+
     SVGinit(&svg, nomInstance, 500, 500);
     ccour = C->chaines;
     while(ccour != NULL){
@@ -131,12 +140,15 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
         }
         ccour = ccour->suiv;
     }
+
     SVGfinalize(&svg);
+
+    return;
 }
 
 //Question 4
 
-/* Calcul de la longueur d'une chaine */
+/* Calcule la longueur d'une chaine */
 double longueurChaine(CellChaine* c) {
     double longueur = 0;
     CellPoint* liste_points = c->points;
@@ -149,7 +161,7 @@ double longueurChaine(CellChaine* c) {
     return longueur;
 }
 
-/* Calcul de la longueur totale de toutes les chaines */
+/* Calcule la longueur totale de toutes les chaines */
 double longueurTotale(Chaines* C) {
     double longueur = 0;
     CellChaine* liste_chaines = C->chaines;
@@ -199,12 +211,12 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ym
     Chaines* chaines = creer_chaine();
 
     for (int i=0; i<nbChaines; i++) {
-        CellChaine* cellC = (CellChaine*) malloc(sizeof(CellChaine));
+        CellChaine* cellC = (CellChaine *) malloc(sizeof(CellChaine));
         cellC->points = NULL;
         cellC->numero = i;
 
         for (int j=0; j<nbPointsChaine; j++) {
-            CellPoint* cellP = (CellPoint*) malloc(sizeof(CellPoint));
+            CellPoint* cellP = (CellPoint *) malloc(sizeof(CellPoint));
             cellP->x = rand() % xmax;
             cellP->y = rand() % ymax;
             cellP->suiv = cellC->points;
@@ -222,16 +234,17 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ym
 
 // Fonctions de bases
 
-/*Initialise une chaine vide*/
+/* Initialise une chaine vide */
 Chaines* creer_chaine() {
-    Chaines* chaine = (Chaines*) malloc(sizeof(Chaines));
+    Chaines* chaine = (Chaines *) malloc(sizeof(Chaines));
     chaine->gamma = 0;
     chaine->nbChaines = 0;
     chaine->chaines = NULL;
+
     return chaine;
 }
 
-/*Calcule la distance entre deux points a et b*/
+/* Calcule la distance entre deux points a et b */
 double distance(CellPoint* a, CellPoint* b) {
     double xa = a->x;
     double ya = a->y;
@@ -248,6 +261,8 @@ double distance(CellPoint* a, CellPoint* b) {
 void liberer_chaine(Chaines* C){
     liberer_cellchaine(C->chaines);
     free(C);
+
+    return;
 }
 
 /* Libere une CellChaine */
@@ -258,6 +273,8 @@ void liberer_cellchaine(CellChaine* c){
         free(c);
         c = next;
     }
+
+    return;
 }
 
 /* Libere un CellPoint */
@@ -267,4 +284,6 @@ void liberer_cellpoint(CellPoint* p){
         free(p);
         p = next;
     }
+
+    return;
 }
