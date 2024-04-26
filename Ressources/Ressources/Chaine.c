@@ -6,7 +6,7 @@
 #include "Chaine.h"
 #include "SVGwriter.h"
 
-#define TAILLE_MAX 512
+#define TAILLE_MAX 2000
 
 
 //Exercice 1

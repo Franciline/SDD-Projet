@@ -327,7 +327,10 @@ void liberer_Graphe(Graphe* graphe){
 
     //libere tableau de sommets
     
-    for (int i = 0; i < graphe->nbsom + 1; i++) {liberer_Sommet(graphe, graphe->T_som[i]); graphe->T_som[i] = NULL;}
+    for (int i = 0; i < graphe->nbsom + 1; i++) {
+        liberer_Sommet(graphe, graphe->T_som[i]);
+        graphe->T_som[i] = NULL;
+    }
     free(graphe->T_som);
     
     free(graphe);

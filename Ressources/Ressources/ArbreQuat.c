@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <assert.h>
 
 #include "ArbreQuat.h"
 #include "Reseau.h"
@@ -241,7 +242,8 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
         //On a ajoute commodite et noeud de la chaine a reseau, on passe a la liste suivante
         liste = liste->suiv;
     }
-    liberer_arbre(a);
+
+    //liberer_arbre(a);
 
     return reseau;
 }
@@ -249,8 +251,7 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
 
 /* Libere l'arbre quaternaire */
 void liberer_arbre(ArbreQuat* a){
-    if (a == NULL) 
-        return;
+    if (a == NULL) return;
 
     liberer_arbre(a->se);
     liberer_arbre(a->so);

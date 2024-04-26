@@ -29,55 +29,55 @@ int main(int argc, char** argv) {
         if (numero_methode == 1) {
             printf("Vous ouvrez le fichier %s avec la methode Liste\n", argv[1]);
 
-            FILE* fichier = fopen(argv[1], "r");
-            FILE* fichier2 = fopen("ecriture_reseau_Liste.txt", "w");
-            Chaines* test = lectureChaines(fichier);
+            FILE* source = fopen(argv[1], "r");
+            FILE* destination = fopen("ecriture_reseau_Liste.txt", "w");
+            Chaines* chaines = lectureChaines(source);
 
             //On reconstitue le reseau depuis la chaine avec la liste chainee
-            Reseau* test_reseau = reconstitueReseauListe(test);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Liste");
-            ecrireReseau(test_reseau, fichier2);
+            Reseau* reseau = reconstitueReseauListe(chaines);
+            afficheReseauSVG(reseau, "affichage_depuis_reseau_Liste");
+            ecrireReseau(reseau, destination);
 
-            liberer_chaine(test);
-            liberer_reseau(test_reseau);
+            liberer_chaine(chaines);
+            liberer_reseau(reseau);
 
-            fclose(fichier);
-            fclose(fichier2);
+            fclose(source);
+            fclose(destination);
         }
         else if (numero_methode == 2) {
             printf("Vous ouvrez le fichier %s avec la methode Table de hachage\n", argv[1]);
 
-            FILE* fichier = fopen(argv[1], "r");
-            FILE* fichier2 = fopen("ecriture_reseau_Hachage.txt", "w");
-            Chaines* test = lectureChaines(fichier);
+            FILE* source = fopen(argv[1], "r");
+            FILE* destination = fopen("ecriture_reseau_Hachage.txt", "w");
+            Chaines* chaines = lectureChaines(source);
 
             //On reconstitue le reseau depuis la chaine avec la table de hachage
-            Reseau* test_reseau = reconstitueReseauHachage(test, TAILLE);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Hachage");
-            ecrireReseau(test_reseau, fichier2);
+            Reseau* reseau = reconstitueReseauHachage(chaines, TAILLE);
+            afficheReseauSVG(reseau, "affichage_depuis_reseau_Hachage");
+            ecrireReseau(reseau, destination);
 
-            liberer_chaine(test);
-            liberer_reseau(test_reseau);
+            liberer_chaine(chaines);
+            liberer_reseau(reseau);
 
-            fclose(fichier);
-            fclose(fichier2);
+            fclose(source);
+            fclose(destination);
         }
         else if (numero_methode == 3) {
             printf("Vous ouvrez le fichier %s avec la methode Arbre\n", argv[1]);
 
-            FILE* fichier = fopen(argv[1], "r");
-            FILE* fichier2 = fopen("ecriture_reseau_Arbre.txt", "w");
-            Chaines* test = lectureChaines(fichier);
+            FILE* source = fopen(argv[1], "r");
+            FILE* destination = fopen("ecriture_reseau_Arbre.txt", "w");
+            Chaines* chaines = lectureChaines(source);
 
             //On reconstitue le reseau depuis la chaine avec l'arbre quaternaire
-            Reseau* test_reseau = reconstitueReseauArbre(test);
-            afficheReseauSVG(test_reseau, "affichage_depuis_reseau_Arbre");
-            ecrireReseau(test_reseau, fichier2);
+            Reseau* reseau = reconstitueReseauArbre(chaines);
+            afficheReseauSVG(reseau, "affichage_depuis_reseau_Arbre");
+            ecrireReseau(reseau, destination);
 
-            liberer_chaine(test);
-            liberer_reseau(test_reseau);
-            fclose(fichier);
-            fclose(fichier2);
+            liberer_chaine(chaines);
+            liberer_reseau(reseau);
+            fclose(source);
+            fclose(destination);
         }
         else {
             printf("Numéro de méthode invalide !\n");
