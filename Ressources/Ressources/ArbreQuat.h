@@ -24,6 +24,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
 Reseau* reconstitueReseauArbre(Chaines* C);                                                         // Exercice 5 Question 5
 
 //Fonctions de desallocation
-void liberer_arbre(ArbreQuat* a);
+void liberer_arbre(ArbreQuat* a);           // Libere l'ArbreQuat a
 
 #endif

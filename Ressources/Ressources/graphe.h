@@ -35,23 +35,22 @@ typedef struct {
 
 //fonctions demandees
 
-Graphe* creerGraphe(Reseau* r);
-int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);
-int* plus_petit_nb_aretes_liste(Graphe* g, Sommet* u, Sommet* v);
-int reorganiseReseau(Reseau* r);
+Graphe* creerGraphe(Reseau* r);                                     // Exercice 1 Question 1 
+int plus_petit_nb_aretes(Graphe* g, Sommet* u, Sommet* v);          // Exercice 1 Question 2
+int* plus_petit_nb_aretes_liste(Graphe* g, Sommet* u, Sommet* v);   // Exercice 1 Question 3
+int reorganiseReseau(Reseau* r);                                    // Exercice 1 Question 4
 
 //fonctions implementees par nous meme
 
-Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod);
-Commod* creerCommod2(int e1, int e2);
-Commod creerCommod(int e1, int e2);
-Sommet* creerSommet(int num, double x, double y);
-Arete* creerArete(int u, int v);
-Cellule_arete* creerCellule_arete(Arete * a);
+Graphe* initGrapheVide(int nbsom, int gamma, int nbcommod);         // Initialise et renvoie un graphe 
+Commod creerCommod(int e1, int e2);                                 // Initialise et renvoie une commodite (structure)    
+Sommet* creerSommet(int num, double x, double y);                   // Initialise et renvoie un sommet
+Arete* creerArete(int u, int v);                                    // Initialise et renvoie une arete
+Cellule_arete* creerCellule_arete(Arete * a);                       // Initialise et renvoie une cellule arete
 
 //Desallocation
 
-void liberer_Graphe(Graphe* graphe);
-void liberer_Commod(Commod* commod);
-void liberer_Sommet(Graphe* graphe, Sommet* sommet);
+void liberer_Graphe(Graphe* graphe);                                // Libere un graphe
+void liberer_Commod(Commod* commod);                                // Libere une commodite
+void liberer_Sommet(Graphe* graphe, Sommet* sommet);                // Libere un sommet
 # endif

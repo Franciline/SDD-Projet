@@ -17,9 +17,9 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
 Reseau* reconstitueReseauHachage(Chaines* C, int M);                                // Exercice 4 Question 5
 
 //Fonctions de base
-TableHachage* initTableHachage(int taille);
+TableHachage* initTableHachage(int taille);         // Initialise et renvoie une table de hachage 
 
 //Fonction de desallocation
-void liberer_tablehachage(TableHachage* t);
+void liberer_tablehachage(TableHachage* t);         // Libere la table de hachage
 
 #endif
