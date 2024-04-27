@@ -1,4 +1,4 @@
-plot "reconstitueR_lc.txt" using 1:2 title 'LC' with lines
+plot "reconstitueR_lc2.txt" using 1:2 title 'LC' with lines
 set term postscript portrait
 set output "courbesLC.ps"
 set size 0.7, 0.7
