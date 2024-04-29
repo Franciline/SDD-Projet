@@ -68,6 +68,7 @@ clean:
 	rm -f test_Hachage
 	rm -f test_graphe
 	rm -f comparaison.txt
+	rm -f instance_liste.txt
 	rm -f ecriture_reseau_Liste.txt
 	rm -f ecriture_reseau_Hachage.txt
 	rm -f ecriture_reseau_Arbre.txt

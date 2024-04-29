@@ -95,6 +95,7 @@ Reseau* reconstitueReseauHachage(Chaines* C, int M){
         //On a ajoute commodite et noeud de la chaine a reseau, on passe a la liste suivante
         liste = liste->suiv;
     }
+    
     liberer_tablehachage(tableH);
 
     return reseau;

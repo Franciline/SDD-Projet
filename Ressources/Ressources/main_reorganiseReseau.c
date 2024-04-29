@@ -13,15 +13,17 @@ clock_t temps_initial;
 clock_t temps_final;
 double temps;
 
-/*Main pour tester reorganiseReseau sur plusieurs instances*/
-int main(){
-    //Chaines* test = generationAleatoire(5, 100, 5000, 5000);
-    //chaines->gamma = 3;
+/*Exercice 7 question 5*/
+int main(int argc, char** argv){
 
-    FILE* inst = fopen("10000_USA-road-d-NY.cha", "r");
+    if (argc < 2) {
+        printf("Il faut des arguments ! : ./%s <nom_instance> \n", argv[0]);        
+        return 1;
+    }
+
+    FILE* inst = fopen(argv[1], "r");
     FILE* destination = fopen("instance_liste.txt", "a");
     Chaines* chaines = lectureChaines(inst);
-    //chaines->gamma = 10;
 
     Reseau* reseau = reconstitueReseauArbre(chaines);
 
@@ -30,13 +32,14 @@ int main(){
     temps_final = clock();
 
     temps = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+
     if (t) printf("Nombre de chaines: %d \ngamma : %d\ntemps: %lf \nReconstitution reussie\n", chaines->nbChaines, chaines->gamma, temps);
     else printf("Nombre de chaines: %d \ngamma : %d\ntemps: %lf\nReconstitution echouee\n", chaines->nbChaines, chaines->gamma, temps);
     
-    fprintf(destination, "10000_USA-road-d-NY.cha %d %d %lf %d\n",chaines->nbChaines, chaines->gamma, temps, t);
+    fprintf(destination, "%s %d %d %lf %d\n",argv[1],chaines->nbChaines, chaines->gamma, temps, t);
 
-    //liberer_chaine(chaines);
-    //liberer_reseau(reseau);
+    liberer_chaine(chaines);
+    liberer_reseau(reseau);
     fclose(inst);
     fclose(destination);
 
