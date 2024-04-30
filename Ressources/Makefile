@@ -67,14 +67,7 @@ clean:
 	rm -f test_File
 	rm -f test_Hachage
 	rm -f test_graphe
-	rm -f comparaison.txt
-	rm -f instance_liste.txt
-	rm -f reconstitueR_hash_abr.txt
-	rm -f reconstitueR_lc.txt
-	rm -f ecriture_reseau_Liste.txt
-	rm -f ecriture_reseau_Hachage.txt
-	rm -f ecriture_reseau_Arbre.txt
-	rm -f test_ecriture_chaine.txt
+	rm -f *.txt
 	rm -f *.html
 	rm -f vgcore.*
 	rm -f *.ps
