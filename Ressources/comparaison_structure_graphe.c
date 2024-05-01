@@ -15,25 +15,29 @@ double temps_cpu_liste, temps_cpu_hachage, temps_cpu_arbre;
 #define YMAX 5000
 #define NBPC 100
 
-/*Exercice 6 question 3*/
-int main(){
 
-    //fichiers resultats
-    FILE * res_liste = fopen("EXO6_Q3_Lc.txt", "a");
-    FILE * res_hash_abr = fopen("EXO6_Q3_Abr_Hash.txt", "a");
+//Exercice 6
+
+//Question 3
+
+int main() {
+
+    //Fichiers resultats
+    FILE* res_liste = fopen("EXO6_Q3_Lc.txt", "a");
+    FILE* res_hash_abr = fopen("EXO6_Q3_Abr_Hash.txt", "a");
 
     Chaines* chaine;
-    Reseau * reseau;
+    Reseau* reseau;
     int nb_points;
 
-    fprintf(res_liste,"n LC\n");
-    fprintf(res_hash_abr,"n H50 H100 H500 H1000 ABR\n");
+    fprintf(res_liste, "n LC\n");
+    fprintf(res_hash_abr, "n H50 H100 H500 H1000 ABR\n");
 
-    for (int i = 500; i <= 5000; i+=500){
+    for (int i=500; i<=5000; i+=500) {
         printf("%d tour\n", i);
         chaine = generationAleatoire(i, NBPC, XMAX, YMAX);
         
-        //liste chainee
+        //Liste chainee
         temps_initial = clock();
         reseau = reconstitueReseauListe(chaine);
         temps_final = clock();
@@ -44,11 +48,11 @@ int main(){
         fprintf(res_liste, "%d %lf\n", nb_points, temps_cpu_liste);
         liberer_reseau(reseau);
 
-        //table de hachage
+        //Table de hachage
         int tab_tailles[4] = {50, 100, 500, 1000};
         fprintf(res_hash_abr, "%d ", nb_points);
 
-        for (int j = 0; j < 4; j ++){
+        for (int j=0; j<4; j++) {
             temps_initial = clock();
             reseau = reconstitueReseauHachage(chaine, tab_tailles[j]);
             temps_final = clock();
@@ -59,7 +63,7 @@ int main(){
             fprintf(res_hash_abr, "%lf ", temps_cpu_hachage);
         }
 
-        //arbre
+        //Arbre quaternaire
         temps_initial = clock();
         reseau = reconstitueReseauArbre(chaine); 
         temps_final = clock();
@@ -69,9 +73,7 @@ int main(){
 
         fprintf(res_hash_abr, "%lf\n", temps_cpu_arbre);
         liberer_chaine(chaine);  
-
     }
-
     fclose(res_hash_abr);
     fclose(res_liste);
 
