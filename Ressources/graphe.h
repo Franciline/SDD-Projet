@@ -47,6 +47,7 @@ Commod creerCommod(int e1, int e2);                                 // Initialis
 Sommet* creerSommet(int num, double x, double y);                   // Initialise et renvoie un sommet
 Arete* creerArete(int u, int v);                                    // Initialise et renvoie une arete
 Cellule_arete* creerCellule_arete(Arete * a);                       // Initialise et renvoie une cellule arete
+void ajouteArete(Sommet* u, Arete* a);                              // Ajoute une arete aux voisins de u 
 
 //Desallocation
 

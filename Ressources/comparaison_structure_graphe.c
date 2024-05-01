@@ -18,34 +18,40 @@ double temps_cpu_liste, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_h
 /*Exercice 6 question 3*/
 int main(){
 
-    FILE * res_liste = fopen("reconstitueR_lc.txt", "w");
-    FILE * res_hash_abr = fopen("reconstitueR_hash_abr.txt", "w");
+    FILE * res_liste = fopen("EXO6_Q3_Lc.txt", "a");
+    FILE * res_hash_abr = fopen("EXO6_Q3_Abr_Hash.txt", "a");
     Chaines* chaine;
     Reseau * reseau;
+    int nb_points;
 
-    fprintf(res_liste,"n tmp_lc\n");
-    fprintf(res_hash_abr,"n h=50 h=100 h=500 h=1000 tmp_abr\n");
+    //fprintf(res_liste,"n LC\n");
+    //fprintf(res_hash_abr,"n H50 H100 H500 H1000 ABR\n");
 
     for (int i = 500; i <= 5000; i+=500){
+        printf("%d tour\n", i);
         chaine = generationAleatoire(i, NBPC, XMAX, YMAX);
         
         //liste chainee
         temps_initial = clock();
         reseau = reconstitueReseauListe(chaine);
         temps_final = clock();
-        liberer_reseau(reseau);
+
+        nb_points = reseau->nbNoeuds;
 
         temps_cpu_liste = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
-        fprintf(res_liste, "%d %lf\n", i, temps_cpu_liste);
+        fprintf(res_liste, "%d %lf\n", nb_points, temps_cpu_liste);
+        liberer_reseau(reseau);
 
         //table de hachage
         int tab_tailles[4] = {50, 100, 500, 1000};
-        fprintf(res_hash_abr, "%d ", i);
+        fprintf(res_hash_abr, "%d ", nb_points);
 
         for (int j = 0; j < 4; j ++){
             temps_initial = clock();
             reseau = reconstitueReseauHachage(chaine, tab_tailles[j]);
             temps_final = clock();
+
+            
 
             temps_cpu_hachage_50 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
             liberer_reseau(reseau);
