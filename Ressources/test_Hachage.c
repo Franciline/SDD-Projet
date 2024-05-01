@@ -13,7 +13,7 @@ int main(){
     assert(tableH->nbElement == 0); 
     assert(tableH->tailleMax == 10);
 
-    Reseau *r = creer_reseau();
+    Reseau *r = creer_reseau(1);
     Noeud *n1 = creer_noeud(8, 2, 1);
     CellNoeud * cellN = creer_cellnoeud(n1);
 

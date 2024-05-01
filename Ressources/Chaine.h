@@ -36,10 +36,12 @@ int comptePointsTotal(Chaines* C);                      // Calcule et renvoie le
 Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax);  // Exercice 6 Question 2
 
 //Fonctions de base
+
 Chaines* creer_chaine();                              //Creer une instance de chaine et la renvoie
 double distance(CellPoint* a, CellPoint* b);          //Calcule et renvoie la distance entre les points a et b
 
 //Fonctions de desallocation
+
 void liberer_chaine(Chaines* C);                      // Libere une Chaines C 
 void liberer_cellchaine(CellChaine* c);               // Libere une liste de CellChaine C
 void liberer_cellpoint(CellPoint* p);                 // Libere un CellPoint p

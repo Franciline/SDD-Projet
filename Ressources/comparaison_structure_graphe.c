@@ -9,7 +9,7 @@
 #include <time.h>
 clock_t temps_initial;
 clock_t temps_final;
-double temps_cpu_liste, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_hachage_500, temps_cpu_hachage_1000, temps_cpu_arbre;
+double temps_cpu_liste, temps_cpu_hachage, temps_cpu_arbre;
 
 #define XMAX 5000
 #define YMAX 5000
@@ -18,14 +18,16 @@ double temps_cpu_liste, temps_cpu_hachage_50, temps_cpu_hachage_100, temps_cpu_h
 /*Exercice 6 question 3*/
 int main(){
 
+    //fichiers resultats
     FILE * res_liste = fopen("EXO6_Q3_Lc.txt", "a");
     FILE * res_hash_abr = fopen("EXO6_Q3_Abr_Hash.txt", "a");
+
     Chaines* chaine;
     Reseau * reseau;
     int nb_points;
 
-    //fprintf(res_liste,"n LC\n");
-    //fprintf(res_hash_abr,"n H50 H100 H500 H1000 ABR\n");
+    fprintf(res_liste,"n LC\n");
+    fprintf(res_hash_abr,"n H50 H100 H500 H1000 ABR\n");
 
     for (int i = 500; i <= 5000; i+=500){
         printf("%d tour\n", i);
@@ -51,12 +53,10 @@ int main(){
             reseau = reconstitueReseauHachage(chaine, tab_tailles[j]);
             temps_final = clock();
 
-            
-
-            temps_cpu_hachage_50 = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
+            temps_cpu_hachage = ((double)(temps_final - temps_initial))/CLOCKS_PER_SEC;
             liberer_reseau(reseau);
 
-            fprintf(res_hash_abr, "%lf ", temps_cpu_hachage_50);
+            fprintf(res_hash_abr, "%lf ", temps_cpu_hachage);
         }
 
         //arbre

@@ -13,23 +13,15 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud * liste = R->noeuds;
 
     while (liste){
-        //égalité des doubles fait avec la différence
         if ((liste->nd->x == x) && (liste->nd->y == y)) return liste->nd;
         liste = liste->suiv;
     }
 
-    //cas ou n'existe pas
     //creation du noeud si n'existe pas
     Noeud * new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
-    //creation de la cellule
-    CellNoeud * new_celln = (CellNoeud*)(malloc(sizeof(CellNoeud)));
-    new_celln -> nd = new_noeud; //on affecte le noeud dans la cellule
-    new_celln -> suiv = R->noeuds; //on ajoute a la suite de la liste de CellNoeud dans Reseau
-    
-    //ajout dans R
-    R->noeuds = new_celln;
-    R->nbNoeuds = R->nbNoeuds + 1; //on incrémente le nombre de noeuds
+    //Ajout dans le reseau
+    ajoutNoeudReseau(R, new_noeud);
 
     return new_noeud;
 }
@@ -41,8 +33,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 Reseau* reconstitueReseauListe(Chaines *C){
 
     //Création du réseau
-    Reseau* reseau = creer_reseau();
-    reseau->gamma=C->gamma;
+    Reseau* reseau = creer_reseau(C->gamma);
 
     CellChaine* liste = C->chaines;
 
@@ -77,11 +68,10 @@ Reseau* reconstitueReseauListe(Chaines *C){
         //le suivant est NULL, on ajoute le precedent
         ajouter_voisin(commodite->extrB, rechercheCreeNoeudListe(reseau, prec->x, prec->y)); 
         
-        //on insere la commodite
+        //on insere la commodite dans le reseau
         commodite->suiv = reseau->commodites;
         reseau->commodites = commodite;
 
-        //On a ajoute commodite et noeud de la chaine a réseau, on passe à la liste suivante
         liste = liste->suiv;
     }
 
@@ -95,7 +85,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
 /*Retourne le nombre de liaisons que possede le reseau*/
 int nbLiaisons(Reseau *R){
 
-    //nb liaisons est donne par la somme des nb de voisins de chaque CellNoeud / 2 
+    //nb liaisons est donne par la somme des nb de voisins de chaque CellNoeud divise par 2 
     int nb_liaisons = 0; 
     CellNoeud* noeud_parcours = R->noeuds;
 
@@ -103,7 +93,7 @@ int nbLiaisons(Reseau *R){
     while(noeud_parcours){
 
         int nb_voisins = 0;
-        CellNoeud* liste_voisins = noeud_parcours->nd->voisins; //les voisins de ce noeud
+        CellNoeud* liste_voisins = noeud_parcours->nd->voisins; //voisins de ce noeud
 
         //on compte le nombre de voisins de ce noeud
         while(liste_voisins){
@@ -224,10 +214,10 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
 //fonctions de base
 
 /*Renvoie un reseau vide*/
-Reseau* creer_reseau(){
+Reseau* creer_reseau(int gamma){
     Reseau* reseau = (Reseau*)(malloc(sizeof(Reseau)));
     reseau->nbNoeuds = 0;
-    reseau->gamma = 0;
+    reseau->gamma = gamma;
     reseau->noeuds = NULL;
     reseau->commodites = NULL;
 
@@ -295,6 +285,19 @@ int nb_commodite(Reseau* r){
         parcours = parcours->suiv;
     }
     return nb;
+}
+
+/*ajoute un noeud dans le reseau*/
+void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud){
+    CellNoeud* celln = (CellNoeud *) malloc(sizeof(CellNoeud));
+
+    //creation du noeud
+    celln->nd = noeud;
+    celln->suiv = reseau->noeuds;
+
+    //ajout dans reseau
+    reseau->noeuds = celln;
+    reseau->nbNoeuds = reseau->nbNoeuds + 1;  //On incremente le nombre de noeuds
 }
 
 //Desallocation

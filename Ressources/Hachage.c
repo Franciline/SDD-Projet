@@ -19,32 +19,20 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
 
     //On cherche si le noeud existe deja
     while(liste){
-        //Egalite des doubles 
         if ((liste->nd->x == x) && (liste->nd->y == y)){
             return liste->nd;
         }
         liste = liste->suiv;
     }
 
-    //Cas ou le noeud n'existe pas
-    //On cree un nouveau noeud
+    //Cas ou le noeud n'existe pas on cree un nouveau noeud
     Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
-    //Creation de la cellule pour le reseau R
-    CellNoeud* new_cellnR = creer_cellnoeud(new_noeud);     //On affecte le noeud dans la cellule
-    new_cellnR->suiv = R->noeuds;                           //On ajoute a la suite de la liste de CellNoeud dans le reseau R
-    
-    //Ajout dans le reseau R
-    R->noeuds = new_cellnR;
-    R->nbNoeuds = R->nbNoeuds + 1;  //on incremente le nombre de noeuds
+    //On ajoute le noeud dans le reseau
+    ajoutNoeudReseau(R, new_noeud);
 
-    //Creation de la cellule pour la table de hachage H
-    CellNoeud* new_cellnH = creer_cellnoeud(new_noeud);     //On affecte le noeud dans la cellule
-    new_cellnH->suiv = H->T[i];                             //On ajoute a la suite de la liste de CellNoeud dans la table de hachage H
-
-    //Ajout dans H
-    H->T[i] = new_cellnH;
-    H->nbElement++;
+    //On ajoute le noeud dans la table de hachage
+    ajoutNoeudHachage(H, new_noeud, i);
 
     return new_noeud;
 }
@@ -55,8 +43,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y)
 Reseau* reconstitueReseauHachage(Chaines* C, int M){
 
     //Creation du reseau
-    Reseau* reseau = creer_reseau();
-    reseau->gamma = C->gamma;
+    Reseau* reseau = creer_reseau(C->gamma);
     CellChaine* liste = C->chaines;
     TableHachage* tableH = initTableHachage(M);
 
@@ -129,6 +116,30 @@ TableHachage* initTableHachage(int taille){
     return tableH;
 }
 
+/*ajoute un noeud dans le reseau*/
+void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud){
+    CellNoeud* celln = (CellNoeud *) malloc(sizeof(CellNoeud));
+
+    //creation du noeud
+    celln->nd = noeud;
+    celln->suiv = reseau->noeuds;
+
+    //ajout dans reseau
+    reseau->noeuds = celln;
+    reseau->nbNoeuds = reseau->nbNoeuds + 1;  //On incremente le nombre de noeuds
+}
+
+
+/*Ajoute un noeud dans la tbale de hachage a la position i*/
+void ajoutNoeudHachage(TableHachage* H, Noeud* noeud, int position){
+    //Creation de la cellule pour la table de hachage H
+    CellNoeud* new_cellnH = creer_cellnoeud(noeud);         //On affecte le noeud dans la cellule
+    new_cellnH->suiv = H->T[position];                      //On ajoute en tete de la liste de CellNoeud 
+
+    //Ajout dans la table de hachage
+    H->T[position] = new_cellnH;
+    H->nbElement++;
+}
 
 /* Libere le tableau de hachage */
 void liberer_tablehachage(TableHachage* t){
@@ -146,3 +157,4 @@ void liberer_tablehachage(TableHachage* t){
 
     return;
 }
+

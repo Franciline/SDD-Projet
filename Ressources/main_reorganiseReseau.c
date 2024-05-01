@@ -21,12 +21,14 @@ int main(int argc, char** argv){
         return 1;
     }
 
+    //ouverture des fichiers
     FILE* inst = fopen(argv[1], "r");
-    FILE* destination = fopen("instance_liste.txt", "a");
+    FILE* destination = fopen("EXO7_Q5.txt", "a");
     Chaines* chaines = lectureChaines(inst);
 
     Reseau* reseau = reconstitueReseauArbre(chaines);
 
+    //Temps de calcul
     temps_initial = clock();
     int t = reorganiseReseau(reseau);
     temps_final = clock();

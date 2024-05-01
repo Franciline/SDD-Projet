@@ -9,7 +9,7 @@
 
 //Question 1
 
-/* Fonction qui determine les coordonnees min et max de la chaine */
+/* Fonction qui determine les coordonnees (x,y) min et max de la chaine C*/
 void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
     if ((C == NULL) || (C->chaines == NULL)) return; 
     CellChaine* cellchaine = C->chaines;
@@ -136,14 +136,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
         //On cree un nouveau noeud
         Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
-        //Creation de la cellule pour R
-        CellNoeud* new_cellnR = (CellNoeud *) malloc(sizeof(CellNoeud));
-        new_cellnR->nd = new_noeud;     //On affecte le noeud dans la cellule
-        new_cellnR->suiv = R->noeuds;   //On ajoute la liste de CellNoeud du Reseau au suivant de la cellule
-        
-        //Ajout de la cellule dans R
-        R->noeuds = new_cellnR;
-        R->nbNoeuds = R->nbNoeuds + 1;  //On incremente le nombre de noeuds
+        //Ajout de ce noeud dans le reseau
+        ajoutNoeudReseau(R, new_noeud);
 
         //Ajout dans l'arbre
         insererNoeudArbre(new_noeud, a, parent);
@@ -160,16 +154,10 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
             //On cree un nouveau noeud
             Noeud* new_noeud = creer_noeud(x, y, R->nbNoeuds + 1);
 
-            //Creation de la cellule pour R
-            CellNoeud* new_cellnR = (CellNoeud *) malloc(sizeof(CellNoeud));
-            new_cellnR->nd = new_noeud;     //On affecte le noeud dans la cellule
-            new_cellnR->suiv = R->noeuds;   //On ajoute la liste de CellNoeud du Reseau au suivant de la cellule
-            
-            //Ajout de la cellule dans R
-            R->noeuds = new_cellnR;
-            R->nbNoeuds = R->nbNoeuds + 1;  //On incremente le nombre de noeuds
+            //Ajout de ce noeud dans le reseau
+            ajoutNoeudReseau(R, new_noeud);
 
-            //Ajout dans l'arbre (dans ses fils) -> Cas 2 : feuille dans la fonction d'insertion
+            //Ajout dans l'arbre 
             insererNoeudArbre(new_noeud, a, parent); 
 
             return new_noeud;
@@ -196,8 +184,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
 /* Reconstitue le reseau à partir de la liste des chaines et en utilisant l'arbre quaternaire */
 Reseau* reconstitueReseauArbre(Chaines* C) {
     //Creation du reseau
-    Reseau* reseau = creer_reseau();
-    reseau->gamma = C->gamma;
+    Reseau* reseau = creer_reseau(C->gamma);
     CellChaine* liste = C->chaines;
     
     //Creation de l'arbre
@@ -248,6 +235,18 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
     return reseau;
 }
 
+/*ajoute un noeud dans le reseau*/
+void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud){
+    CellNoeud* celln = (CellNoeud *) malloc(sizeof(CellNoeud));
+
+    //creation du noeud
+    celln->nd = noeud;
+    celln->suiv = reseau->noeuds;
+
+    //ajout dans reseau
+    reseau->noeuds = celln;
+    reseau->nbNoeuds = reseau->nbNoeuds + 1;  //On incremente le nombre de noeuds
+}
 
 /* Libere l'arbre quaternaire */
 void liberer_arbre(ArbreQuat* a){

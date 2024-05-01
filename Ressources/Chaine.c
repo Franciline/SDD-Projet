@@ -210,11 +210,13 @@ int comptePointsTotal(Chaines* C) {
 Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax) {
     Chaines* chaines = creer_chaine();
 
+    //Creation de la chaine
     for (int i=0; i<nbChaines; i++) {
         CellChaine* cellC = (CellChaine *) malloc(sizeof(CellChaine));
         cellC->points = NULL;
         cellC->numero = i;
 
+        //Creation des points
         for (int j=0; j<nbPointsChaine; j++) {
             CellPoint* cellP = (CellPoint *) malloc(sizeof(CellPoint));
             cellP->x = rand() % xmax;

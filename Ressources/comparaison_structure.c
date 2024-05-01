@@ -22,14 +22,14 @@ int main(int argc, char** argv){
 
     //ouverture du fichier de chaines
     FILE * source = fopen(argv[1], "r");
-    FILE * destination = fopen("instance_comparaison.txt", "a");
+    FILE * destination = fopen("EXO6_Q1.txt", "a");
     
     Chaines* chaines = lectureChaines(source);
-    int taille_tab;
     Reseau* test_reseau;
+    int taille_tab;
 
-    fprintf(destination, "nbChaines ABQ LC H50 H100 H150 H200 H250 H300 H350 H400 H450 H500 \n");
-    fprintf(destination, "%d ",chaines->nbChaines);
+    fprintf(destination, "nom nbChaines ABQ LC H100 H200 H300 H400 H500\n");
+    fprintf(destination, "%s %d ",argv[1], chaines->nbChaines);
 
     //Arbre quaternaire
     temps_initial = clock();
@@ -52,7 +52,7 @@ int main(int argc, char** argv){
     liberer_reseau(test_reseau);
     
     //Table de hachage
-    for (taille_tab = 50; taille_tab <= 501; taille_tab+=50){
+    for (taille_tab = 100; taille_tab <= 500; taille_tab+=100){
         temps_initial = clock();
         test_reseau = reconstitueReseauHachage(chaines, taille_tab);
         temps_final = clock();

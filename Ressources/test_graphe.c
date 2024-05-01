@@ -12,15 +12,15 @@ int main(){
     Chaines* chaine = lectureChaines(lecture);
     Reseau* reseau = reconstitueReseauArbre(chaine);
 
-    //test question 1
+    //test question 1 
+    //test de la fonction creerGraphe
     Graphe* g = creerGraphe(reseau);
     assert(g);
     assert(g->gamma == reseau->gamma);
     assert(g->nbcommod == nb_commodite(reseau));
     assert(g->nbsom == reseau->nbNoeuds);
     
-    
-    //affichage des voisins
+    //affichage des sommet et de leurs voisins
     printf("\nAffichage de tous les aretes\n");
     for (int i = 0; i < g->nbsom; i++){
         Sommet* s = g->T_som[i];
@@ -47,6 +47,8 @@ int main(){
         free(chaine_commod);
     }
 
+    //test question 4 
+    //fonctionnement correct de reorganiseReseau
     int t = reorganiseReseau(reseau);
     printf("\nRetour de reorganiseReseau %d\n", t);
     

@@ -13,7 +13,7 @@ int main(){
     assert(a->coteX== 10);
     assert(a->coteY == 10);
     
-    Reseau *r = creer_reseau();
+    Reseau *r = creer_reseau(1);
     Noeud *n1 = creer_noeud(8, 2, 0);
     Noeud *n2 = creer_noeud(7, 1, 1);
     Noeud *n3 = creer_noeud(6, 4, 2);
