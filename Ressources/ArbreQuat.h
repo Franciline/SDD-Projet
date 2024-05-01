@@ -23,8 +23,8 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent);             
 Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, double x, double y);    // Exercice 5 Question 4
 Reseau* reconstitueReseauArbre(Chaines* C);                                                         // Exercice 5 Question 5
 
-//Fonctions de desallocation
+//Fonction de desallocation
 
-void liberer_arbre(ArbreQuat* a);           // Libere l'ArbreQuat a
+void liberer_arbre(ArbreQuat* a);   // Fonction qui libere un ArbreQuat
 
 #endif
