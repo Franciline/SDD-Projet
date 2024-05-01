@@ -48,6 +48,7 @@ Noeud* creer_noeud(double x, double y, int num);
 void ajouter_voisin(Noeud* n, Noeud* voisin);
 int nb_commodite(Reseau* r);
 void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud);
+
 //Desallocation
 
 void liberer_reseau(Reseau* r);
