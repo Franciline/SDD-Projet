@@ -5,7 +5,7 @@
 
 
 typedef struct{
-  int nbElement; //pas necessaire ici
+  int nbElement;  //pas necessaire ici
   int tailleMax;
   CellNoeud** T;
 } TableHachage ;
@@ -18,11 +18,11 @@ Reseau* reconstitueReseauHachage(Chaines* C, int M);                            
 
 //Fonctions de base
 
-TableHachage* initTableHachage(int taille);         // Initialise et renvoie une table de hachage 
-void ajoutNoeudHachage(TableHachage* H, Noeud* noeud, int position);
+TableHachage* initTableHachage(int taille);                           // Fonction qui initialise et renvoie une table de hachage 
+void ajoutNoeudHachage(TableHachage* H, Noeud* noeud, int position);  // Fonction qui ajoute un noeud dans la table de hachage a la position position
 
 //Fonction de desallocation
 
-void liberer_tablehachage(TableHachage* t);         // Libere la table de hachage
+void liberer_tablehachage(TableHachage* t);   // Fonction qui libere une TableHachage
 
 #endif
