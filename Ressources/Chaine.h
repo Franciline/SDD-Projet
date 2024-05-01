@@ -29,21 +29,21 @@ Chaines* lectureChaines(FILE* f);                       // Exercice 1 Question 1
 void ecrireChaines(Chaines* C, FILE* f);                // Exercice 1 Question 2
 void afficheChainesSVG(Chaines* C, char* nomInstance);  // Exercice 1 Question 3
 double longueurChaine(CellChaine* c);                   // Exercice 1 Question 4
-double longueurTotale(Chaines* C);                      // Calcule et renvoie la longueur totale de toutes les chaines de C
+double longueurTotale(Chaines* C);                      // Fonction qui calcule et renvoie la longueur totale de toutes les chaines de C
 int comptePoints(CellChaine* c);                        // Exercice 1 Question 5
-int comptePointsTotal(Chaines* C);                      // Calcule et renvoie le nombre de points totale dans C
+int comptePointsTotal(Chaines* C);                      // Fonction qui calcule et renvoie le nombre de points totale dans C
 
 Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax);  // Exercice 6 Question 2
 
 //Fonctions de base
 
-Chaines* creer_chaine();                              //Creer une instance de chaine et la renvoie
-double distance(CellPoint* a, CellPoint* b);          //Calcule et renvoie la distance entre les points a et b
+Chaines* creer_chaine();                              // Fonction qui initialise une chaine vide
+double distance(CellPoint* a, CellPoint* b);          // Fonction qui calcule la distance entre deux points a et b
 
 //Fonctions de desallocation
 
-void liberer_chaine(Chaines* C);                      // Libere une Chaines C 
-void liberer_cellchaine(CellChaine* c);               // Libere une liste de CellChaine C
-void liberer_cellpoint(CellPoint* p);                 // Libere un CellPoint p
+void liberer_chaine(Chaines* C);                      // Fonction qui libere une Chaines
+void liberer_cellchaine(CellChaine* c);               // Fonction qui libere une CellChaine
+void liberer_cellpoint(CellPoint* p);                 // Fonction qui libere un CellPoint
 
 #endif
