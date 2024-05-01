@@ -26,19 +26,19 @@ Chaines* lectureChaines(FILE* f) {
     Chaines* chaine = creer_chaine();
     char ligne[TAILLE_MAX];
 
-    // On recupere la 1ere ligne du fichier qui contient nbChain
+    //On recupere la 1ere ligne du fichier qui contient nbChain
     fgets(ligne, sizeof(ligne), f);
     sscanf(ligne, "NbChain: %d\n", &nbChain);
     
-    // On recupere la 2eme ligne du fichier qui contient gamma
+    //On recupere la 2eme ligne du fichier qui contient gamma
     fgets(ligne, sizeof(ligne), f);
     sscanf(ligne, "Gamma: %d\n", &gamma);
 
     chaine->nbChaines = nbChain;
     chaine->gamma = gamma;
 
-    // On parcourt les lignes jusqu'a la fin du fichier
-    for (int i=0; i<nbChain; i++){
+    //On parcourt les lignes jusqu'a la fin du fichier
+    for (int i=0; i<nbChain; i++) {
         fgets(ligne, sizeof(ligne), f);
         sscanf(ligne, "%d %d %[^\n]\n", &num, &nb_pts, ligne);
         CellChaine* cellC = (CellChaine *) malloc(sizeof(CellChaine));
@@ -63,7 +63,7 @@ Chaines* lectureChaines(FILE* f) {
 //Question 2
 
 /* Fonction d'ecriture des chaines dans un fichier */
-void ecrireChaines(Chaines* C, FILE* f){
+void ecrireChaines(Chaines* C, FILE* f) {
     if (f == NULL) {
         printf("Il faut entrer un nom de fichier ! \n");
         exit(1);
@@ -73,18 +73,18 @@ void ecrireChaines(Chaines* C, FILE* f){
     fprintf(f, "Gamma: %d\n", C->gamma);
     
     CellChaine* tmp_cell = C->chaines;
-    while(tmp_cell){
+    while(tmp_cell) {
         //On compte le nombre de points dans la liste chainee
         int nb_point = 0;
         CellPoint* tmp_point = tmp_cell->points;
-        while(tmp_point){
+        while(tmp_point) {
             nb_point++;
             tmp_point = tmp_point->suiv;
         }
 
         fprintf(f, "%d %d ", tmp_cell->numero, nb_point);
         tmp_point = tmp_cell->points;
-        while(tmp_point){
+        while(tmp_point) {
             fprintf(f, "%lf %lf ", tmp_point->x, tmp_point->y);
             tmp_point = tmp_point->suiv;
         }
@@ -97,9 +97,9 @@ void ecrireChaines(Chaines* C, FILE* f){
 
 //Question 3
 
-/* Affichage des chaines */
-void afficheChainesSVG(Chaines* C, char* nomInstance){
-    double maxx=0, maxy=0, minx=1e6, miny=1e6;
+/* Fonction d'affichage des chaines */
+void afficheChainesSVG(Chaines* C, char* nomInstance) {
+    double maxx = 0, maxy = 0, minx = 1e6, miny = 1e6;
     CellChaine* ccour;
     CellPoint* pcour;
     double precx, precy;
@@ -107,13 +107,17 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
     ccour = C->chaines;
     while(ccour != NULL){
         pcour = ccour->points;
+
         while(pcour != NULL){
             if (maxx < pcour->x)
                 maxx = pcour->x;
+
             if (maxy < pcour->y)
                 maxy = pcour->y;
+
             if (minx > pcour->x)
                 minx = pcour->x;
+
             if (miny > pcour->y)
                 miny = pcour->y;
                 
@@ -124,7 +128,7 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
 
     SVGinit(&svg, nomInstance, 500, 500);
     ccour = C->chaines;
-    while(ccour != NULL){
+    while(ccour != NULL) {
         pcour = ccour->points;
         SVGlineRandColor(&svg);
         SVGpoint(&svg, 500*(pcour->x - minx)/(maxx - minx), 500*(pcour->y - miny)/(maxy - miny)); 
@@ -140,7 +144,6 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
         }
         ccour = ccour->suiv;
     }
-
     SVGfinalize(&svg);
 
     return;
@@ -148,7 +151,7 @@ void afficheChainesSVG(Chaines* C, char* nomInstance){
 
 //Question 4
 
-/* Calcule la longueur d'une chaine */
+/* Fonction qui calcule la longueur d'une chaine */
 double longueurChaine(CellChaine* c) {
     double longueur = 0;
     CellPoint* liste_points = c->points;
@@ -161,7 +164,7 @@ double longueurChaine(CellChaine* c) {
     return longueur;
 }
 
-/* Calcule la longueur totale de toutes les chaines */
+/* Fonction qui calcule la longueur totale de toutes les chaines */
 double longueurTotale(Chaines* C) {
     double longueur = 0;
     CellChaine* liste_chaines = C->chaines;
@@ -176,7 +179,7 @@ double longueurTotale(Chaines* C) {
 
 //Question 5
 
-/* Renvoie le nombre d'occurrences de points dans une chaine */
+/* Fonction qui compte le nombre d'occurrences de points dans une chaine */
 int comptePoints(CellChaine* c) {
     int nb_pts = 0;
     CellPoint* liste_points = c->points;
@@ -189,7 +192,7 @@ int comptePoints(CellChaine* c) {
     return nb_pts;
 }
 
-/* Renvoie le nombre total d'occurrences de points dans le reseau */
+/* Fonction qui compte le nombre total d'occurrences de points dans le reseau */
 int comptePointsTotal(Chaines* C) {
     int nb_pts = 0;
     CellChaine* liste_chaines = C->chaines;
@@ -206,7 +209,7 @@ int comptePointsTotal(Chaines* C) {
 
 //Question 2
 
-/* Genere aleatoirement nbChaines chaines contenant nbPointsChaine points */
+/* Fonction qui genere aleatoirement nbChaines chaines contenant nbPointsChaine points */
 Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax) {
     Chaines* chaines = creer_chaine();
 
@@ -236,7 +239,7 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ym
 
 // Fonctions de bases
 
-/* Initialise une chaine vide */
+/* Fonction qui initialise une chaine vide */
 Chaines* creer_chaine() {
     Chaines* chaine = (Chaines *) malloc(sizeof(Chaines));
     chaine->gamma = 0;
@@ -246,7 +249,7 @@ Chaines* creer_chaine() {
     return chaine;
 }
 
-/* Calcule la distance entre deux points a et b */
+/* Fonction qui calcule la distance entre deux points a et b */
 double distance(CellPoint* a, CellPoint* b) {
     double xa = a->x;
     double ya = a->y;
@@ -259,17 +262,17 @@ double distance(CellPoint* a, CellPoint* b) {
 
 //Fonctions de desallocation
 
-/* Libere une Chaine */
-void liberer_chaine(Chaines* C){
+/* Fonction qui libere une Chaines */
+void liberer_chaine(Chaines* C) {
     liberer_cellchaine(C->chaines);
     free(C);
 
     return;
 }
 
-/* Libere une CellChaine */
-void liberer_cellchaine(CellChaine* c){
-    while(c){
+/* Fonction qui libere une CellChaine */
+void liberer_cellchaine(CellChaine* c) {
+    while(c) {
         CellChaine* next = c->suiv;
         liberer_cellpoint(c->points);
         free(c);
@@ -279,9 +282,9 @@ void liberer_cellchaine(CellChaine* c){
     return;
 }
 
-/* Libere un CellPoint */
-void liberer_cellpoint(CellPoint* p){
-    while(p){
+/* Fonction qui libere un CellPoint */
+void liberer_cellpoint(CellPoint* p) {
+    while(p) {
         CellPoint* next = p->suiv;
         free(p);
         p = next;
