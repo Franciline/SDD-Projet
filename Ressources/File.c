@@ -5,7 +5,7 @@
 #include "File.h"
 
 
-//Cree une nouvelle file
+//Fonction qui cree une nouvelle file
 File* creer_file() {
     File* f = (File *) malloc(sizeof(File));
     f->premier = NULL;
@@ -14,12 +14,12 @@ File* creer_file() {
     return f;
 }
 
-//Teste si la file est vide (1 si vide et 0 sinon)
+//Fonction qui teste si la file est vide (1 si vide et 0 sinon)
 int est_vide(File* f) {
     return ((f->premier == NULL) || (f->dernier == NULL));
 }
 
-//Ajoute un nouvel element a la fin de la file
+//Fonction qui ajoute un nouvel element a la fin de la file
 void enfiler(File* f, Sommet* s) {
     Element* e = (Element *) malloc(sizeof(Element));
     e->s = s;
@@ -37,14 +37,14 @@ void enfiler(File* f, Sommet* s) {
     return;
 }
 
-//Retire et renvoie le premier element de la file
+//Fonction qui retire et renvoie le premier element de la file
 Sommet* defiler(File* f) {
     //Cas : file vide
     if (est_vide(f) == 1) {
         return NULL;
     }
     //Cas : un seul element dans la file
-    else if (f->premier == f->dernier){
+    else if (f->premier == f->dernier) {
         Sommet* s = f->premier->s;
         free(f->premier);
         f->premier = NULL;
@@ -64,10 +64,10 @@ Sommet* defiler(File* f) {
     }
 }
 
-//Libere la file
-void liberer_file(File* f){
+//Fonction qui libere la file
+void liberer_file(File* f) {
     Element* element = f->premier, *tmp;
-    while(element){
+    while(element) {
         tmp = element->suiv;
         free(element);
         element = tmp;
@@ -77,11 +77,11 @@ void liberer_file(File* f){
     return;
 }
 
-//Affiche la file
+//Fonction qui affiche la file
 void afficher_file(File* f) {
     Element* el = f->premier;
     printf("\n\nFile :");
-    while (el){
+    while(el) {
         printf("%d ", el->s->num);
         el = el->suiv;
     }
