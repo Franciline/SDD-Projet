@@ -2,7 +2,7 @@ CC=gcc
 GCC_FLAGS=-Wall -g
 
 all: ReconstitueReseau comparaison_structure comparaison_structure_graphe main_reorganiseReseau
-test: test_Chaine test_Hachage test_ABQ test_File test_graphe
+test: test_Chaine test_Hachage test_ABQ test_File test_graphe test_Reseau
 
 Chaine.o: Chaine.c Chaine.h SVGwriter.c SVGwriter.h
 	$(CC) $(GCC_FLAGS) -c $< -o $@ -lm 
@@ -46,15 +46,14 @@ test_Hachage: test_Hachage.c Reseau.o Chaine.o SVGwriter.o Hachage.o
 test_ABQ: test_ABQ.c Reseau.o Chaine.o SVGwriter.o ArbreQuat.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
-test_file: test_file.c File.o graphe.o Reseau.o SVGwriter.o
-	$(CC) $(GCC_FLAGS) -o $@ $^ 
-
 test_File: test_File.c File.o graphe.o Reseau.o SVGwriter.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ 
 
 test_graphe: test_graphe.c File.o graphe.o Reseau.o SVGwriter.o ArbreQuat.o Chaine.o
 	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
+test_Reseau: test_Reseau.c File.o graphe.o Reseau.o SVGwriter.o Chaine.o
+	$(CC) $(GCC_FLAGS) -o $@ $^ -lm
 
 clean:
 	rm -f *.o
@@ -63,6 +62,7 @@ clean:
 	rm -f main_reorganiseReseau
 	rm -f test_Chaine
 	rm -f test_ABQ
+	rm -f test_Reseau
 	rm -f comparaison_structure_graphe
 	rm -f test_File
 	rm -f test_Hachage

@@ -116,20 +116,6 @@ TableHachage* initTableHachage(int taille){
     return tableH;
 }
 
-/*ajoute un noeud dans le reseau*/
-void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud){
-    CellNoeud* celln = (CellNoeud *) malloc(sizeof(CellNoeud));
-
-    //creation du noeud
-    celln->nd = noeud;
-    celln->suiv = reseau->noeuds;
-
-    //ajout dans reseau
-    reseau->noeuds = celln;
-    reseau->nbNoeuds = reseau->nbNoeuds + 1;  //On incremente le nombre de noeuds
-}
-
-
 /*Ajoute un noeud dans la tbale de hachage a la position i*/
 void ajoutNoeudHachage(TableHachage* H, Noeud* noeud, int position){
     //Creation de la cellule pour la table de hachage H

@@ -235,18 +235,6 @@ Reseau* reconstitueReseauArbre(Chaines* C) {
     return reseau;
 }
 
-/*ajoute un noeud dans le reseau*/
-void ajoutNoeudReseau(Reseau* reseau, Noeud* noeud){
-    CellNoeud* celln = (CellNoeud *) malloc(sizeof(CellNoeud));
-
-    //creation du noeud
-    celln->nd = noeud;
-    celln->suiv = reseau->noeuds;
-
-    //ajout dans reseau
-    reseau->noeuds = celln;
-    reseau->nbNoeuds = reseau->nbNoeuds + 1;  //On incremente le nombre de noeuds
-}
 
 /* Libere l'arbre quaternaire */
 void liberer_arbre(ArbreQuat* a){
