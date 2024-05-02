@@ -51,7 +51,6 @@ void ajouteArete(Sommet* u, Arete* a);                              // Ajoute un
 //Fonctions de desallocation
 
 void liberer_Graphe(Graphe* graphe);                                // Fonction qui libere un Graphe
-void liberer_Commod(Commod* commod);                                // Fonction qui libere une Commod (Commodite)
 void liberer_Sommet(Graphe* graphe, Sommet* sommet);                // Fonction qui libere un Sommet d'un graphe g
 
 # endif
