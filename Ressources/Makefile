@@ -60,13 +60,8 @@ clean:
 	rm -f ReconstitueReseau
 	rm -f comparaison_structure
 	rm -f main_reorganiseReseau
-	rm -f test_Chaine
-	rm -f test_ABQ
-	rm -f test_Reseau
 	rm -f comparaison_structure_graphe
-	rm -f test_File
-	rm -f test_Hachage
-	rm -f test_graphe
+	rm -f test_*
 	rm -f *.txt
 	rm -f *.html
 	rm -f vgcore.*
