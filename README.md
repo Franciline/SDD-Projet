@@ -6,4 +6,4 @@ Travail sur l'optimisation d'un réseau composé de noeuds et de liaisons
 
 ## Auteurs
 - CHU Amélie [Franciline](https://github.com/Franciline)
-- [Zhou Jérémy](https://github.com/FlyFird) 
+- [ZHOU Jérémy](https://github.com/FlyFird) 
